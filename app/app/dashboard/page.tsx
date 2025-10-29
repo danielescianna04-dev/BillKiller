@@ -11,6 +11,8 @@ import WelcomeToast from './welcome-toast'
 import UploadBox from '@/components/upload-box'
 import AnimatedWrapper from '@/components/animated-wrapper'
 
+export const revalidate = 60 // Cache per 60 secondi
+
 export default async function DashboardPage() {
   const supabase = await createServerSupabaseClient()
   
