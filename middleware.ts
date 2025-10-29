@@ -68,7 +68,8 @@ export async function middleware(request: NextRequest) {
 
   // Redirect authenticated users away from auth pages
   if ((request.nextUrl.pathname.startsWith('/auth/login') || 
-       request.nextUrl.pathname.startsWith('/auth/signup')) && user) {
+       request.nextUrl.pathname.startsWith('/auth/signup') ||
+       request.nextUrl.pathname.startsWith('/auth/callback')) && user) {
     return NextResponse.redirect(new URL('/app/dashboard', request.url))
   }
 
