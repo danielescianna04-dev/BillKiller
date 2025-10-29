@@ -20,8 +20,12 @@ export async function parsePDF(buffer: Buffer): Promise<Transaction[]> {
       try {
         // Extract text from all pages
         let fullText = ''
+        const pageCount = pdfData.Pages?.length || 0
+        console.log(`PDF has ${pageCount} pages`)
+        
         if (pdfData.Pages) {
-          pdfData.Pages.forEach((page: any) => {
+          pdfData.Pages.forEach((page: any, index: number) => {
+            console.log(`Processing page ${index + 1}`)
             if (page.Texts) {
               page.Texts.forEach((text: any) => {
                 if (text.R) {
