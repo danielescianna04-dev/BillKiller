@@ -15,8 +15,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const formData = await req.formData()
-    const priceId = formData.get('priceId') as string || process.env.STRIPE_PRICE_MONTHLY!
+    const priceId = process.env.STRIPE_PRICE_MONTHLY!
     
     console.log('Creating checkout session:', {
       priceId,
