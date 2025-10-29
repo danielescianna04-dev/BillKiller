@@ -1,7 +1,7 @@
 import { createServerSupabaseClient } from '@/lib/supabase'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatCurrency } from '@/lib/utils'
-import { TrendingUp, CreditCard, Calendar, AlertCircle, Lock, CheckCircle, XCircle, Clock, Package, Sparkles, DollarSign } from 'lucide-react'
+import { TrendingUp, CreditCard, Calendar, AlertCircle, Lock, CheckCircle, XCircle, Clock, Package, Sparkles, DollarSign, Mail } from 'lucide-react'
 import SubscriptionsList from '@/components/subscriptions-list'
 import UpgradePrompt from '@/components/upgrade-prompt'
 import SubscriptionCharts from '@/components/subscription-charts'
