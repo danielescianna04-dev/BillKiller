@@ -52,13 +52,17 @@ export async function GET(req: NextRequest) {
           email: user.email!,
           plan: 'free'
         })
-        // New user - show welcome message
-        return NextResponse.redirect(new URL('/app/dashboard?welcome=true', req.url))
+        // New user - redirect to dashboard
+        const dashboardUrl = new URL('/app/dashboard', req.url)
+        dashboardUrl.searchParams.set('welcome', 'true')
+        return NextResponse.redirect(dashboardUrl)
       }
     }
     
-    // Existing user - show login success
-    return NextResponse.redirect(new URL('/app/dashboard?login=success', req.url))
+    // Existing user - redirect to dashboard
+    const dashboardUrl = new URL('/app/dashboard', req.url)
+    dashboardUrl.searchParams.set('login', 'success')
+    return NextResponse.redirect(dashboardUrl)
   }
 
   return NextResponse.redirect(new URL('/auth/login', req.url))
