@@ -53,8 +53,8 @@ export default function AppNavbar({ user }: AppNavbarProps) {
               </div>
             </div>
 
-            <div className="hidden md:flex items-center space-x-4 flex-shrink-0">
-              <span className="text-sm text-gray-600 truncate max-w-[150px]">{user.email}</span>
+            <div className="hidden md:flex items-center space-x-4 flex-shrink-0 ml-auto">
+              <span className="text-sm text-gray-600 truncate max-w-[120px]">{user.email}</span>
               <Link href="/app/account">
                 <Button variant="ghost" size="sm">
                   <Settings className="w-4 h-4" />
