@@ -76,6 +76,11 @@ export default async function DashboardPage() {
   const activeSubscriptions = allSubscriptions?.filter((sub) => sub.status === 'active') || []
   const cancelledSubscriptions = allSubscriptions?.filter((sub) => sub.status === 'cancelled') || []
   
+  // Check for unknown subscriptions (Apple Pay, Google Pay, POS)
+  const unknownSubscriptions = activeSubscriptions.filter(s => 
+    s.merchant_canonical.startsWith('unknown-')
+  )
+  
   // Split installment plans into active and completed
   const activeInstallmentPlans = installmentPlans?.filter((plan) => !plan.meta?.is_completed) || []
   const completedInstallmentPlans = installmentPlans?.filter((plan) => plan.meta?.is_completed) || []
@@ -235,6 +240,35 @@ export default async function DashboardPage() {
             </Card>
           ) : (
             <>
+              {/* Alert for unknown subscriptions */}
+              {unknownSubscriptions.length > 0 && (
+                <Card className="border-amber-300 bg-gradient-to-r from-amber-50 to-orange-50 shadow-md">
+                  <CardContent className="pt-6">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 bg-amber-100 rounded-lg flex-shrink-0">
+                        <AlertCircle className="w-5 h-5 text-amber-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-gray-900 mb-2">
+                          Abbonamenti non identificati rilevati
+                        </h3>
+                        <p className="text-sm text-gray-700 mb-3">
+                          Abbiamo rilevato {unknownSubscriptions.length} transazione{unknownSubscriptions.length > 1 ? 'i' : ''} ricorrente{unknownSubscriptions.length > 1 ? 'i' : ''} (
+                          {unknownSubscriptions.map(s => `€${s.amount.toFixed(2)}`).join(', ')}
+                          ) ma non siamo riusciti a identificare il servizio. Probabilmente {unknownSubscriptions.length > 1 ? 'sono' : 'è'} pagat{unknownSubscriptions.length > 1 ? 'i' : 'o'} con Apple Pay o Google Pay.
+                        </p>
+                        <Link href="/app/email">
+                          <Button className="bg-amber-600 hover:bg-amber-700">
+                            <Mail className="w-4 h-4 mr-2" />
+                            Collega email per identificarli
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+              
               {activeSubscriptions.length > 0 && (
                 <>
                   <SubscriptionsList 

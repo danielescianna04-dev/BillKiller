@@ -1,4 +1,19 @@
 const MERCHANT_MAP: Record<string, string> = {
+  // Apple Pay / Google Pay
+  if (desc.includes('APPLE PAY') || desc.includes('APPLEPAY')) return 'apple-pay'
+  if (desc.includes('GOOGLE PAY') || desc.includes('GOOGLEPAY') || desc.includes('G PAY')) return 'google-pay'
+  if (desc.includes('POS CARTA') && desc.includes('DEBIT')) return 'pos-carta'
+  
+  // Apple Pay / Google Pay / POS generici
+  if (desc.includes('APPLE PAY') || desc.includes('APPLEPAY')) return 'unknown-applepay'
+  if (desc.includes('GOOGLE PAY') || desc.includes('GOOGLEPAY') || desc.includes('G PAY')) return 'unknown-googlepay'
+  if (desc.includes('POS CARTA') || (desc.includes('POS') && desc.includes('CARTA'))) return 'unknown-pos'
+  
+  // Unknown payments
+  'unknown-applepay': 'Abbonamento Apple Pay',
+  'unknown-googlepay': 'Abbonamento Google Pay',
+  'unknown-pos': 'Abbonamento POS',
+  
   // Streaming
   'NETFLIX': 'netflix',
   'SPOTIFY': 'spotify',
