@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { AlertCircle, Send, CheckCircle } from 'lucide-react'
+import { AlertCircle, Send, CheckCircle, X } from 'lucide-react'
 
 export default function ReportMissingButton({ statementId }: { statementId: string }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -37,48 +37,80 @@ export default function ReportMissingButton({ statementId }: { statementId: stri
 
   if (!isOpen) {
     return (
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => setIsOpen(true)}
-        className="text-orange-600 border-orange-300 hover:bg-orange-50"
-      >
-        <AlertCircle className="w-4 h-4 mr-2" />
-        Segnala abbonamenti mancanti
-      </Button>
+      <div className="flex justify-center">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setIsOpen(true)}
+          className="text-amber-700 border-amber-300 hover:bg-amber-50 hover:border-amber-400 transition-all shadow-sm"
+        >
+          <AlertCircle className="w-4 h-4 mr-2" />
+          Abbonamento non rilevato?
+        </Button>
+      </div>
     )
   }
 
   return (
-    <Card className="border-orange-200 bg-orange-50">
+    <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 shadow-md">
       <CardContent className="pt-6 space-y-4">
         {success ? (
-          <div className="flex items-center gap-2 text-green-700">
-            <CheckCircle className="w-5 h-5" />
-            <span className="font-medium">Segnalazione inviata!</span>
+          <div className="flex flex-col items-center gap-3 py-4">
+            <div className="p-3 bg-green-100 rounded-full">
+              <CheckCircle className="w-8 h-8 text-green-600" />
+            </div>
+            <div className="text-center">
+              <h3 className="font-semibold text-green-800 mb-1">Segnalazione inviata!</h3>
+              <p className="text-sm text-green-700">Grazie per il tuo feedback</p>
+            </div>
           </div>
         ) : (
           <>
+            <div className="flex items-start justify-between">
+              <div className="flex items-start gap-3">
+                <div className="p-2 bg-amber-100 rounded-lg">
+                  <AlertCircle className="w-5 h-5 text-amber-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 mb-1">
+                    Segnala abbonamenti mancanti
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    Aiutaci a migliorare il rilevamento
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsOpen(false)}
+                className="h-8 w-8 p-0 hover:bg-amber-100"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+
             <div>
-              <h3 className="font-semibold text-gray-900 mb-2">
-                Segnala abbonamenti non rilevati
-              </h3>
-              <p className="text-sm text-gray-600 mb-3">
-                Ci invierai l'estratto conto per migliorare il rilevamento. Descrivi quali abbonamenti mancano:
-              </p>
+              <label className="text-sm font-medium text-gray-700 mb-2 block">
+                Quali abbonamenti non sono stati rilevati?
+              </label>
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Es: Non ha rilevato Netflix e Spotify..."
-                className="w-full p-3 border border-gray-300 rounded-lg text-sm resize-none"
+                placeholder="Es: Netflix €12.99/mese, Spotify €9.99/mese..."
+                className="w-full p-3 border border-amber-200 rounded-lg text-sm resize-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 rows={3}
               />
+              <p className="text-xs text-gray-500 mt-2">
+                Ti invieremo l'estratto conto per analizzarlo e migliorare il sistema
+              </p>
             </div>
+
             <div className="flex gap-2">
               <Button
                 onClick={handleSubmit}
-                disabled={loading}
-                className="bg-orange-600 hover:bg-orange-700"
+                disabled={loading || !message.trim()}
+                className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-md"
               >
                 <Send className="w-4 h-4 mr-2" />
                 {loading ? 'Invio...' : 'Invia segnalazione'}
@@ -87,6 +119,7 @@ export default function ReportMissingButton({ statementId }: { statementId: stri
                 variant="outline"
                 onClick={() => setIsOpen(false)}
                 disabled={loading}
+                className="border-gray-300 hover:bg-gray-50"
               >
                 Annulla
               </Button>
