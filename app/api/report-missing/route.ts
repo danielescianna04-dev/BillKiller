@@ -72,8 +72,10 @@ export async function POST(req: NextRequest) {
     const buffer = await fileData.arrayBuffer()
     const base64 = Buffer.from(buffer).toString('base64')
 
+    console.log('Sending email to daniele.scianna04@gmail.com')
+
     // Send email with Resend
-    await resend.emails.send({
+    const emailResult = await resend.emails.send({
       from: 'BillKiller <noreply@billkiller.it>',
       to: 'daniele.scianna04@gmail.com',
       subject: `Segnalazione abbonamenti mancanti - ${user.email}`,
@@ -91,6 +93,8 @@ export async function POST(req: NextRequest) {
         },
       ],
     })
+
+    console.log('Email sent:', emailResult)
 
     return NextResponse.json({ success: true })
   } catch (error: any) {
