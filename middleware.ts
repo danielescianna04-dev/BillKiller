@@ -72,6 +72,11 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/app/dashboard', request.url))
   }
 
+  // Redirect authenticated users from home to dashboard
+  if (request.nextUrl.pathname === '/' && user) {
+    return NextResponse.redirect(new URL('/app/dashboard', request.url))
+  }
+
   return response
 }
 

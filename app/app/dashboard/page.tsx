@@ -82,7 +82,8 @@ export default async function DashboardPage() {
   const hiddenCount = activeSubscriptions ? activeSubscriptions.length - (displayActive?.length || 0) : 0
 
   return (
-    <div className="space-y-4 sm:space-y-6 px-4 sm:px-0 pb-6">
+    <AnimatedWrapper>
+      <div className="space-y-4 sm:space-y-6 px-4 sm:px-0 pb-6">
       <WelcomeToast />
       {/* Hero Cards */}
       <div className={`grid grid-cols-3 gap-2 sm:gap-4 ${!hasUploadedFile ? 'blur-sm pointer-events-none' : ''}`}>
@@ -325,6 +326,6 @@ export default async function DashboardPage() {
           </Card>
         </div>
       </div>
-    </div>
-  )
-}
+          </div>
+        </AnimatedWrapper>
+      )}
