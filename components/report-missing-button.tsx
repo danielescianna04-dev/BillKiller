@@ -10,9 +10,11 @@ export default function ReportMissingButton({ statementId }: { statementId: stri
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [error, setError] = useState('')
 
   const handleSubmit = async () => {
     setLoading(true)
+    setError('')
     try {
       const res = await fetch('/api/report-missing', {
         method: 'POST',
@@ -27,9 +29,12 @@ export default function ReportMissingButton({ statementId }: { statementId: stri
           setSuccess(false)
           setMessage('')
         }, 2000)
+      } else {
+        const data = await res.json()
+        setError(data.error || 'Errore durante l\'invio')
       }
-    } catch (error) {
-      console.error(error)
+    } catch (err: any) {
+      setError(err.message || 'Errore di connessione')
     } finally {
       setLoading(false)
     }
@@ -105,6 +110,12 @@ export default function ReportMissingButton({ statementId }: { statementId: stri
                 Invieremo l'estratto conto al nostro team per analizzarlo e migliorare il rilevamento
               </p>
             </div>
+
+            {error && (
+              <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-sm text-red-700">{error}</p>
+              </div>
+            )}
 
             <div className="flex gap-2">
               <Button
