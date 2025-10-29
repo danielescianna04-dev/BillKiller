@@ -13,15 +13,15 @@ export default function HomePage() {
 
   const handleNavigate = () => {
     setIsNavigating(true)
-    setTimeout(() => router.push('/auth/signup'), 500)
+    setTimeout(() => router.push('/auth/signup'), 200)
   }
 
   const handleLogin = () => {
     setIsNavigating(true)
-    setTimeout(() => router.push('/auth/login'), 500)
+    setTimeout(() => router.push('/auth/login'), 200)
   }
   return (
-    <div className={`min-h-screen bg-white text-gray-800 relative overflow-hidden transition-all duration-500 ${isNavigating ? 'opacity-0 -translate-y-10 scale-95' : 'opacity-100 translate-y-0 scale-100'}`}>
+    <div className={`min-h-screen bg-white text-gray-800 relative overflow-hidden transition-all duration-200 ${isNavigating ? 'opacity-0 -translate-y-10 scale-95' : 'opacity-100 translate-y-0 scale-100'}`}>
       {/* Background Gradient */}
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white via-white to-amber-100" />
       
@@ -55,9 +55,9 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative container mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center flex flex-col items-center">
-        <div className="inline-block mb-4 sm:mb-6">
-          <div className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 shadow-sm">
-            <p className="text-sm sm:text-base text-gray-700 font-medium">
+        <div className="inline-block mb-4 sm:mb-6 group">
+          <div className="px-2 py-1 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 border border-amber-300 shadow-md transition-all group-hover:shadow-lg group-hover:scale-105">
+            <p className="text-xs text-gray-600 font-semibold">
               💸 Scopri dove vanno davvero i tuoi soldi ogni mese.
             </p>
           </div>

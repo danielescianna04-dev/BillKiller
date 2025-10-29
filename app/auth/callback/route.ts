@@ -27,7 +27,12 @@ export async function GET(req: NextRequest) {
     )
     
     // Exchange code for session
-    await supabase.auth.exchangeCodeForSession(code)
+    const { error } = await supabase.auth.exchangeCodeForSession(code)
+    
+    if (error) {
+      console.error('Error exchanging code:', error)
+      return NextResponse.redirect(new URL('/auth/login?error=callback', req.url))
+    }
     
     // Get user
     const { data: { user } } = await supabase.auth.getUser()
