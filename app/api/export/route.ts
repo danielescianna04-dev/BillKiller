@@ -127,7 +127,7 @@ export async function GET(req: NextRequest) {
     const pdf = await page.pdf({ format: 'A4', printBackground: true })
     await browser.close()
 
-    return new NextResponse(pdf, {
+    return new NextResponse(Buffer.from(pdf), {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': 'attachment; filename="abbonamenti.pdf"'
