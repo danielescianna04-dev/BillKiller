@@ -47,6 +47,7 @@ export default async function DashboardPage() {
     .limit(1)
   
   const lastStatement = lastStatementData?.[0]
+  console.log('Last statement:', lastStatement)
 
   // Get all subscriptions from base table
   const { data: allSubscriptionsRaw } = await supabase
