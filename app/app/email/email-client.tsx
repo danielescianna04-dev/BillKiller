@@ -75,22 +75,22 @@ export default function EmailPageClient({
       {/* Email Providers Grid */}
       <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
         {/* Gmail Card */}
-        <Card className={`hover:shadow-xl transition-all duration-300 ${gmailConnected ? 'border-green-300 bg-green-50/30' : 'hover:scale-[1.02]'}`}>
+        <Card className={`hover:shadow-xl transition-all duration-300 ${gmailConnected ? 'border-green-300 bg-gradient-to-br from-green-50 to-emerald-50' : 'border-gray-200 bg-gradient-to-br from-white to-gray-50 hover:scale-[1.02]'}`}>
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
+              <div className="flex items-center gap-3">
+                <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none">
                   <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/>
                   <path d="M0 5.457v.727l12 9 12-9v-.727c0-2.023-2.309-3.178-3.927-1.964L12 9.548 3.927 3.493C2.31 2.28 0 3.434 0 5.457z" fill="#FBBC04"/>
                   <path d="M18.545 11.73v9.273h3.819c.904 0 1.636-.732 1.636-1.636V11.73l-5.455 4.091z" fill="#34A853"/>
                   <path d="M1.636 21.003h3.819V11.73L0 7.639v11.727c0 .904.732 1.636 1.636 1.636z" fill="#4285F4"/>
                 </svg>
-                <span className="text-lg">Gmail</span>
+                <span className="text-xl font-semibold">Gmail</span>
               </div>
               {gmailConnected && (
-                <div className="flex items-center gap-1 text-green-600 text-sm font-semibold bg-green-100 px-3 py-1 rounded-full">
+                <div className="flex items-center gap-1.5 text-green-700 text-sm font-bold bg-green-100 px-3 py-1.5 rounded-full shadow-sm">
                   <CheckCircle className="w-4 h-4" />
-                  Attivo
+                  Connesso
                 </div>
               )}
             </CardTitle>
@@ -98,40 +98,44 @@ export default function EmailPageClient({
           <CardContent className="space-y-4">
             {gmailConnected ? (
               <>
-                <div className="bg-white rounded-lg p-3 space-y-2">
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <Zap className="w-4 h-4 text-green-600" />
-                    <span>Scansione automatica attiva</span>
+                <div className="bg-white rounded-xl p-4 space-y-3 shadow-sm border border-green-100">
+                  <div className="flex items-center gap-3 text-sm text-gray-700">
+                    <div className="p-1.5 bg-green-100 rounded-lg">
+                      <Zap className="w-4 h-4 text-green-600" />
+                    </div>
+                    <span className="font-medium">Scansione automatica attiva</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <Search className="w-4 h-4 text-amber-600" />
-                    <span>Cerca ricevute in tempo reale</span>
+                  <div className="flex items-center gap-3 text-sm text-gray-700">
+                    <div className="p-1.5 bg-blue-100 rounded-lg">
+                      <Search className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <span className="font-medium">Ricerca ricevute in tempo reale</span>
                   </div>
                 </div>
                 <Button 
                   onClick={() => disconnectEmail('gmail')} 
                   disabled={disconnecting === 'gmail'}
                   variant="outline"
-                  className="w-full border-gray-300 hover:bg-gray-50 hover:border-gray-400"
+                  className="w-full border-gray-300 hover:bg-red-50 hover:border-red-300 hover:text-red-600 transition-colors"
                 >
-                  {disconnecting === 'gmail' ? 'Disconnessione...' : 'Disconnetti Gmail'}
+                  {disconnecting === 'gmail' ? 'Disconnessione...' : 'Disconnetti'}
                 </Button>
               </>
             ) : (
               <>
-                <p className="text-xs sm:text-sm text-gray-600">
+                <p className="text-sm text-gray-600 leading-relaxed">
                   Collega Google per trovare automaticamente ricevute e abbonamenti
                 </p>
-                <div className="bg-gray-50 rounded-lg p-3 space-y-2">
-                  <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+                <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl p-4 space-y-2.5 border border-gray-100">
+                  <div className="flex items-center gap-2.5 text-sm text-gray-700">
                     <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
                     <span>Solo lettura, massima sicurezza</span>
                   </div>
-                  <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+                  <div className="flex items-center gap-2.5 text-sm text-gray-700">
                     <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
                     <span>Cerca solo ricevute di pagamento</span>
                   </div>
-                  <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+                  <div className="flex items-center gap-2.5 text-sm text-gray-700">
                     <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
                     <span>Disconnetti con 1 click</span>
                   </div>
@@ -139,7 +143,7 @@ export default function EmailPageClient({
                 <Button 
                   onClick={connectGmail} 
                   disabled={connecting}
-                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-md"
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 shadow-lg hover:shadow-xl transition-all"
                 >
                   <Mail className="w-4 h-4 mr-2" />
                   Collega Gmail
@@ -150,22 +154,22 @@ export default function EmailPageClient({
         </Card>
 
         {/* Outlook Card */}
-        <Card className={`hover:shadow-xl transition-all duration-300 ${outlookConnected ? 'border-green-300 bg-green-50/30' : 'hover:scale-[1.02]'}`}>
+        <Card className={`hover:shadow-xl transition-all duration-300 ${outlookConnected ? 'border-green-300 bg-gradient-to-br from-green-50 to-emerald-50' : 'border-gray-200 bg-gradient-to-br from-white to-gray-50 hover:scale-[1.02]'}`}>
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
+              <div className="flex items-center gap-3">
+                <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none">
                   <path d="M0 0h11.377v11.372H0z" fill="#0364B8"/>
                   <path d="M12.623 0H24v11.372H12.623z" fill="#0078D4"/>
                   <path d="M0 12.628h11.377V24H0z" fill="#1490DF"/>
                   <path d="M12.623 12.628H24V24H12.623z" fill="#28A8EA"/>
                 </svg>
-                <span className="text-lg">Outlook</span>
+                <span className="text-xl font-semibold">Outlook</span>
               </div>
               {outlookConnected && (
-                <div className="flex items-center gap-1 text-green-600 text-sm font-semibold bg-green-100 px-3 py-1 rounded-full">
+                <div className="flex items-center gap-1.5 text-green-700 text-sm font-bold bg-green-100 px-3 py-1.5 rounded-full shadow-sm">
                   <CheckCircle className="w-4 h-4" />
-                  Attivo
+                  Connesso
                 </div>
               )}
             </CardTitle>
@@ -173,40 +177,44 @@ export default function EmailPageClient({
           <CardContent className="space-y-4">
             {outlookConnected ? (
               <>
-                <div className="bg-white rounded-lg p-3 space-y-2">
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <Zap className="w-4 h-4 text-green-600" />
-                    <span>Scansione automatica attiva</span>
+                <div className="bg-white rounded-xl p-4 space-y-3 shadow-sm border border-green-100">
+                  <div className="flex items-center gap-3 text-sm text-gray-700">
+                    <div className="p-1.5 bg-green-100 rounded-lg">
+                      <Zap className="w-4 h-4 text-green-600" />
+                    </div>
+                    <span className="font-medium">Scansione automatica attiva</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <Search className="w-4 h-4 text-orange-600" />
-                    <span>Cerca ricevute in tempo reale</span>
+                  <div className="flex items-center gap-3 text-sm text-gray-700">
+                    <div className="p-1.5 bg-blue-100 rounded-lg">
+                      <Search className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <span className="font-medium">Ricerca ricevute in tempo reale</span>
                   </div>
                 </div>
                 <Button 
                   onClick={() => disconnectEmail('outlook')} 
                   disabled={disconnecting === 'outlook'}
                   variant="outline"
-                  className="w-full border-gray-300 hover:bg-gray-50 hover:border-gray-400"
+                  className="w-full border-gray-300 hover:bg-red-50 hover:border-red-300 hover:text-red-600 transition-colors"
                 >
-                  {disconnecting === 'outlook' ? 'Disconnessione...' : 'Disconnetti Outlook'}
+                  {disconnecting === 'outlook' ? 'Disconnessione...' : 'Disconnetti'}
                 </Button>
               </>
             ) : (
               <>
-                <p className="text-xs sm:text-sm text-gray-600">
+                <p className="text-sm text-gray-600 leading-relaxed">
                   Collega Microsoft per trovare automaticamente ricevute e abbonamenti
                 </p>
-                <div className="bg-gray-50 rounded-lg p-3 space-y-2">
-                  <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+                <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl p-4 space-y-2.5 border border-gray-100">
+                  <div className="flex items-center gap-2.5 text-sm text-gray-700">
                     <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
                     <span>Solo lettura, massima sicurezza</span>
                   </div>
-                  <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+                  <div className="flex items-center gap-2.5 text-sm text-gray-700">
                     <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
                     <span>Cerca solo ricevute di pagamento</span>
                   </div>
-                  <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
+                  <div className="flex items-center gap-2.5 text-sm text-gray-700">
                     <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
                     <span>Disconnetti con 1 click</span>
                   </div>
@@ -214,7 +222,7 @@ export default function EmailPageClient({
                 <Button 
                   onClick={connectOutlook} 
                   disabled={connecting}
-                  className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 shadow-md"
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 shadow-lg hover:shadow-xl transition-all"
                 >
                   <Mail className="w-4 h-4 mr-2" />
                   Collega Outlook
