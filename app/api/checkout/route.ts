@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     
     console.log('Session created:', session.id, session.url)
 
-    return NextResponse.redirect(session.url!)
+    return NextResponse.json({ url: session.url })
   } catch (error: any) {
     console.error('Checkout error:', error)
     return NextResponse.json({ error: error.message }, { status: 500 })

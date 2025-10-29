@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { redirect } from 'next/navigation'
 import { Crown, Trash2, User, CheckCircle, Sparkles, BarChart3, FileText, TrendingUp, ArrowRight, Mail, Calendar } from 'lucide-react'
 import { DeleteAccountButton } from '@/components/delete-account-button'
+import CheckoutButton from '@/components/checkout-button'
 
 export default async function AccountPage() {
   const supabase = await createServerSupabaseClient()
@@ -111,11 +112,9 @@ export default async function AccountPage() {
                 <p className="text-2xl sm:text-3xl font-bold">€0,99<span className="text-base sm:text-lg font-normal text-gray-400">/mese</span></p>
               </div>
             </div>
-            <form action="/api/checkout" method="POST" className="mt-4">
-              <Button size="lg" className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-base sm:text-lg" type="submit">
-                Attiva Premium Ora <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
-              </Button>
-            </form>
+            <div className="mt-4">
+              <CheckoutButton />
+            </div>
           </div>
         </Card>
       )}
