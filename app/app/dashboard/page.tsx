@@ -85,8 +85,8 @@ export default async function DashboardPage() {
     <AnimatedWrapper>
       <div className="space-y-4 sm:space-y-6 px-4 sm:px-0 pb-6">
         <WelcomeToast />
-      {/* Hero Cards */}
-      <div className={`grid grid-cols-3 gap-2 sm:gap-4 ${!hasUploadedFile ? 'blur-sm pointer-events-none' : ''}`}>
+        {/* Hero Cards */}
+        <div className={`grid grid-cols-3 gap-2 sm:gap-4 ${!hasUploadedFile ? 'blur-sm pointer-events-none' : ''}`}>
         <Card className="border-gray-200 hover:shadow-lg transition-shadow">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 p-3 sm:p-6">
             <CardTitle className="text-[10px] sm:text-sm font-medium text-gray-600">Spesa Mensile</CardTitle>
