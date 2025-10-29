@@ -1,19 +1,4 @@
 const MERCHANT_MAP: Record<string, string> = {
-  // Apple Pay / Google Pay
-  if (desc.includes('APPLE PAY') || desc.includes('APPLEPAY')) return 'apple-pay'
-  if (desc.includes('GOOGLE PAY') || desc.includes('GOOGLEPAY') || desc.includes('G PAY')) return 'google-pay'
-  if (desc.includes('POS CARTA') && desc.includes('DEBIT')) return 'pos-carta'
-  
-  // Apple Pay / Google Pay / POS generici
-  if (desc.includes('APPLE PAY') || desc.includes('APPLEPAY')) return 'unknown-applepay'
-  if (desc.includes('GOOGLE PAY') || desc.includes('GOOGLEPAY') || desc.includes('G PAY')) return 'unknown-googlepay'
-  if (desc.includes('POS CARTA') || (desc.includes('POS') && desc.includes('CARTA'))) return 'unknown-pos'
-  
-  // Unknown payments
-  'unknown-applepay': 'Abbonamento Apple Pay',
-  'unknown-googlepay': 'Abbonamento Google Pay',
-  'unknown-pos': 'Abbonamento POS',
-  
   // Streaming
   'NETFLIX': 'netflix',
   'SPOTIFY': 'spotify',
@@ -60,6 +45,12 @@ const MERCHANT_MAP: Record<string, string> = {
 export function normalizeMerchant(raw: string): string {
   const upper = raw.toUpperCase()
   
+  // Check for Apple Pay / Google Pay / POS first
+  if (upper.includes('APPLE PAY') || upper.includes('APPLEPAY')) return 'unknown-applepay'
+  if (upper.includes('GOOGLE PAY') || upper.includes('GOOGLEPAY') || upper.includes('G PAY')) return 'unknown-googlepay'
+  if (upper.includes('POS CARTA') || (upper.includes('POS') && upper.includes('CARTA'))) return 'unknown-pos'
+  
+  // Check merchant map
   for (const [key, value] of Object.entries(MERCHANT_MAP)) {
     if (upper.includes(key)) {
       return value
@@ -72,6 +63,9 @@ export function normalizeMerchant(raw: string): string {
 
 export function getMerchantTitle(canonical: string): string {
   const titles: Record<string, string> = {
+    'unknown-applepay': 'Abbonamento Apple Pay',
+    'unknown-googlepay': 'Abbonamento Google Pay',
+    'unknown-pos': 'Abbonamento POS',
     'netflix': 'Netflix',
     'spotify': 'Spotify',
     'amazon-prime': 'Amazon Prime',
