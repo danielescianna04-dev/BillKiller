@@ -13,10 +13,10 @@ export default function HomePage() {
 
   const handleNavigate = () => {
     setIsNavigating(true)
-    setTimeout(() => router.push('/auth/signup'), 300)
+    setTimeout(() => router.push('/auth/signup'), 500)
   }
   return (
-    <div className={`min-h-screen bg-white text-gray-800 relative overflow-hidden transition-opacity duration-300 ${isNavigating ? 'opacity-0' : 'opacity-100'}`}>
+    <div className={`min-h-screen bg-white text-gray-800 relative overflow-hidden transition-all duration-500 ${isNavigating ? 'opacity-0 -translate-y-10 scale-95' : 'opacity-100 translate-y-0 scale-100'}`}>
       {/* Background Gradient */}
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white via-white to-amber-100" />
       
