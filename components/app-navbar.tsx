@@ -36,18 +36,18 @@ export default function AppNavbar({ user }: AppNavbarProps) {
                 </span>
               </Link>
               <div className="hidden md:flex space-x-6 flex-shrink-0">
-                <Link href="/app/dashboard" className="text-gray-700 hover:text-blue-600">
+                <Link href="/app/dashboard" prefetch={true} className="text-gray-700 hover:text-blue-600">
                   Dashboard
                 </Link>
-                <Link href="/app/upload" className="text-gray-700 hover:text-blue-600 flex items-center space-x-1">
+                <Link href="/app/upload" prefetch={true} className="text-gray-700 hover:text-blue-600 flex items-center space-x-1">
                   <Upload className="w-4 h-4" />
                   <span>Upload</span>
                 </Link>
-                <Link href="/app/email" className="text-gray-700 hover:text-blue-600 flex items-center space-x-1">
+                <Link href="/app/email" prefetch={true} className="text-gray-700 hover:text-blue-600 flex items-center space-x-1">
                   <Mail className="w-4 h-4" />
                   <span>Email</span>
                 </Link>
-                <Link href="/app/offerte" className="text-gray-700 hover:text-blue-600">
+                <Link href="/app/offerte" prefetch={true} className="text-gray-700 hover:text-blue-600">
                   Offerte
                 </Link>
               </div>
@@ -88,23 +88,23 @@ export default function AppNavbar({ user }: AppNavbarProps) {
               </div>
               
               <div className="space-y-4">
-                <Link href="/app/dashboard" className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/dashboard' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
+                <Link href="/app/dashboard" prefetch={true} className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/dashboard' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
                   <span>Dashboard</span>
                 </Link>
-                <Link href="/app/upload" className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/upload' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
+                <Link href="/app/upload" prefetch={true} className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/upload' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
                   <Upload className="w-5 h-5" />
                   <span>Upload</span>
                 </Link>
-                <Link href="/app/email" className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/email' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
+                <Link href="/app/email" prefetch={true} className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/email' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
                   <Mail className="w-5 h-5" />
                   <span>Email</span>
                 </Link>
-                <Link href="/app/offerte" className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/offerte' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
+                <Link href="/app/offerte" prefetch={true} className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/offerte' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
                   <span>Offerte</span>
                 </Link>
                 
                 <div className="border-t pt-4 mt-4">
-                  <Link href="/app/account" className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/account' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
+                  <Link href="/app/account" prefetch={true} className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/account' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
                     <Settings className="w-5 h-5" />
                     <span>Account</span>
                   </Link>
