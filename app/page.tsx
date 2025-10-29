@@ -55,10 +55,12 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative container mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center flex flex-col items-center">
-        <div className="text-center mb-4 sm:mb-6">
-          <p className="text-lg sm:text-xl md:text-2xl text-gray-700 font-medium">
-            💸 Scopri dove vanno davvero i tuoi soldi ogni mese.
-          </p>
+        <div className="inline-block mb-4 sm:mb-6">
+          <div className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 shadow-lg">
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-800 font-medium">
+              💸 Scopri dove vanno davvero i tuoi soldi ogni mese.
+            </p>
+          </div>
         </div>
         
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-4 sm:mb-6 leading-tight text-gray-900">
