@@ -34,13 +34,18 @@ export async function POST(req: NextRequest) {
         const session = event.data.object as Stripe.Checkout.Session
         const userId = session.client_reference_id
 
+        console.log('Checkout completed:', { userId, sessionId: session.id })
+
         if (userId) {
-          await supabase
+          const { data, error } = await supabase
             .from('users')
             .update({ plan: 'premium' })
             .eq('id', userId)
+            .select()
           
-          console.log('User upgraded to premium:', userId)
+          console.log('User upgrade result:', { data, error })
+        } else {
+          console.error('No client_reference_id in session')
         }
         break
       }
