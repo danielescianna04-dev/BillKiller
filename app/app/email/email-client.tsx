@@ -79,9 +79,12 @@ export default function EmailPageClient({
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="p-2 bg-amber-100 rounded-lg">
-                  <Mail className="w-5 h-5 text-amber-500" />
-                </div>
+                <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
+                  <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" fill="#EA4335"/>
+                  <path d="M0 5.457v.727l12 9 12-9v-.727c0-2.023-2.309-3.178-3.927-1.964L12 9.548 3.927 3.493C2.31 2.28 0 3.434 0 5.457z" fill="#FBBC04"/>
+                  <path d="M18.545 11.73v9.273h3.819c.904 0 1.636-.732 1.636-1.636V11.73l-5.455 4.091z" fill="#34A853"/>
+                  <path d="M1.636 21.003h3.819V11.73L0 7.639v11.727c0 .904.732 1.636 1.636 1.636z" fill="#4285F4"/>
+                </svg>
                 <span className="text-lg">Gmail</span>
               </div>
               {gmailConnected && (
@@ -151,9 +154,12 @@ export default function EmailPageClient({
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="p-2 bg-orange-100 rounded-lg">
-                  <Mail className="w-5 h-5 text-orange-500" />
-                </div>
+                <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
+                  <path d="M0 0h11.377v11.372H0z" fill="#0364B8"/>
+                  <path d="M12.623 0H24v11.372H12.623z" fill="#0078D4"/>
+                  <path d="M0 12.628h11.377V24H0z" fill="#1490DF"/>
+                  <path d="M12.623 12.628H24V24H12.623z" fill="#28A8EA"/>
+                </svg>
                 <span className="text-lg">Outlook</span>
               </div>
               {outlookConnected && (
