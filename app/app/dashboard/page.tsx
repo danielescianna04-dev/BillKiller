@@ -221,6 +221,11 @@ export default async function DashboardPage() {
                     <p className="text-sm sm:text-base text-gray-600 px-4">
                       Non abbiamo rilevato abbonamenti ricorrenti nel tuo estratto conto. Continua così! 🎉
                     </p>
+                    {lastStatement && (
+                      <div className="pt-4">
+                        <ReportMissingButton statementId={lastStatement.id} />
+                      </div>
+                    )}
                   </>
                 )}
               </CardContent>
