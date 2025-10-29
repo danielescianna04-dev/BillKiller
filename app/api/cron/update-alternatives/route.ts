@@ -68,7 +68,7 @@ export async function GET(request: Request) {
       success: true,
       checked: alternatives?.length || 0,
       updated: updates.length,
-      errors: errors.length,
+      errorCount: errors.length,
       updates,
       errors
     })
