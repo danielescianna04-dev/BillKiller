@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
 
     // Send email with Resend
     const emailResult = await resend.emails.send({
-      from: 'BillKiller <noreply@billkiller.it>',
+      from: 'BillKiller <onboarding@resend.dev>',
       to: 'daniele.scianna04@gmail.com',
       subject: `Segnalazione abbonamenti mancanti - ${user.email}`,
       html: `
