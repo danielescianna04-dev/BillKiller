@@ -15,6 +15,11 @@ export default function HomePage() {
     setIsNavigating(true)
     setTimeout(() => router.push('/auth/signup'), 500)
   }
+
+  const handleLogin = () => {
+    setIsNavigating(true)
+    setTimeout(() => router.push('/auth/login'), 500)
+  }
   return (
     <div className={`min-h-screen bg-white text-gray-800 relative overflow-hidden transition-all duration-500 ${isNavigating ? 'opacity-0 -translate-y-10 scale-95' : 'opacity-100 translate-y-0 scale-100'}`}>
       {/* Background Gradient */}
@@ -33,9 +38,13 @@ export default function HomePage() {
           <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">BillKiller</span>
         </Link>
         <div className="flex items-center gap-2 sm:gap-4">
-          <Link href="/auth/login">
-            <Button variant="ghost" className="text-sm sm:text-base hover:bg-amber-100/50 hover:text-gray-900 px-3 sm:px-4">Accedi</Button>
-          </Link>
+          <Button 
+            variant="ghost" 
+            className="text-sm sm:text-base hover:bg-amber-100/50 hover:text-gray-900 px-3 sm:px-4"
+            onClick={handleLogin}
+          >
+            Accedi
+          </Button>
           <Link href="/auth/signup" id="signup-section">
             <Button className="text-sm sm:text-base bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-full shadow-lg shadow-amber-500/20 transition-all transform hover:scale-105 px-3 sm:px-4 py-2 sm:py-2.5">
               Inizia Gratis <ArrowRight className="hidden sm:inline w-4 h-4 ml-2" />
