@@ -3,11 +3,25 @@
   <rect width="1200" height="630" fill="white"/>
   <rect width="1200" height="630" fill="url(#bgGradient)"/>
   
-  <!-- Logo -->
-  <g transform="translate(500, 200)">
-    <rect width="200" height="200" rx="32" fill="url(#logoGradient)"/>
-    <path d="M100 75L50 125H87.5V175H112.5V125H150L100 75Z" fill="white" stroke="white" stroke-width="4"/>
-    <path d="M58.33 200H141.67" stroke="white" stroke-width="16" stroke-linecap="round"/>
+  <!-- Logo (scaled 2x) -->
+  <g transform="translate(450, 120) scale(2)">
+    <!-- Banconota/Fattura -->
+    <rect x="15" y="35" width="70" height="45" rx="4" fill="#f59e0b" opacity="0.9"/>
+    <rect x="15" y="35" width="70" height="45" rx="4" stroke="#d97706" stroke-width="2"/>
+    
+    <!-- Linee della fattura -->
+    <line x1="25" y1="45" x2="55" y2="45" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+    <line x1="25" y1="52" x2="65" y2="52" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+    <line x1="25" y1="59" x2="50" y2="59" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Simbolo € -->
+    <text x="65" y="70" fill="#fff" font-size="20" font-weight="bold" font-family="Arial">€</text>
+    
+    <!-- Fulmine killer -->
+    <path d="M 50 10 L 40 40 L 50 40 L 45 60 L 65 35 L 55 35 L 60 10 Z" fill="#ef4444" stroke="#dc2626" stroke-width="2" stroke-linejoin="round"/>
+    
+    <!-- Effetto taglio/slash -->
+    <line x1="20" y1="75" x2="80" y2="40" stroke="#dc2626" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
   </g>
   
   <!-- Text -->
@@ -22,10 +36,6 @@
     <linearGradient id="bgGradient" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
       <stop offset="0%" stop-color="#FEF3C7"/>
       <stop offset="100%" stop-color="#FED7AA"/>
-    </linearGradient>
-    <linearGradient id="logoGradient" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#F59E0B"/>
-      <stop offset="100%" stop-color="#EF4444"/>
     </linearGradient>
   </defs>
 </svg>
