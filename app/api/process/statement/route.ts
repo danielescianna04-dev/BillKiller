@@ -114,9 +114,22 @@ export async function POST(req: NextRequest) {
 
     let detectedCount = 0
     if (allTxs) {
+      console.log(`Analyzing ${allTxs.length} total transactions for user`)
+      console.log('Sample transactions:', allTxs.slice(0, 3).map(t => ({ 
+        date: t.occurred_at, 
+        description: t.description, 
+        amount: t.amount 
+      })))
+      
       // Detect subscriptions
       const detected = detectSubscriptions(allTxs)
       detectedCount = detected.length
+      
+      console.log(`Detected ${detectedCount} subscriptions:`, detected.map(s => ({
+        merchant: s.merchant_canonical,
+        amount: s.amount,
+        periodicity: s.periodicity
+      })))
 
       // Insert subscriptions
       for (const sub of detected) {
