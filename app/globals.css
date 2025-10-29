@@ -2,6 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  /* 1) Titolo: meno "altezza ottica" */
+  .hero h1 {
+    line-height: 1.05;
+    margin-bottom: 0.75rem;
+  }
+  .hero .subtitle {
+    margin-top: 0.25rem;
+  }
+
+  /* 2) CTA più "toccabile" */
+  .cta {
+    padding: 0.95rem 1.25rem;
+    font-size: 1.05rem;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  }
+  .cta:active {
+    transform: translateY(1px);
+  }
+
+  /* 3) Badge fiducia su una riga (o 2 righe bilanciate) */
+  .trust-badges {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1rem;
+  }
+
+  /* 4) Disclaimer più leggero (ma leggibile) */
+  .disclaimer {
+    color: #6b7280;
+    font-size: 0.78rem;
+    line-height: 1.3;
+    margin-top: 0.5rem;
+  }
+
+  /* 5) Spazio prima di "Come funziona" */
+  .hero {
+    padding-bottom: 1.25rem;
+  }
+  .divider {
+    margin: 0.75rem auto 1rem;
+    width: 50%;
+    opacity: 0.5;
+  }
+  .howitworks h2 {
+    margin-top: 0.75rem;
+  }
+}
+
+@media (max-width: 380px) {
+  /* Badge: nascondi testo lungo su schermi molto piccoli */
+  .trust-badges .long {
+    display: none;
+  }
+  
+  /* Titolo più piccolo su iPhone SE */
+  .hero h1 {
+    font-size: 92%;
+  }
+}
+
+/* 6) Safe-area iOS */
+@supports (padding: max(0px)) {
+  .page {
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;

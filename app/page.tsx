@@ -21,7 +21,7 @@ export default function HomePage() {
     setTimeout(() => router.push('/auth/login'), 200)
   }
   return (
-    <div className={`min-h-screen bg-white text-gray-800 relative overflow-hidden transition-all duration-200 ${isNavigating ? 'opacity-0 -translate-y-10 scale-95' : 'opacity-100 translate-y-0 scale-100'}`}>
+    <div className={`page min-h-screen bg-white text-gray-800 relative overflow-hidden transition-all duration-200 ${isNavigating ? 'opacity-0 -translate-y-10 scale-95' : 'opacity-100 translate-y-0 scale-100'}`}>
       {/* Background Gradient */}
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white via-white to-amber-100" />
       
@@ -54,7 +54,7 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative container mx-auto px-4 sm:px-6 pt-14 pb-8 sm:py-24 text-center flex flex-col items-center">
+      <section className="hero relative container mx-auto px-4 sm:px-6 pt-14 pb-8 sm:py-24 text-center flex flex-col items-center">
         <div className="hidden sm:inline-block mb-4 sm:mb-6 group">
           <div className="px-2 py-1 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 border border-amber-300 shadow-md transition-all group-hover:shadow-lg group-hover:scale-105">
             <p className="text-xs text-gray-600 font-semibold">
@@ -71,7 +71,7 @@ export default function HomePage() {
           </span>
         </h1>
         
-        <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-12 max-w-3xl mx-auto">
+        <p className="subtitle text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-12 max-w-3xl mx-auto">
           Carica il tuo estratto conto e lascia che BillKiller trovi tutti i tuoi abbonamenti ricorrenti.
           Nessun accesso bancario richiesto.
         </p>
@@ -79,36 +79,36 @@ export default function HomePage() {
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center w-full px-4 sm:px-0">
           <Button 
             size="lg" 
-            className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 rounded-full shadow-2xl shadow-amber-500/30 transform hover:scale-105 transition-transform text-white"
+            className="cta w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 rounded-full shadow-2xl shadow-amber-500/30 transform hover:scale-105 transition-transform text-white"
             onClick={handleNavigate}
           >
             Scopri quanto stai sprecando
           </Button>
         </div>
         
-        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 mt-5 sm:mt-16 text-xs sm:text-sm text-gray-600">
+        <div className="trust-badges flex flex-wrap justify-center items-center gap-4 sm:gap-6 mt-5 sm:mt-16 text-xs sm:text-sm text-gray-600">
           <div className="flex items-center gap-2">
             <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
-            <span>GDPR & Privacy-first</span>
+            <span>GDPR<span className="long"> & Privacy-first</span></span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
-            <span>Hosting 100% Europeo</span>
+            <span>Hosting<span className="long"> 100% Europeo</span></span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
             <span>Nessun accesso bancario</span>
           </div>
         </div>
-        <p className="text-center text-xs text-gray-600 mt-2 px-4">
+        <p className="disclaimer text-center text-xs text-gray-600 mt-2 px-4">
           🔒 Analizziamo solo il file che carichi. Nessun dato personale viene condiviso o salvato oltre 30 giorni.
         </p>
       </section>
 
-      <hr className="mx-auto mt-6 mb-4 w-1/2 border-t border-gray-200 opacity-50" />
+      <hr className="divider mx-auto mt-6 mb-4 w-1/2 border-t border-gray-200 opacity-50" />
 
       {/* How it works */}
-      <section className="relative container mx-auto px-4 sm:px-6 py-4 sm:py-8">
+      <section className="howitworks relative container mx-auto px-4 sm:px-6 py-4 sm:py-8">
         <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 sm:mb-16 text-gray-900">Come funziona, in 3 semplici passi</h2>
         <div className="grid md:grid-cols-3 gap-6 sm:gap-8 text-center">
           <div className="bg-white/50 p-6 sm:p-8 rounded-2xl border border-gray-200/50 transform hover:scale-105 hover:border-amber-500/50 transition-all shadow-lg">
