@@ -48,7 +48,8 @@ export function normalizeMerchant(raw: string): string {
   // Check for Apple Pay / Google Pay / POS first
   if (upper.includes('APPLE PAY') || upper.includes('APPLEPAY')) return 'unknown-applepay'
   if (upper.includes('GOOGLE PAY') || upper.includes('GOOGLEPAY') || upper.includes('G PAY')) return 'unknown-googlepay'
-  if (upper.includes('POS CARTA') || (upper.includes('POS') && upper.includes('CARTA'))) return 'unknown-pos'
+  if (upper.includes('POS CARTA')) return 'unknown-pos'
+  if (upper.includes('POS') && (upper.includes('DEBIT') || upper.includes('VISA') || upper.includes('MASTERCARD'))) return 'unknown-pos'
   
   // Check merchant map
   for (const [key, value] of Object.entries(MERCHANT_MAP)) {
