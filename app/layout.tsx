@@ -15,6 +15,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://billkiller.it',
   },
+  icons: {
+    icon: '/logo.svg',
+    apple: '/logo.svg',
+  },
   openGraph: {
     title: 'BillKiller - Scopri e Gestisci i Tuoi Abbonamenti',
     description: 'Trova tutti i tuoi abbonamenti nascosti analizzando il tuo estratto conto. Risparmia fino a €500/anno.',
@@ -24,7 +28,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og-image.png',
+        url: '/og-image.svg',
         width: 1200,
         height: 630,
         alt: 'BillKiller - Gestione Abbonamenti',
@@ -35,7 +39,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'BillKiller - Scopri e Gestisci i Tuoi Abbonamenti',
     description: 'Trova tutti i tuoi abbonamenti nascosti. Risparmia fino a €500/anno.',
-    images: ['/og-image.png'],
+    images: ['/og-image.svg'],
   },
   robots: {
     index: true,

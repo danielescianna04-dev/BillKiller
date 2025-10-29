@@ -1,6 +1,31 @@
-<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="630" fill="#f59e0b"/>
-  <text x="600" y="280" font-family="Arial" font-size="80" font-weight="bold" fill="white" text-anchor="middle">BillKiller</text>
-  <text x="600" y="380" font-family="Arial" font-size="40" fill="white" text-anchor="middle">Scopri e Gestisci i Tuoi Abbonamenti</text>
-  <text x="600" y="450" font-family="Arial" font-size="30" fill="#fbbf24" text-anchor="middle">Risparmia fino a €500/anno</text>
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="white"/>
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Logo -->
+  <g transform="translate(500, 200)">
+    <rect width="200" height="200" rx="32" fill="url(#logoGradient)"/>
+    <path d="M100 75L50 125H87.5V175H112.5V125H150L100 75Z" fill="white" stroke="white" stroke-width="4"/>
+    <path d="M58.33 200H141.67" stroke="white" stroke-width="16" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="600" y="480" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#111827" text-anchor="middle">
+    BillKiller
+  </text>
+  <text x="600" y="540" font-family="Arial, sans-serif" font-size="32" fill="#6B7280" text-anchor="middle">
+    Scopri e Gestisci i Tuoi Abbonamenti
+  </text>
+  
+  <defs>
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="100%" stop-color="#FED7AA"/>
+    </linearGradient>
+    <linearGradient id="logoGradient" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#EF4444"/>
+    </linearGradient>
+  </defs>
 </svg>
