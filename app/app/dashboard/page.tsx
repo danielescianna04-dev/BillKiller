@@ -10,6 +10,7 @@ import Link from 'next/link'
 import WelcomeToast from './welcome-toast'
 import UploadBox from '@/components/upload-box'
 import AnimatedWrapper from '@/components/animated-wrapper'
+import ReportMissingButton from '@/components/report-missing-button'
 
 export const revalidate = 300 // Cache per 5 minuti
 
@@ -36,6 +37,15 @@ export default async function DashboardPage() {
     .limit(1)
   
   const hasUploadedFile = sources && sources.length > 0
+
+  // Get last uploaded statement for report button
+  const { data: lastStatement } = await supabase
+    .from('statements')
+    .select('id')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .single()
 
   // Get all subscriptions from base table
   const { data: allSubscriptionsRaw } = await supabase
@@ -218,11 +228,18 @@ export default async function DashboardPage() {
           ) : (
             <>
               {activeSubscriptions.length > 0 && (
-                <SubscriptionsList 
-                  subscriptions={displayActive || []} 
-                  isPremium={isPremium}
-                  title="Abbonamenti Attivi"
-                />
+                <>
+                  <SubscriptionsList 
+                    subscriptions={displayActive || []} 
+                    isPremium={isPremium}
+                    title="Abbonamenti Attivi"
+                  />
+                  {lastStatement && (
+                    <div className="mt-4">
+                      <ReportMissingButton statementId={lastStatement.id} />
+                    </div>
+                  )}
+                </>
               )}
             </>
           )}
