@@ -64,7 +64,6 @@ export async function scrapePrice(merchant: string): Promise<number | null> {
     // Launch browser (Vercel compatible)
     browser = await puppeteer.launch({
       args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath(),
       headless: chromium.headless,
     })
