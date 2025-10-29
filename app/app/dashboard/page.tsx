@@ -39,13 +39,14 @@ export default async function DashboardPage() {
   const hasUploadedFile = sources && sources.length > 0
 
   // Get last uploaded statement for report button
-  const { data: lastStatement } = await supabase
+  const { data: lastStatementData } = await supabase
     .from('statements')
     .select('id')
     .eq('user_id', user.id)
     .order('created_at', { ascending: false })
     .limit(1)
-    .single()
+  
+  const lastStatement = lastStatementData?.[0]
 
   // Get all subscriptions from base table
   const { data: allSubscriptionsRaw } = await supabase
