@@ -38,16 +38,17 @@ export default async function DashboardPage() {
   
   const hasUploadedFile = sources && sources.length > 0
 
-  // Get last uploaded statement for report button
-  const { data: lastStatementData } = await supabase
-    .from('statements')
+  // Get last uploaded source for report button
+  const { data: lastSourceData } = await supabase
+    .from('sources')
     .select('id')
     .eq('user_id', user.id)
+    .eq('type', 'statement')
     .order('created_at', { ascending: false })
     .limit(1)
   
-  const lastStatement = lastStatementData?.[0]
-  console.log('Last statement:', lastStatement)
+  const lastSource = lastSourceData?.[0]
+  console.log('Last source:', lastSource)
 
   // Get all subscriptions from base table
   const { data: allSubscriptionsRaw } = await supabase
@@ -223,9 +224,9 @@ export default async function DashboardPage() {
                     <p className="text-sm sm:text-base text-gray-600 px-4">
                       Non abbiamo rilevato abbonamenti ricorrenti nel tuo estratto conto. Continua così! 🎉
                     </p>
-                    {lastStatement && (
+                    {lastSource && (
                       <div className="pt-4">
-                        <ReportMissingButton statementId={lastStatement.id} />
+                        <ReportMissingButton statementId={lastSource.id} />
                       </div>
                     )}
                   </>
@@ -241,9 +242,9 @@ export default async function DashboardPage() {
                     isPremium={isPremium}
                     title="Abbonamenti Attivi"
                   />
-                  {lastStatement && (
+                  {lastSource && (
                     <div className="mt-4">
-                      <ReportMissingButton statementId={lastStatement.id} />
+                      <ReportMissingButton statementId={lastSource.id} />
                     </div>
                   )}
                 </>

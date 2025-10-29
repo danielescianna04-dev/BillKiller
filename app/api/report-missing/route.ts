@@ -15,22 +15,22 @@ export async function POST(req: NextRequest) {
 
     const { statementId, message } = await req.json()
 
-    // Get statement file
-    const { data: statement } = await supabase
-      .from('statements')
+    // Get source file
+    const { data: source } = await supabase
+      .from('sources')
       .select('file_path, file_name')
       .eq('id', statementId)
       .eq('user_id', user.id)
       .single()
 
-    if (!statement) {
-      return NextResponse.json({ error: 'Statement not found' }, { status: 404 })
+    if (!source) {
+      return NextResponse.json({ error: 'Source not found' }, { status: 404 })
     }
 
     // Download file from Supabase Storage
     const { data: fileData } = await supabase.storage
       .from('statements')
-      .download(statement.file_path)
+      .download(source.file_path)
 
     if (!fileData) {
       return NextResponse.json({ error: 'File not found' }, { status: 404 })
@@ -49,12 +49,12 @@ export async function POST(req: NextRequest) {
         <h2>Segnalazione da ${user.email}</h2>
         <p><strong>Messaggio:</strong></p>
         <p>${message || 'Nessun messaggio'}</p>
-        <p><strong>File:</strong> ${statement.file_name}</p>
+        <p><strong>File:</strong> ${source.file_name}</p>
         <p><strong>User ID:</strong> ${user.id}</p>
       `,
       attachments: [
         {
-          filename: statement.file_name,
+          filename: source.file_name,
           content: base64,
         },
       ],
