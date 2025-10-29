@@ -17,9 +17,9 @@ const AFFILIATE_URLS: Record<string, string> = {
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const id = params.id
+  const { id } = await params
   const url = AFFILIATE_URLS[id]
 
   if (!url) {
