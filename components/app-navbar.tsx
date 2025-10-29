@@ -33,9 +33,6 @@ export default function AppNavbar({ user }: AppNavbarProps) {
 
   return (
     <>
-      {isPending && (
-        <div className="fixed top-0 left-0 right-0 h-1 bg-blue-500 animate-pulse z-50" />
-      )}
       <nav className="bg-white border-b border-gray-200">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-16">
