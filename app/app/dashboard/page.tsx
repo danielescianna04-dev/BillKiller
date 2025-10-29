@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import WelcomeToast from './welcome-toast'
 import UploadBox from '@/components/upload-box'
+import AnimatedWrapper from '@/components/animated-wrapper'
 
 export default async function DashboardPage() {
   const supabase = await createServerSupabaseClient()
@@ -81,8 +82,9 @@ export default async function DashboardPage() {
   const hiddenCount = activeSubscriptions ? activeSubscriptions.length - (displayActive?.length || 0) : 0
 
   return (
-    <div className="space-y-4 sm:space-y-6 px-4 sm:px-0 pb-6">
-      <WelcomeToast />
+    <AnimatedWrapper>
+      <div className="space-y-4 sm:space-y-6 px-4 sm:px-0 pb-6">
+        <WelcomeToast />
       {/* Hero Cards */}
       <div className={`grid grid-cols-3 gap-2 sm:gap-4 ${!hasUploadedFile ? 'blur-sm pointer-events-none' : ''}`}>
         <Card className="border-gray-200 hover:shadow-lg transition-shadow">
@@ -324,6 +326,6 @@ export default async function DashboardPage() {
           </Card>
         </div>
       </div>
-    </div>
+    </AnimatedWrapper>
   )
 }
