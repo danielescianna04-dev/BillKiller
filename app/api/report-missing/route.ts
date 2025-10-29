@@ -29,18 +29,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Source not found' }, { status: 404 })
     }
 
-    // Check which field contains the file path
-    const filePath = source.file_path || source.path || source.file_url
-    const fileName = source.file_name || source.name || 'estratto-conto.pdf'
+    // Construct file path from user_id and label
+    const filePath = `${user.id}/${source.label}`
+    const fileName = source.label
 
-    if (!filePath) {
-      return NextResponse.json({ error: 'File path not found in source' }, { status: 404 })
-    }
+    console.log('Downloading file:', filePath)
 
     // Download file from Supabase Storage
-    const { data: fileData } = await supabase.storage
+    const { data: fileData, error: downloadError } = await supabase.storage
       .from('statements')
       .download(filePath)
+
+    console.log('Download result:', { fileData: !!fileData, downloadError })
+
+    if (!fileData) {
+      return NextResponse.json({ error: 'File not found in storage' }, { status: 404 })
+    }
 
     if (!fileData) {
       return NextResponse.json({ error: 'File not found' }, { status: 404 })
