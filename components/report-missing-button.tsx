@@ -24,11 +24,6 @@ export default function ReportMissingButton({ statementId }: { statementId: stri
       
       if (res.ok) {
         setSuccess(true)
-        setTimeout(() => {
-          setIsOpen(false)
-          setSuccess(false)
-          setMessage('')
-        }, 2000)
       } else {
         const data = await res.json()
         setError(data.error || 'Errore durante l\'invio')
@@ -60,7 +55,7 @@ export default function ReportMissingButton({ statementId }: { statementId: stri
     <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 shadow-md">
       <CardContent className="pt-6 space-y-4">
         {success ? (
-          <div className="flex flex-col items-center gap-3 py-4">
+          <div className="flex flex-col items-center gap-4 py-4">
             <div className="p-3 bg-green-100 rounded-full">
               <CheckCircle className="w-8 h-8 text-green-600" />
             </div>
@@ -68,6 +63,16 @@ export default function ReportMissingButton({ statementId }: { statementId: stri
               <h3 className="font-semibold text-green-800 mb-1">Segnalazione inviata!</h3>
               <p className="text-sm text-green-700">Grazie per il tuo feedback</p>
             </div>
+            <Button
+              onClick={() => {
+                setSuccess(false)
+                setMessage('')
+              }}
+              variant="outline"
+              className="border-green-300 hover:bg-green-50"
+            >
+              Invia un'altra segnalazione
+            </Button>
           </div>
         ) : (
           <>
