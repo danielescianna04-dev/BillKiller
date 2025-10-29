@@ -253,9 +253,9 @@ export default async function DashboardPage() {
                           Abbonamenti non identificati rilevati
                         </h3>
                         <p className="text-sm text-gray-700 mb-3">
-                          Abbiamo rilevato {unknownSubscriptions.length} transazione{unknownSubscriptions.length > 1 ? 'i' : ''} ricorrente{unknownSubscriptions.length > 1 ? 'i' : ''} (
+                          Abbiamo rilevato {unknownSubscriptions.length} abbonamento{unknownSubscriptions.length > 1 ? 'i' : ''} ricorrente{unknownSubscriptions.length > 1 ? 'i' : ''} (
                           {unknownSubscriptions.map(s => `€${s.amount.toFixed(2)}`).join(', ')}
-                          ) ma non siamo riusciti a identificare il servizio. Probabilmente {unknownSubscriptions.length > 1 ? 'sono' : 'è'} pagat{unknownSubscriptions.length > 1 ? 'i' : 'o'} con Apple Pay o Google Pay.
+                          ) ma non siamo riusciti a identificare {unknownSubscriptions.length > 1 ? 'i servizi' : 'il servizio'}. Probabilmente {unknownSubscriptions.length > 1 ? 'sono pagati' : 'è pagato'} con Apple Pay o Google Pay.
                         </p>
                         <Link href="/app/email">
                           <Button className="bg-amber-600 hover:bg-amber-700">
