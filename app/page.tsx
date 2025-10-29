@@ -97,6 +97,9 @@ export default function HomePage() {
             <span>Nessun accesso bancario</span>
           </div>
         </div>
+        <p className="text-center text-xs sm:text-sm text-gray-500 mt-4 px-4">
+          🔒 Analizziamo solo il file che carichi. Nessun dato personale viene condiviso o salvato oltre 30 giorni.
+        </p>
       </section>
 
       {/* How it works */}
