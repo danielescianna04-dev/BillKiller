@@ -55,9 +55,10 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative container mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center flex flex-col items-center">
-        <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-800 text-xs sm:text-sm mb-6 sm:mb-8">
-          <Zap className="w-3 h-3 sm:w-4 sm:h-4" />
-          <span>Risparmia fino a €500/anno</span>
+        <div className="text-center mb-4 sm:mb-6">
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-700 font-medium">
+            💸 Scopri dove vanno davvero i tuoi soldi ogni mese.
+          </p>
         </div>
         
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-4 sm:mb-6 leading-tight text-gray-900">
