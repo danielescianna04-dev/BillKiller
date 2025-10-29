@@ -143,6 +143,82 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* FAQ Section - SEO */}
+      <section className="relative py-16 sm:py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-gray-900">
+              Domande Frequenti
+            </h2>
+            <p className="text-lg text-gray-600">
+              Tutto quello che devi sapere su BillKiller
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">
+                Come faccio a sapere quanti abbonamenti ho?
+              </h3>
+              <p className="text-gray-600">
+                BillKiller analizza automaticamente i tuoi estratti conto e le email per trovare tutti gli abbonamenti attivi. 
+                Carica un estratto conto o collega la tua email Gmail/Outlook e scopri in pochi secondi quanti abbonamenti hai e quanto spendi ogni mese.
+              </p>
+            </div>
+
+            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">
+                Come trovare abbonamenti nascosti?
+              </h3>
+              <p className="text-gray-600">
+                Gli abbonamenti nascosti sono spesso sepolti negli estratti conto con nomi poco chiari. BillKiller usa l'intelligenza artificiale 
+                per riconoscere automaticamente Netflix, Spotify, Amazon Prime e centinaia di altri servizi, anche se appaiono con nomi diversi.
+              </p>
+            </div>
+
+            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">
+                Quanto costa BillKiller?
+              </h3>
+              <p className="text-gray-600">
+                BillKiller è gratis per sempre fino a 5 abbonamenti. Il piano Premium costa solo €0,99/mese e include abbonamenti illimitati, 
+                collegamento email automatico, grafici dettagliati ed export PDF/CSV. Nessun costo nascosto.
+              </p>
+            </div>
+
+            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">
+                I miei dati bancari sono al sicuro?
+              </h3>
+              <p className="text-gray-600">
+                Sì, al 100%. Non chiediamo mai le credenziali bancarie. Analizzi tu stesso gli estratti conto scaricati dalla tua banca. 
+                Tutti i dati sono criptati, ospitati in Europa (GDPR compliant) e puoi eliminarli in qualsiasi momento con un click.
+              </p>
+            </div>
+
+            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">
+                Quali abbonamenti può trovare BillKiller?
+              </h3>
+              <p className="text-gray-600">
+                BillKiller riconosce automaticamente Netflix, Spotify, Amazon Prime, Disney+, Apple Music, Adobe, Microsoft 365, 
+                palestre, telefonia mobile e centinaia di altri servizi. Se un abbonamento si ripete mensilmente o annualmente, lo troviamo.
+              </p>
+            </div>
+
+            <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">
+                Posso cancellare gli abbonamenti da BillKiller?
+              </h3>
+              <p className="text-gray-600">
+                BillKiller ti mostra tutti i tuoi abbonamenti e quanto spendi, ma la cancellazione va fatta direttamente sul sito del servizio. 
+                Ti forniamo link diretti e istruzioni per disdire velocemente ogni abbonamento che non vuoi più.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="relative bg-gray-50/50 border-t border-gray-200 py-8 sm:py-12">
         <div className="container mx-auto px-4 sm:px-6">
