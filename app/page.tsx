@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/button'
 import { CheckCircle, Upload, Mail, TrendingDown, Shield, Sparkles, Zap, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import BillKillerLogo from '@/components/logo'
+import { useRouter } from 'next/navigation'
 
 export default function HomePage() {
+  const router = useRouter()
   return (
     <div className="min-h-screen bg-white text-gray-800 relative overflow-hidden">
       {/* Background Gradient */}
@@ -59,9 +61,7 @@ export default function HomePage() {
           <Button 
             size="lg" 
             className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 rounded-full shadow-2xl shadow-amber-500/30 transform hover:scale-105 transition-transform text-white"
-            onClick={() => {
-              document.getElementById('signup-section')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-            }}
+            onClick={() => router.push('/auth/signup')}
           >
             Scopri quanto stai sprecando
           </Button>
