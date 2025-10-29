@@ -54,8 +54,8 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative container mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center flex flex-col items-center">
-        <div className="inline-block mb-4 sm:mb-6 group">
+      <section className="relative container mx-auto px-4 sm:px-6 pt-14 pb-8 sm:py-24 text-center flex flex-col items-center">
+        <div className="hidden sm:inline-block mb-4 sm:mb-6 group">
           <div className="px-2 py-1 rounded-full bg-gradient-to-r from-amber-100 to-orange-100 border border-amber-300 shadow-md transition-all group-hover:shadow-lg group-hover:scale-105">
             <p className="text-xs text-gray-600 font-semibold">
               💸 Scopri dove vanno davvero i tuoi soldi ogni mese.
@@ -63,7 +63,7 @@ export default function HomePage() {
           </div>
         </div>
         
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-4 sm:mb-6 leading-tight text-gray-900">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-5 sm:mb-6 leading-tight text-gray-900">
           Tieni traccia dei tuoi abbonamenti.
           <br />
           <span className="bg-gradient-to-r from-amber-500 to-orange-500 bg-clip-text text-transparent">
@@ -71,7 +71,7 @@ export default function HomePage() {
           </span>
         </h1>
         
-        <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-12 max-w-3xl mx-auto">
+        <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-12 max-w-3xl mx-auto">
           Carica il tuo estratto conto e lascia che BillKiller trovi tutti i tuoi abbonamenti ricorrenti.
           Nessun accesso bancario richiesto.
         </p>
@@ -86,24 +86,26 @@ export default function HomePage() {
           </Button>
         </div>
         
-        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 mt-12 sm:mt-16 text-xs sm:text-sm text-gray-600">
+        <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 mt-5 sm:mt-16 text-xs sm:text-sm text-gray-600">
           <div className="flex items-center gap-2">
-            <Shield className="w-4 h-4 text-green-500" />
+            <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
             <span>GDPR & Privacy-first</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-green-500" />
+            <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
             <span>Hosting 100% Europeo</span>
           </div>
           <div className="flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-green-500" />
+            <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-green-500" />
             <span>Nessun accesso bancario</span>
           </div>
         </div>
-        <p className="text-center text-xs sm:text-sm text-gray-500 mt-4 px-4">
+        <p className="text-center text-xs text-gray-600 mt-2 px-4">
           🔒 Analizziamo solo il file che carichi. Nessun dato personale viene condiviso o salvato oltre 30 giorni.
         </p>
       </section>
+
+      <hr class="mx-auto mt-6 mb-4 w-1/2 border-t border-gray-200 opacity-50" />
 
       {/* How it works */}
       <section className="relative container mx-auto px-4 sm:px-6 py-4 sm:py-8">

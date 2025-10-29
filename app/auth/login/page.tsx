@@ -29,7 +29,7 @@ export default function LoginPage() {
 
       if (error) throw error
 
-      window.location.href = '/app/dashboard'
+      router.push('/app/dashboard')
     } catch (error: any) {
       setError(error.message)
       setLoading(false)
@@ -40,7 +40,7 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`
+        redirectTo: `${window.location.origin}/app/dashboard`
       }
     })
     if (error) setError(error.message)
