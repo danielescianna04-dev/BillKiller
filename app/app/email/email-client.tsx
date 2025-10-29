@@ -75,7 +75,7 @@ export default function EmailPageClient({
       {/* Email Providers Grid */}
       <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
         {/* Gmail Card */}
-        <Card className={`hover:shadow-xl transition-all duration-300 ${gmailConnected ? 'border-green-300 bg-gradient-to-br from-green-50 to-emerald-50' : 'border-gray-200 bg-gradient-to-br from-white to-gray-50 hover:scale-[1.02]'}`}>
+        <Card className="hover:shadow-xl transition-all duration-300 border-gray-200 bg-gradient-to-br from-white to-gray-50 hover:scale-[1.02]">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -154,7 +154,7 @@ export default function EmailPageClient({
         </Card>
 
         {/* Outlook Card */}
-        <Card className={`hover:shadow-xl transition-all duration-300 ${outlookConnected ? 'border-green-300 bg-gradient-to-br from-green-50 to-emerald-50' : 'border-gray-200 bg-gradient-to-br from-white to-gray-50 hover:scale-[1.02]'}`}>
+        <Card className="hover:shadow-xl transition-all duration-300 border-gray-200 bg-gradient-to-br from-white to-gray-50 hover:scale-[1.02]">
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center gap-3">
