@@ -194,9 +194,8 @@ function parseRevolutDate(str: string): string | null {
     'gen': '01', 'feb': '02', 'mar': '03', 'apr': '04',
     'mag': '05', 'giu': '06', 'lug': '07', 'ago': '08',
     'set': '09', 'ott': '10', 'nov': '11', 'dic': '12',
-    'jan': '01', 'feb': '02', 'mar': '03', 'apr': '04',
-    'may': '05', 'jun': '06', 'jul': '07', 'aug': '08',
-    'sep': '09', 'oct': '10', 'nov': '11', 'dec': '12'
+    'jan': '01', 'may': '05', 'jun': '06', 'jul': '07', 
+    'aug': '08', 'sep': '09', 'oct': '10', 'dec': '12'
   }
   
   const match = str.match(/(\d{1,2})\s+(\w{3})\s+(\d{4})/)
