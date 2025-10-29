@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatCurrency } from '@/lib/utils'
 import { Calendar, CreditCard, Mail, CheckCircle, TrendingUp, Sparkles, ArrowRight, TrendingDown } from 'lucide-react'
 import ExportButton from './export-button'
-import { getAlternative } from '@/lib/alternatives'
 
 interface Subscription {
   id: string
@@ -83,8 +82,6 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
       
       <div className="grid grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
         {subscriptions.map((sub) => {
-          const alternative = getAlternative(sub.merchant_canonical, sub.monthly_amount)
-          
           return (
           <Card 
             key={sub.id}
@@ -134,27 +131,6 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
                   </div>
                 )}
               </div>
-
-              {alternative && (
-                <div className="mt-2 p-2 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg">
-                  <div className="flex items-center gap-1 mb-1">
-                    <TrendingDown className="w-3 h-3 text-green-600 flex-shrink-0" />
-                    <span className="text-[10px] sm:text-xs font-semibold text-green-700">Risparmia {alternative.savings}%</span>
-                  </div>
-                  <div className="text-[9px] sm:text-[10px] text-gray-700 mb-1">{alternative.name}</div>
-                  <div className="text-[8px] sm:text-[9px] text-gray-500 mb-1 italic">Verifica se hai bundle inclusi</div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs sm:text-sm font-bold text-green-600">{formatCurrency(alternative.price)}/mese</span>
-                    <a 
-                      href={alternative.url}
-                      className="text-[9px] sm:text-[10px] font-semibold text-green-600 hover:text-green-700 flex items-center gap-0.5"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      Scopri <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                    </a>
-                  </div>
-                </div>
-              )}
 
               <div className="mt-auto pt-2 sm:pt-3 md:pt-4 border-t border-gray-100 text-center">
                 <a href="#" className="text-[10px] sm:text-xs md:text-sm font-semibold text-green-600 group-hover:text-green-500 inline-flex items-center gap-1">
