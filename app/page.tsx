@@ -56,8 +56,8 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative container mx-auto px-4 sm:px-6 py-16 sm:py-24 text-center flex flex-col items-center">
         <div className="inline-block mb-4 sm:mb-6">
-          <div className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-200 shadow-lg">
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-800 font-medium">
+          <div className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 shadow-sm">
+            <p className="text-sm sm:text-base text-gray-700 font-medium">
               💸 Scopri dove vanno davvero i tuoi soldi ogni mese.
             </p>
           </div>
