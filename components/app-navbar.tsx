@@ -6,7 +6,7 @@ import { User } from '@supabase/supabase-js'
 import { LogOut, Settings, Upload, Mail, Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import BillKillerLogo from './logo'
 
 interface AppNavbarProps {
@@ -17,14 +17,25 @@ export default function AppNavbar({ user }: AppNavbarProps) {
   const router = useRouter()
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
     window.location.href = '/'
   }
 
+  const navigate = (href: string) => {
+    startTransition(() => {
+      router.push(href)
+      setIsOpen(false)
+    })
+  }
+
   return (
     <>
+      {isPending && (
+        <div className="fixed top-0 left-0 right-0 h-1 bg-blue-500 animate-pulse z-50" />
+      )}
       <nav className="bg-white border-b border-gray-200">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-16">
