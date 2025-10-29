@@ -105,7 +105,7 @@ export default function HomePage() {
         </p>
       </section>
 
-      <hr class="mx-auto mt-6 mb-4 w-1/2 border-t border-gray-200 opacity-50" />
+      <hr className="mx-auto mt-6 mb-4 w-1/2 border-t border-gray-200 opacity-50" />
 
       {/* How it works */}
       <section className="relative container mx-auto px-4 sm:px-6 py-4 sm:py-8">
