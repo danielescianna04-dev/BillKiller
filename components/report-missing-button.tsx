@@ -102,7 +102,7 @@ export default function ReportMissingButton({ statementId }: { statementId: stri
                 rows={3}
               />
               <p className="text-xs text-gray-500 mt-2">
-                Ti invieremo l'estratto conto per analizzarlo e migliorare il sistema
+                Invieremo l'estratto conto al nostro team per analizzarlo e migliorare il rilevamento
               </p>
             </div>
 
