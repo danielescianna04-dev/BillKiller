@@ -98,6 +98,7 @@ export default function EmailPageClient({
           <CardContent className="space-y-4">
             {gmailConnected ? (
               <>
+                <div className="h-6"></div>
                 <div className="bg-white rounded-xl p-4 space-y-3 shadow-sm border border-green-100">
                   <div className="flex items-center gap-3 text-sm text-gray-700">
                     <div className="p-1.5 bg-green-100 rounded-lg">
@@ -177,6 +178,7 @@ export default function EmailPageClient({
           <CardContent className="space-y-4">
             {outlookConnected ? (
               <>
+                <div className="h-6"></div>
                 <div className="bg-white rounded-xl p-4 space-y-3 shadow-sm border border-green-100">
                   <div className="flex items-center gap-3 text-sm text-gray-700">
                     <div className="p-1.5 bg-green-100 rounded-lg">
