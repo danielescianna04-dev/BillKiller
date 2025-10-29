@@ -57,24 +57,24 @@ export default async function EmailPage() {
                 Il collegamento email è disponibile solo per gli utenti Premium
               </p>
             </div>
-            <div className="bg-white/50 rounded-xl p-6 space-y-3 text-left">
-              <div className="flex items-center gap-3">
+            <div className="bg-white rounded-xl p-6 space-y-3 text-left shadow-sm">
+              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
                 <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
                 <span className="text-sm">Scansione automatica Gmail e Outlook</span>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
                 <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
                 <span className="text-sm">Trova ricevute e notifiche di rinnovo</span>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
                 <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
                 <span className="text-sm">Abbonamenti illimitati</span>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
                 <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
                 <span className="text-sm">Grafici e trend dettagliati</span>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
                 <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
                 <span className="text-sm">Export CSV/PDF</span>
               </div>

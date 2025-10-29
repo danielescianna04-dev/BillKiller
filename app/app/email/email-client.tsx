@@ -48,7 +48,7 @@ export default function EmailPageClient({
     <div className="max-w-4xl mx-auto space-y-6 px-4 sm:px-0">
       {/* Header */}
       <div className="text-center sm:text-left">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-2 bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
           Collega la tua Email
         </h1>
         <p className="text-sm sm:text-base text-gray-600">
@@ -57,13 +57,13 @@ export default function EmailPageClient({
       </div>
 
       {/* Privacy Banner */}
-      <Card className="border-green-200 bg-gradient-to-r from-green-50 to-emerald-50 shadow-md">
+      <Card className="border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 shadow-md">
         <CardContent className="p-4 sm:p-6">
           <div className="flex items-start gap-3">
-            <div className="p-2 bg-green-100 rounded-lg flex-shrink-0">
-              <Shield className="w-5 h-5 text-green-600" />
+            <div className="p-2 bg-amber-100 rounded-lg flex-shrink-0">
+              <Shield className="w-5 h-5 text-amber-600" />
             </div>
-            <div className="text-xs sm:text-sm text-green-900">
+            <div className="text-xs sm:text-sm text-amber-900">
               <strong className="block mb-1">🔒 Privacy garantita</strong>
               Accesso solo lettura. Cerchiamo solo ricevute di abbonamenti. 
               Non leggiamo email personali e puoi disconnettere in qualsiasi momento.
@@ -79,8 +79,8 @@ export default function EmailPageClient({
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="p-2 bg-red-100 rounded-lg">
-                  <Mail className="w-5 h-5 text-red-500" />
+                <div className="p-2 bg-amber-100 rounded-lg">
+                  <Mail className="w-5 h-5 text-amber-500" />
                 </div>
                 <span className="text-lg">Gmail</span>
               </div>
@@ -101,7 +101,7 @@ export default function EmailPageClient({
                     <span>Scansione automatica attiva</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <Search className="w-4 h-4 text-blue-600" />
+                    <Search className="w-4 h-4 text-amber-600" />
                     <span>Cerca ricevute in tempo reale</span>
                   </div>
                 </div>
@@ -109,7 +109,7 @@ export default function EmailPageClient({
                   onClick={() => disconnectEmail('gmail')} 
                   disabled={disconnecting === 'gmail'}
                   variant="outline"
-                  className="w-full border-red-200 hover:bg-red-50 hover:border-red-300"
+                  className="w-full border-gray-300 hover:bg-gray-50 hover:border-gray-400"
                 >
                   {disconnecting === 'gmail' ? 'Disconnessione...' : 'Disconnetti Gmail'}
                 </Button>
@@ -136,7 +136,7 @@ export default function EmailPageClient({
                 <Button 
                   onClick={connectGmail} 
                   disabled={connecting}
-                  className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 shadow-md"
+                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-md"
                 >
                   <Mail className="w-4 h-4 mr-2" />
                   Collega Gmail
@@ -151,8 +151,8 @@ export default function EmailPageClient({
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Mail className="w-5 h-5 text-blue-500" />
+                <div className="p-2 bg-orange-100 rounded-lg">
+                  <Mail className="w-5 h-5 text-orange-500" />
                 </div>
                 <span className="text-lg">Outlook</span>
               </div>
@@ -173,7 +173,7 @@ export default function EmailPageClient({
                     <span>Scansione automatica attiva</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <Search className="w-4 h-4 text-blue-600" />
+                    <Search className="w-4 h-4 text-orange-600" />
                     <span>Cerca ricevute in tempo reale</span>
                   </div>
                 </div>
@@ -181,7 +181,7 @@ export default function EmailPageClient({
                   onClick={() => disconnectEmail('outlook')} 
                   disabled={disconnecting === 'outlook'}
                   variant="outline"
-                  className="w-full border-blue-200 hover:bg-blue-50 hover:border-blue-300"
+                  className="w-full border-gray-300 hover:bg-gray-50 hover:border-gray-400"
                 >
                   {disconnecting === 'outlook' ? 'Disconnessione...' : 'Disconnetti Outlook'}
                 </Button>
@@ -208,7 +208,7 @@ export default function EmailPageClient({
                 <Button 
                   onClick={connectOutlook} 
                   disabled={connecting}
-                  className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 shadow-md"
+                  className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 shadow-md"
                 >
                   <Mail className="w-4 h-4 mr-2" />
                   Collega Outlook
@@ -235,7 +235,7 @@ export default function EmailPageClient({
       <Card className="border-gray-200 bg-gradient-to-br from-gray-50 to-white">
         <CardHeader>
           <CardTitle className="text-base sm:text-lg flex items-center gap-2">
-            <Search className="w-5 h-5 text-blue-600" />
+            <Search className="w-5 h-5 text-amber-600" />
             Cosa cerchiamo nelle tue email
           </CardTitle>
         </CardHeader>
