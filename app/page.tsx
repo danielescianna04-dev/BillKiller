@@ -5,11 +5,18 @@ import { CheckCircle, Upload, Mail, TrendingDown, Shield, Sparkles, Zap, ArrowRi
 import Link from 'next/link'
 import BillKillerLogo from '@/components/logo'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export default function HomePage() {
   const router = useRouter()
+  const [isNavigating, setIsNavigating] = useState(false)
+
+  const handleNavigate = () => {
+    setIsNavigating(true)
+    setTimeout(() => router.push('/auth/signup'), 300)
+  }
   return (
-    <div className="min-h-screen bg-white text-gray-800 relative overflow-hidden">
+    <div className={`min-h-screen bg-white text-gray-800 relative overflow-hidden transition-opacity duration-300 ${isNavigating ? 'opacity-0' : 'opacity-100'}`}>
       {/* Background Gradient */}
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white via-white to-amber-100" />
       
@@ -61,7 +68,7 @@ export default function HomePage() {
           <Button 
             size="lg" 
             className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 rounded-full shadow-2xl shadow-amber-500/30 transform hover:scale-105 transition-transform text-white"
-            onClick={() => router.push('/auth/signup')}
+            onClick={handleNavigate}
           >
             Scopri quanto stai sprecando
           </Button>
