@@ -25,7 +25,7 @@ export default function HomePage() {
           <Link href="/auth/login">
             <Button variant="ghost" className="text-sm sm:text-base hover:bg-amber-100/50 hover:text-gray-900 px-3 sm:px-4">Accedi</Button>
           </Link>
-          <Link href="/auth/signup">
+          <Link href="/auth/signup" id="signup-section">
             <Button className="text-sm sm:text-base bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-full shadow-lg shadow-amber-500/20 transition-all transform hover:scale-105 px-3 sm:px-4 py-2 sm:py-2.5">
               Inizia Gratis <ArrowRight className="hidden sm:inline w-4 h-4 ml-2" />
             </Button>
@@ -54,11 +54,15 @@ export default function HomePage() {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center w-full px-4 sm:px-0">
-          <Link href="/auth/signup" className="w-full sm:w-auto">
-            <Button size="lg" className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 rounded-full shadow-2xl shadow-amber-500/30 transform hover:scale-105 transition-transform text-white">
-              Scopri quanto stai sprecando
-            </Button>
-          </Link>
+          <Button 
+            size="lg" 
+            className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 rounded-full shadow-2xl shadow-amber-500/30 transform hover:scale-105 transition-transform text-white"
+            onClick={() => {
+              document.getElementById('signup-section')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            }}
+          >
+            Scopri quanto stai sprecando
+          </Button>
           <Button variant="outline" size="lg" className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 bg-white/50 border-gray-300 hover:bg-white/80 rounded-full text-gray-800">
             Guarda la Demo
           </Button>
