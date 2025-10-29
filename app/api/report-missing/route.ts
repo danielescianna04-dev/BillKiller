@@ -29,9 +29,27 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Source not found' }, { status: 404 })
     }
 
-    // Construct file path from user_id and label
-    const filePath = `${user.id}/${source.label}`
     const fileName = source.label
+
+    // List files in user folder to find the one with matching label
+    const { data: files, error: listError } = await supabase.storage
+      .from('statements')
+      .list(user.id)
+
+    console.log('Files in folder:', files?.map(f => f.name))
+
+    if (!files || files.length === 0) {
+      return NextResponse.json({ error: 'No files found in storage' }, { status: 404 })
+    }
+
+    // Find file that ends with the label
+    const matchingFile = files.find(f => f.name.endsWith(source.label))
+
+    if (!matchingFile) {
+      return NextResponse.json({ error: 'File not found in storage' }, { status: 404 })
+    }
+
+    const filePath = `${user.id}/${matchingFile.name}`
 
     console.log('Downloading file:', filePath)
 
@@ -43,7 +61,7 @@ export async function POST(req: NextRequest) {
     console.log('Download result:', { fileData: !!fileData, downloadError })
 
     if (!fileData) {
-      return NextResponse.json({ error: 'File not found in storage' }, { status: 404 })
+      return NextResponse.json({ error: 'File download failed' }, { status: 404 })
     }
 
     if (!fileData) {
