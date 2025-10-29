@@ -81,9 +81,6 @@ export default function HomePage() {
           >
             Scopri quanto stai sprecando
           </Button>
-          <Button variant="outline" size="lg" className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 bg-white/50 border-gray-300 hover:bg-white/80 rounded-full text-gray-800">
-            Guarda la Demo
-          </Button>
         </div>
         
         <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 mt-12 sm:mt-16 text-xs sm:text-sm text-gray-600">
