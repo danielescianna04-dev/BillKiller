@@ -86,10 +86,16 @@ export async function parsePDF(buffer: Buffer): Promise<Transaction[]> {
           }
         } else if (isCreditAgricole) {
           // Credit Agricole format: "DD.MM.YY DD.MM.YY AMOUNT DESCRIPTION"
-          const regex = /(\d{2}\.\d{2}\.\d{2})\s+\d{2}\.\d{2}\.\d{2}\s+([\d,]+)\s+(.+?)(?=\d{2}\.\d{2}\.\d{2}|$)/g
-          let match
+          // Also handles: "DD.MM.YY DD.MM.YY * AMOUNT DESCRIPTION" (with asterisk)
+          const regex1 = /(\d{2}\.\d{2}\.\d{2})\s+\d{2}\.\d{2}\.\d{2}\s+([\d,]+)\s+(.+?)(?=\d{2}\.\d{2}\.\d{2}|$)/g
+          const regex2 = /(\d{2}\.\d{2}\.\d{2})\s+\d{2}\.\d{2}\.\d{2}\s+\*\s+([\d,]+)\s+(.+?)(?=\d{2}\.\d{2}\.\d{2}|$)/g
           
-          while ((match = regex.exec(fullText)) !== null) {
+          // Try both patterns
+          const regexes = [regex1, regex2]
+          
+          for (const regex of regexes) {
+            let match
+            while ((match = regex.exec(fullText)) !== null) {
             const date = parseCreditAgricoleDate(match[1])
             const amount = parseFloat(match[2].replace(',', '.'))
             let description = match[3].trim()
@@ -113,6 +119,7 @@ export async function parsePDF(buffer: Buffer): Promise<Transaction[]> {
                 raw_merchant: extractMerchant(description)
               })
             }
+          }
           }
         } else {
           // Enhanced generic parser for Italian banks
