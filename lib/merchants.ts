@@ -45,6 +45,10 @@ const MERCHANT_MAP: Record<string, string> = {
 export function normalizeMerchant(raw: string): string {
   const upper = raw.toUpperCase()
   
+  // Check for common bank fees/charges
+  if (upper.includes('CANONE') && upper.includes('CARTA')) return 'canone-carta'
+  if (upper.includes('SOTTOSC')) return 'sottoscrizione'
+  
   // Check for Apple Pay / Google Pay / POS first
   if (upper.includes('APPLE PAY') || upper.includes('APPLEPAY')) return 'unknown-applepay'
   if (upper.includes('GOOGLE PAY') || upper.includes('GOOGLEPAY') || upper.includes('G PAY')) return 'unknown-googlepay'
@@ -69,6 +73,8 @@ export function getMerchantTitle(canonical: string): string {
     'unknown-applepay': 'Abbonamento Apple Pay',
     'unknown-googlepay': 'Abbonamento Google Pay',
     'unknown-pos': 'Abbonamento POS',
+    'canone-carta': 'Canone Carta',
+    'sottoscrizione': 'Sottoscrizione',
     'netflix': 'Netflix',
     'spotify': 'Spotify',
     'amazon-prime': 'Amazon Prime',
