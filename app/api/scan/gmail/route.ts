@@ -125,6 +125,11 @@ export async function POST(req: NextRequest) {
       // Skip promotional emails without amount
       if (!amount) continue
       
+      // Skip promotional/marketing emails
+      const marketingKeywords = ['ritorna', 'torna', 'scopri', 'spendi', 'inizia a guardare', 'benvenuto', 'buon', 'ricordi', 'passati', 'vuoi guardare']
+      const isMarketing = marketingKeywords.some(keyword => subject.toLowerCase().includes(keyword))
+      if (isMarketing) continue
+      
       // Skip promotional emails (free trials, €0 offers)
       const isPromo = subject.toLowerCase().includes('€0') || 
                       subject.toLowerCase().includes('gratis') || 
@@ -170,12 +175,33 @@ export async function POST(req: NextRequest) {
 }
 
 function extractMerchantFromEmail(from: string, subject: string): string | null {
-  const fromMatch = from.match(/@([^.]+)/)
-  if (fromMatch) return fromMatch[1]
-  
-  const merchants = ['netflix', 'spotify', 'apple', 'google', 'microsoft', 'adobe']
-  for (const m of merchants) {
-    if (subject.toLowerCase().includes(m)) return m
+  // Extract domain from email
+  const emailMatch = from.match(/@([\w.-]+\.\w+)/i)
+  if (emailMatch) {
+    const domain = emailMatch[1].toLowerCase()
+    
+    // Extract main brand from domain
+    // e.g., email.playstation.com -> playstation
+    // e.g., account.netflix.com -> netflix
+    // e.g., mailer.netflix.com -> netflix
+    const parts = domain.split('.')
+    if (parts.length >= 2) {
+      // Get second-to-last part (brand name)
+      const brand = parts[parts.length - 2]
+      
+      // Skip generic domains
+      if (!['email', 'mailer', 'account', 'noreply', 'no-reply', 'info'].includes(brand)) {
+        return brand
+      }
+      
+      // If generic, try to find brand in subject
+      const knownBrands = ['netflix', 'spotify', 'apple', 'google', 'microsoft', 'adobe', 'playstation', 'amazon', 'disney', 'hbo', 'dazn', 'sky', 'tim', 'vodafone', 'wind', 'iliad']
+      for (const merchant of knownBrands) {
+        if (domain.includes(merchant) || subject.toLowerCase().includes(merchant)) {
+          return merchant
+        }
+      }
+    }
   }
   
   return null
