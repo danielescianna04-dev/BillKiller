@@ -330,6 +330,7 @@ export function detectSubscriptions(transactions: Transaction[]): Subscription[]
         confidence,
         first_seen: recurringTxs[0].occurred_at,
         last_seen: recurringTxs[recurringTxs.length - 1].occurred_at,
+        status: daysSinceLastPayment > 60 ? 'cancelled' : 'active',
         is_installment: isInstallment,
         installments_total: installmentsTotal,
         installments_paid: installmentsPaid,

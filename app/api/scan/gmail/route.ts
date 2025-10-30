@@ -199,7 +199,7 @@ export async function POST(req: NextRequest) {
               confidence: sub.confidence,
               first_seen: sub.first_seen,
               last_seen: sub.last_seen,
-              status: 'active'
+              status: sub.status || 'active'
             }, {
               onConflict: 'user_id,merchant_canonical'
             })
