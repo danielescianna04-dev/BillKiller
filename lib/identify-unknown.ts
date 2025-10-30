@@ -45,7 +45,7 @@ export async function identifyUnknownSubscriptions(
     // Method #1: Match by date + amount with email transactions
     const emailMatch = await matchByEmailTransaction(userId, sub, supabase)
     if (emailMatch) {
-      await updateSubscription(sub.id, emailMatch, supabase)
+      await updateSubscription(sub.id, emailMatch, supabase, 'email')
       identified++
       methods.push('email')
       console.log(`  ✅ Identified via email: ${emailMatch}`)
@@ -55,7 +55,7 @@ export async function identifyUnknownSubscriptions(
     // Method #2: Analyze PDF description for merchant hints
     const descriptionMatch = await matchByDescription(userId, sub, supabase)
     if (descriptionMatch) {
-      await updateSubscription(sub.id, descriptionMatch, supabase)
+      await updateSubscription(sub.id, descriptionMatch, supabase, 'description')
       identified++
       methods.push('description')
       console.log(`  ✅ Identified via description: ${descriptionMatch}`)
@@ -167,7 +167,8 @@ async function matchByDescription(
 async function updateSubscription(
   subscriptionId: string,
   newMerchant: string,
-  supabase: any
+  supabase: any,
+  method: 'email' | 'description'
 ) {
   const { getMerchantTitle } = await import('./merchants')
   
@@ -175,7 +176,8 @@ async function updateSubscription(
     .from('subscriptions')
     .update({
       merchant_canonical: newMerchant,
-      title: getMerchantTitle(newMerchant)
+      title: getMerchantTitle(newMerchant),
+      meta: { identification_method: method }
     })
     .eq('id', subscriptionId)
 }

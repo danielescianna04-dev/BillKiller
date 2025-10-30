@@ -147,22 +147,29 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
                 )}
               </div>
 
-              <div className="mt-auto pt-2 sm:pt-3 md:pt-4 border-t border-gray-100 text-center">
+              <div className="mt-auto pt-2 sm:pt-3 md:pt-4 border-t border-gray-100">
                 {isUnknown ? (
-                  <a 
-                    href="/app/email"
-                    className="text-[10px] sm:text-xs md:text-sm font-semibold text-amber-600 hover:text-amber-700 inline-flex items-center gap-1"
-                  >
-                    <Mail className="w-3 h-3 sm:w-4 sm:h-4" />
-                    Collega email
-                  </a>
+                  <div className="space-y-2">
+                    <p className="text-[9px] sm:text-[10px] text-amber-700 text-center px-2">
+                      Contatta la tua banca per informazioni aggiuntive
+                    </p>
+                    <a 
+                      href="/app/email"
+                      className="text-[10px] sm:text-xs md:text-sm font-semibold text-amber-600 hover:text-amber-700 inline-flex items-center gap-1 justify-center w-full"
+                    >
+                      <Mail className="w-3 h-3 sm:w-4 sm:h-4" />
+                      Collega email
+                    </a>
+                  </div>
                 ) : (
-                  <button 
-                    onClick={() => setSelectedSubscription({ id: sub.id, title: sub.title })}
-                    className="text-[10px] sm:text-xs md:text-sm font-semibold text-green-600 group-hover:text-green-500 inline-flex items-center gap-1"
-                  >
-                    Dettagli <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 transform transition-transform group-hover:translate-x-1"/>
-                  </button>
+                  <div className="text-center">
+                    <button 
+                      onClick={() => setSelectedSubscription({ id: sub.id, title: sub.title })}
+                      className="text-[10px] sm:text-xs md:text-sm font-semibold text-green-600 group-hover:text-green-500 inline-flex items-center gap-1"
+                    >
+                      Dettagli <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 transform transition-transform group-hover:translate-x-1"/>
+                    </button>
+                  </div>
                 )}
               </div>
             </CardContent>
