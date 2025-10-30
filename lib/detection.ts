@@ -100,6 +100,7 @@ export function detectSubscriptions(transactions: Transaction[]): Subscription[]
   const blacklist = [
     'cliente', 'transfer', 'accredita', 'prelievo', 'conversione', 'commissione',
     'klarna', 'scalapay', 'paypal', 'satispay', 'revolut',
+    'sottoscrizione', 'pac', // Investment plans, not subscriptions
     // Generic places (not subscriptions)
     'bar', 'tabaccheria', 'conad', 'coop', 'iper', 'lidl', 'famila', 'pam',
     'macelleria', 'farmacia', 'pasticceria', 'pizzeria', 'rosticceria',
