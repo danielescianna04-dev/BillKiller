@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatCurrency } from '@/lib/utils'
 import { Calendar, CreditCard, Mail, CheckCircle, TrendingUp, Sparkles, ArrowRight, TrendingDown } from 'lucide-react'
 import ExportButton from './export-button'
+import SubscriptionDetailsDialog from './subscription-details-dialog'
+import { useState } from 'react'
 
 interface Subscription {
   id: string
@@ -32,6 +34,8 @@ interface SubscriptionsListProps {
 }
 
 export default function SubscriptionsList({ subscriptions, isPremium, title = "I Tuoi Abbonamenti" }: SubscriptionsListProps) {
+  const [selectedSubscription, setSelectedSubscription] = useState<{ id: string; title: string } | null>(null)
+  
   const getPeriodicityLabel = (periodicity: string) => {
     const labels = {
       monthly: 'Mese',
@@ -133,15 +137,27 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
               </div>
 
               <div className="mt-auto pt-2 sm:pt-3 md:pt-4 border-t border-gray-100 text-center">
-                <a href="#" className="text-[10px] sm:text-xs md:text-sm font-semibold text-green-600 group-hover:text-green-500 inline-flex items-center gap-1">
+                <button 
+                  onClick={() => setSelectedSubscription({ id: sub.id, title: sub.title })}
+                  className="text-[10px] sm:text-xs md:text-sm font-semibold text-green-600 group-hover:text-green-500 inline-flex items-center gap-1"
+                >
                   Dettagli <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 transform transition-transform group-hover:translate-x-1"/>
-                </a>
+                </button>
               </div>
             </CardContent>
           </Card>
         )
         })}
       </div>
+      
+      {selectedSubscription && (
+        <SubscriptionDetailsDialog
+          subscriptionId={selectedSubscription.id}
+          title={selectedSubscription.title}
+          open={!!selectedSubscription}
+          onOpenChange={(open) => !open && setSelectedSubscription(null)}
+        />
+      )}
     </div>
   )
 }
