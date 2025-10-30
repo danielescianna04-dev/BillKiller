@@ -81,11 +81,6 @@ export default async function DashboardPage() {
     s.merchant_canonical.includes('unknown-')
   )
   
-  // Remove unknown subscriptions from active list (show only in alert)
-  const knownActiveSubscriptions = activeSubscriptions.filter(s => 
-    !s.merchant_canonical.includes('unknown-')
-  )
-  
   // Split installment plans into active and completed
   const activeInstallmentPlans = installmentPlans?.filter((plan) => !plan.meta?.is_completed) || []
   const completedInstallmentPlans = installmentPlans?.filter((plan) => plan.meta?.is_completed) || []
@@ -99,12 +94,12 @@ export default async function DashboardPage() {
     cancelledSubscriptions: cancelledSubscriptions.length
   })
 
-  const totalMonthly = knownActiveSubscriptions?.reduce((sum, sub) => sum + sub.monthly_amount, 0) || 0
+  const totalMonthly = activeSubscriptions?.reduce((sum, sub) => sum + sub.monthly_amount, 0) || 0
   const totalYearly = totalMonthly * 12
 
   // Limit to 3 for free users
-  const displayActive = isPremium ? knownActiveSubscriptions : knownActiveSubscriptions?.slice(0, 3)
-  const hiddenCount = knownActiveSubscriptions ? knownActiveSubscriptions.length - (displayActive?.length || 0) : 0
+  const displayActive = isPremium ? activeSubscriptions : activeSubscriptions?.slice(0, 3)
+  const hiddenCount = activeSubscriptions ? activeSubscriptions.length - (displayActive?.length || 0) : 0
 
   return (
     <AnimatedWrapper>
@@ -120,10 +115,10 @@ export default async function DashboardPage() {
             </div>
           </CardHeader>
           <CardContent className="p-3 pt-0 sm:p-6 sm:pt-0">
-            <div className={`text-lg sm:text-3xl font-bold text-gray-900 ${knownActiveSubscriptions.length === 0 ? 'blur-sm' : ''}`}>{formatCurrency(totalMonthly)}</div>
+            <div className={`text-lg sm:text-3xl font-bold text-gray-900 ${activeSubscriptions.length === 0 ? 'blur-sm' : ''}`}>{formatCurrency(totalMonthly)}</div>
             <p className="text-[10px] sm:text-xs text-gray-500 mt-1 flex items-center gap-1">
               <CheckCircle className="h-2 w-2 sm:h-3 sm:w-3" />
-              {knownActiveSubscriptions?.length || 0} attivi
+              {activeSubscriptions?.length || 0} attivi
             </p>
           </CardContent>
         </Card>
@@ -245,35 +240,6 @@ export default async function DashboardPage() {
             </Card>
           ) : (
             <>
-              {/* Alert for unknown subscriptions */}
-              {unknownSubscriptions.length > 0 && (
-                <Card className="border-amber-300 bg-gradient-to-r from-amber-50 to-orange-50 shadow-md">
-                  <CardContent className="pt-6">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 bg-amber-100 rounded-lg flex-shrink-0">
-                        <AlertCircle className="w-5 h-5 text-amber-600" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 mb-2">
-                          Abbonamenti non identificati rilevati
-                        </h3>
-                        <p className="text-sm text-gray-700 mb-3">
-                          Abbiamo rilevato {unknownSubscriptions.length} abbonamento{unknownSubscriptions.length > 1 ? 'i' : ''} ricorrente{unknownSubscriptions.length > 1 ? 'i' : ''} (
-                          {unknownSubscriptions.map(s => `€${s.amount.toFixed(2)}`).join(', ')}
-                          ) ma non siamo riusciti a identificare {unknownSubscriptions.length > 1 ? 'i servizi' : 'il servizio'}. Probabilmente {unknownSubscriptions.length > 1 ? 'sono pagati' : 'è pagato'} con Apple Pay o Google Pay.
-                        </p>
-                        <Link href="/app/email">
-                          <Button className="bg-amber-600 hover:bg-amber-700">
-                            <Mail className="w-4 h-4 mr-2" />
-                            Collega email per identificarli
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-              
               {activeSubscriptions.length > 0 && (
                 <>
                   <SubscriptionsList 

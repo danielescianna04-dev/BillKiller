@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatCurrency } from '@/lib/utils'
-import { Calendar, CreditCard, Mail, CheckCircle, TrendingUp, Sparkles, ArrowRight, TrendingDown } from 'lucide-react'
+import { Calendar, CreditCard, Mail, CheckCircle, TrendingUp, Sparkles, ArrowRight, TrendingDown, AlertCircle } from 'lucide-react'
 import ExportButton from './export-button'
 import SubscriptionDetailsDialog from './subscription-details-dialog'
 import { useState } from 'react'
@@ -86,12 +86,23 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
       
       <div className="grid grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
         {subscriptions.map((sub) => {
+          const isUnknown = sub.merchant_canonical.includes('unknown-')
           return (
           <Card 
             key={sub.id}
-            className="group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 ease-in-out border-gray-200/80 hover:border-green-400 flex flex-col"
+            className={`group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 ease-in-out flex flex-col ${
+              isUnknown 
+                ? 'border-amber-300 bg-gradient-to-br from-amber-50 to-orange-50 hover:border-amber-400' 
+                : 'border-gray-200/80 hover:border-green-400'
+            }`}
           >
             <CardContent className="p-3 sm:p-4 md:p-6 flex flex-col flex-1">
+              {isUnknown && (
+                <div className="mb-2 flex items-center gap-1.5 text-amber-700">
+                  <AlertCircle className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                  <span className="text-[10px] sm:text-xs font-medium">Non identificato</span>
+                </div>
+              )}
               <div className="flex justify-between items-start gap-2">
                 <div className="space-y-0.5 sm:space-y-1 flex-1 min-w-0">
                   <h3 className="font-bold text-xs sm:text-sm md:text-base lg:text-lg text-gray-900 truncate">{sub.title}</h3>
@@ -137,12 +148,22 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
               </div>
 
               <div className="mt-auto pt-2 sm:pt-3 md:pt-4 border-t border-gray-100 text-center">
-                <button 
-                  onClick={() => setSelectedSubscription({ id: sub.id, title: sub.title })}
-                  className="text-[10px] sm:text-xs md:text-sm font-semibold text-green-600 group-hover:text-green-500 inline-flex items-center gap-1"
-                >
-                  Dettagli <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 transform transition-transform group-hover:translate-x-1"/>
-                </button>
+                {isUnknown ? (
+                  <a 
+                    href="/app/email"
+                    className="text-[10px] sm:text-xs md:text-sm font-semibold text-amber-600 hover:text-amber-700 inline-flex items-center gap-1"
+                  >
+                    <Mail className="w-3 h-3 sm:w-4 sm:h-4" />
+                    Collega email
+                  </a>
+                ) : (
+                  <button 
+                    onClick={() => setSelectedSubscription({ id: sub.id, title: sub.title })}
+                    className="text-[10px] sm:text-xs md:text-sm font-semibold text-green-600 group-hover:text-green-500 inline-flex items-center gap-1"
+                  >
+                    Dettagli <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 transform transition-transform group-hover:translate-x-1"/>
+                  </button>
+                )}
               </div>
             </CardContent>
           </Card>
