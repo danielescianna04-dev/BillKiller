@@ -332,7 +332,8 @@ export default async function DashboardPage() {
                     </div>
                   ))
                 )}
-          </Card>
+              </CardContent>
+            </Card>
           )}
         </div>
         
