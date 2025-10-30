@@ -60,7 +60,7 @@ export default function PrezziPage() {
                 </div>
               </div>
               <Button variant="outline" className="w-full mt-6" asChild>
-                <a href="/auth/login">Inizia Gratis</a>
+                <a href="/app/dashboard">Continua con Free</a>
               </Button>
             </CardContent>
           </Card>
