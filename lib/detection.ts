@@ -116,8 +116,14 @@ export function detectSubscriptions(transactions: Transaction[]): Subscription[]
   
   // Group by merchant
   const groups = transactions.reduce((acc, t) => {
-    if (!acc[t.merchant_canonical]) acc[t.merchant_canonical] = []
-    acc[t.merchant_canonical].push(t)
+    // For unknown payments (Apple Pay, Google Pay, POS), group by merchant + amount
+    // This allows detecting multiple subscriptions paid with the same method
+    const key = t.merchant_canonical.startsWith('unknown-') 
+      ? `${t.merchant_canonical}-${Math.abs(t.amount).toFixed(2)}`
+      : t.merchant_canonical
+    
+    if (!acc[key]) acc[key] = []
+    acc[key].push(t)
     return acc
   }, {} as Record<string, Transaction[]>)
 
@@ -307,8 +313,13 @@ export function detectSubscriptions(transactions: Transaction[]): Subscription[]
       
       console.log(`  ✅ ADDED as ${isInstallment ? 'installment plan' : 'subscription'}! (last amount: €${lastAmount.toFixed(2)})`)
       
+      // Extract original merchant_canonical (remove amount suffix for unknown-*)
+      const originalMerchant = merchant.match(/^(unknown-[a-z]+)-[\d.]+$/)
+        ? merchant.substring(0, merchant.lastIndexOf('-'))  // "unknown-pos-5.99" → "unknown-pos"
+        : merchant
+      
       subscriptions.push({
-        merchant_canonical: merchant,
+        merchant_canonical: originalMerchant,
         amount: lastAmount,
         periodicity,
         confidence,
