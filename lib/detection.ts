@@ -122,6 +122,10 @@ export function detectSubscriptions(transactions: Transaction[]): Subscription[]
       ? `${t.merchant_canonical}-${Math.abs(t.amount).toFixed(2)}`
       : t.merchant_canonical
     
+    if (t.merchant_canonical.startsWith('unknown-')) {
+      console.log(`  Grouping: ${t.merchant_canonical} €${t.amount} → key: ${key}`)
+    }
+    
     if (!acc[key]) acc[key] = []
     acc[key].push(t)
     return acc
