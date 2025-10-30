@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
+import { getMerchantTitle } from '@/lib/merchants'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -167,6 +168,45 @@ export async function POST(req: NextRequest) {
     }
 
     console.log(`Gmail scan complete: ${found} transactions found`)
+    
+    // Run detection on all user transactions
+    if (found > 0) {
+      const { detectSubscriptions } = await import('@/lib/detection')
+      const { data: allTransactions } = await supabase
+        .from('transactions')
+        .select('*')
+        .eq('user_id', userId)
+        .order('occurred_at', { ascending: true })
+      
+      if (allTransactions && allTransactions.length > 0) {
+        const detected = detectSubscriptions(allTransactions)
+        console.log(`Detection: found ${detected.length} subscriptions`)
+        
+        // Insert/update subscriptions
+        for (const sub of detected) {
+          const merchantKey = sub.merchant_canonical.startsWith('unknown-')
+            ? `${sub.merchant_canonical}-${sub.amount.toFixed(2)}`
+            : sub.merchant_canonical
+          
+          await supabase
+            .from('subscriptions')
+            .upsert({
+              user_id: userId,
+              merchant_canonical: merchantKey,
+              title: getMerchantTitle(sub.merchant_canonical),
+              periodicity: sub.periodicity,
+              amount: sub.amount,
+              confidence: sub.confidence,
+              first_seen: sub.first_seen,
+              last_seen: sub.last_seen,
+              status: 'active'
+            }, {
+              onConflict: 'user_id,merchant_canonical'
+            })
+        }
+      }
+    }
+    
     return NextResponse.json({ found })
   } catch (error: any) {
     console.error('Gmail scan error:', error)
