@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
           ? '/api/scan/gmail' 
           : '/api/scan/outlook'
         
-        const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}${endpoint}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL?.trim() || 'https://www.billkiller.it'}${endpoint}`, {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json',
