@@ -17,7 +17,7 @@ interface UnknownSubscription {
 
 export async function identifyUnknownSubscriptions(
   userId: string,
-  supabase: ReturnType<typeof createClient>
+  supabase: any
 ) {
   console.log('\n🔍 Identifying unknown subscriptions...')
 
@@ -72,7 +72,7 @@ export async function identifyUnknownSubscriptions(
 async function matchByEmailTransaction(
   userId: string,
   sub: UnknownSubscription,
-  supabase: ReturnType<typeof createClient>
+  supabase: any
 ): Promise<string | null> {
   // Get unknown transactions
   const baseMerchant = sub.merchant_canonical.split('-').slice(0, 2).join('-') // "unknown-pos-5.99" -> "unknown-pos"
@@ -122,7 +122,7 @@ async function matchByEmailTransaction(
 async function matchByDescription(
   userId: string,
   sub: UnknownSubscription,
-  supabase: ReturnType<typeof createClient>
+  supabase: any
 ): Promise<string | null> {
   const baseMerchant = sub.merchant_canonical.split('-').slice(0, 2).join('-')
   
@@ -163,7 +163,7 @@ async function matchByDescription(
 async function updateSubscription(
   subscriptionId: string,
   newMerchant: string,
-  supabase: ReturnType<typeof createClient>
+  supabase: any
 ) {
   const { getMerchantTitle } = await import('./merchants')
   
