@@ -11,7 +11,10 @@ export async function GET(req: NextRequest) {
   const code = searchParams.get('code')
   const userId = searchParams.get('state')
 
+  console.log('Gmail callback received:', { code: !!code, userId })
+
   if (!code || !userId) {
+    console.error('Missing code or userId')
     return NextResponse.redirect(new URL('/app/email?error=invalid', req.url))
   }
 
