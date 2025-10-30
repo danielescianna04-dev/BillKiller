@@ -264,18 +264,21 @@ function extractMerchant(description: string): string {
     return pressoMatch[1]
   }
   
-  // Remove common prefixes and get first word
+  // Remove common prefixes
   let cleaned = description
     .replace(/^(PAGAMENTO|ADDEBITO|BONIFICO|CARTA|POS|ALLE ORE \d{2}:\d{2} MEDIANTE LA CARTA.*?PRESSO)\s+/i, '')
     .trim()
   
-  // Get first meaningful word
+  // Get first 2-3 meaningful words for better context
   const words = cleaned.split(/[\s-]+/)
+  const meaningful: string[] = []
+  
   for (const word of words) {
-    if (word.length > 2 && !/^\d+$/.test(word) && !/^(il|la|di|da|per|con)$/i.test(word)) {
-      return word
+    if (word.length > 2 && !/^\d+$/.test(word) && !/^(il|la|di|da|per|con|del|dal|periodo)$/i.test(word)) {
+      meaningful.push(word)
+      if (meaningful.length >= 3) break
     }
   }
   
-  return cleaned.substring(0, 50) // Fallback
+  return meaningful.length > 0 ? meaningful.join(' ') : cleaned.substring(0, 50)
 }
