@@ -25,12 +25,23 @@ export async function GET(
   }
 
   // Get transactions for this subscription
+  // For unknown-* subscriptions, merchant_canonical has amount suffix, but transactions don't
+  const baseMerchant = subscription.merchant_canonical.startsWith('unknown-')
+    ? subscription.merchant_canonical.split('-').slice(0, 2).join('-') // "unknown-pos-1.99" -> "unknown-pos"
+    : subscription.merchant_canonical
+
   const { data: transactions } = await supabase
     .from('transactions')
-    .select('id, occurred_at, amount, description, source')
+    .select('id, occurred_at, amount, description')
     .eq('user_id', user.id)
-    .eq('merchant_canonical', subscription.merchant_canonical)
+    .eq('merchant_canonical', baseMerchant)
     .order('occurred_at', { ascending: false })
 
-  return NextResponse.json({ transactions: transactions || [] })
+  // Add source field based on statement_id presence
+  const enrichedTransactions = transactions?.map(tx => ({
+    ...tx,
+    source: 'statement' // Default to statement for now
+  })) || []
+
+  return NextResponse.json({ transactions: enrichedTransactions })
 }
