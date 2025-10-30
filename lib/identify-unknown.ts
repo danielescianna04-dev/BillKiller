@@ -95,8 +95,7 @@ async function matchByEmailTransaction(
     const maxDate = new Date(txDate)
     maxDate.setDate(maxDate.getDate() + 3) // +3 days
 
-    const minAmount = Math.abs(unknownTx.amount) - 0.10
-    const maxAmount = Math.abs(unknownTx.amount) + 0.10
+    const exactAmount = Math.abs(unknownTx.amount) // Match esatto, nessuna tolleranza
 
     const { data: emailTxs } = await supabase
       .from('transactions')
@@ -111,8 +110,7 @@ async function matchByEmailTransaction(
       .not('merchant_canonical', 'in', '("sottoscrizione","revolut","paypal","vinted","pagopa")')
       .gte('occurred_at', minDate.toISOString().split('T')[0])
       .lte('occurred_at', maxDate.toISOString().split('T')[0])
-      .gte('amount', -maxAmount)
-      .lte('amount', -minAmount)
+      .eq('amount', -exactAmount) // Match esatto
 
     if (emailTxs && emailTxs.length > 0) {
       // Found match! Return the merchant
