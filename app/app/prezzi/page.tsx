@@ -28,7 +28,7 @@ export default function PrezziPage() {
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
                   <Check className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Fino a 5 abbonamenti</span>
+                  <span className="text-gray-700">Fino a 3 abbonamenti</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <Check className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
@@ -43,8 +43,8 @@ export default function PrezziPage() {
                   <span className="text-gray-700">Totali mensili e annuali</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <Check className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-700">Hub offerte alternative</span>
+                  <X className="h-5 w-5 text-gray-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-gray-400">Hub offerte alternative</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <X className="h-5 w-5 text-gray-400 flex-shrink-0 mt-0.5" />
@@ -143,11 +143,11 @@ export default function PrezziPage() {
             
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Cosa succede se supero i 5 abbonamenti con il piano Free?</CardTitle>
+                <CardTitle className="text-lg">Cosa succede se supero i 3 abbonamenti con il piano Free?</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600">
-                  Potrai vedere solo i primi 5 abbonamenti. Per sbloccare tutti gli abbonamenti rilevati, 
+                  Potrai vedere solo i primi 3 abbonamenti. Per sbloccare tutti gli abbonamenti rilevati, 
                   passa al piano Premium.
                 </p>
               </CardContent>
