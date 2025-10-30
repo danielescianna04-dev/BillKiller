@@ -26,17 +26,24 @@ export async function parsePDF(buffer: Buffer): Promise<Transaction[]> {
         if (pdfData.Pages) {
           pdfData.Pages.forEach((page: any, index: number) => {
             console.log(`Processing page ${index + 1}`)
+            let pageText = ''
             if (page.Texts) {
               page.Texts.forEach((text: any) => {
                 if (text.R) {
                   text.R.forEach((r: any) => {
                     if (r.T) {
-                      fullText += decodeURIComponent(r.T) + ' '
+                      const decoded = decodeURIComponent(r.T)
+                      fullText += decoded + ' '
+                      pageText += decoded + ' '
                     }
                   })
                 }
               })
               fullText += '\n'
+            }
+            // Log sample from page 2 and 3
+            if (index === 1 || index === 2) {
+              console.log(`Page ${index + 1} sample:`, pageText.substring(0, 500))
             }
           })
         }
