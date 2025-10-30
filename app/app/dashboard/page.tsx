@@ -78,7 +78,7 @@ export default async function DashboardPage() {
   
   // Check for unknown subscriptions (Apple Pay, Google Pay, POS)
   const unknownSubscriptions = activeSubscriptions.filter(s => 
-    s.merchant_canonical.startsWith('unknown-')
+    s.merchant_canonical.includes('unknown-')
   )
   
   // Split installment plans into active and completed
