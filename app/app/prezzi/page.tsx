@@ -59,9 +59,11 @@ export default function PrezziPage() {
                   <span className="text-gray-400">Collegamento email illimitato</span>
                 </div>
               </div>
-              <Button variant="outline" className="w-full mt-6" asChild>
-                <a href="/app/dashboard">Continua con Free</a>
-              </Button>
+              <a href="/app/dashboard" className="block">
+                <Button variant="outline" className="w-full mt-6">
+                  Continua con Free
+                </Button>
+              </a>
             </CardContent>
           </Card>
 
@@ -114,9 +116,11 @@ export default function PrezziPage() {
                   <span className="text-gray-900 font-medium">Collegamento email illimitato</span>
                 </div>
               </div>
-              <Button className="w-full mt-6 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600" asChild>
-                <a href="/api/checkout">Passa a Premium</a>
-              </Button>
+              <a href="/api/checkout" className="block">
+                <Button className="w-full mt-6 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600">
+                  Passa a Premium
+                </Button>
+              </a>
             </CardContent>
           </Card>
         </div>
