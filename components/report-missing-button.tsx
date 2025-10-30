@@ -52,8 +52,8 @@ export default function ReportMissingButton({ statementId }: { statementId: stri
   }
 
   return (
-    <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 shadow-md">
-      <CardContent className="pt-6 space-y-4">
+    <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 shadow-md max-w-md mx-auto">
+      <CardContent className="pt-6 space-y-4 px-4 sm:px-6">
         {success ? (
           <div className="flex flex-col items-center gap-4 py-4">
             <div className="p-3 bg-green-100 rounded-full">
@@ -76,16 +76,16 @@ export default function ReportMissingButton({ statementId }: { statementId: stri
           </div>
         ) : (
           <>
-            <div className="flex items-start justify-between">
-              <div className="flex items-start gap-3">
-                <div className="p-2 bg-amber-100 rounded-lg">
-                  <AlertCircle className="w-5 h-5 text-amber-600" />
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex items-start gap-2 sm:gap-3 flex-1 min-w-0">
+                <div className="p-1.5 sm:p-2 bg-amber-100 rounded-lg flex-shrink-0">
+                  <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600" />
                 </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 mb-1">
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-sm sm:text-base text-gray-900 mb-1">
                     Segnala abbonamenti mancanti
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-xs sm:text-sm text-gray-600">
                     Aiutaci a migliorare il rilevamento
                   </p>
                 </div>
@@ -94,9 +94,9 @@ export default function ReportMissingButton({ statementId }: { statementId: stri
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsOpen(false)}
-                className="h-8 w-8 p-0 hover:bg-amber-100"
+                className="h-7 w-7 sm:h-8 sm:w-8 p-0 hover:bg-amber-100 flex-shrink-0"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3 h-3 sm:w-4 sm:h-4" />
               </Button>
             </div>
 
@@ -122,20 +122,22 @@ export default function ReportMissingButton({ statementId }: { statementId: stri
               </div>
             )}
 
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <Button
                 onClick={handleSubmit}
                 disabled={loading || !message.trim()}
-                className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-md"
+                className="flex-1 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-md text-sm"
+                size="sm"
               >
-                <Send className="w-4 h-4 mr-2" />
+                <Send className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
                 {loading ? 'Invio...' : 'Invia segnalazione'}
               </Button>
               <Button
                 variant="outline"
                 onClick={() => setIsOpen(false)}
                 disabled={loading}
-                className="border-gray-300 hover:bg-gray-50"
+                className="border-gray-300 hover:bg-gray-50 text-sm"
+                size="sm"
               >
                 Annulla
               </Button>
