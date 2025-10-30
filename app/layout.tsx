@@ -69,7 +69,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="it">
+    <html lang="it" className="overflow-x-hidden">
       <head>
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
@@ -87,7 +87,7 @@ export default function RootLayout({
           </>
         )}
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} overflow-x-hidden`}>{children}</body>
     </html>
   )
 }

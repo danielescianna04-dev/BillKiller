@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent horizontal scroll and bounce on mobile */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+body {
+  overscroll-behavior-x: none;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Mobile optimizations */
 @media (max-width: 640px) {
   /* 1) Titolo: meno "altezza ottica" */
