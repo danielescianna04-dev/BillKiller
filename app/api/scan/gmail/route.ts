@@ -204,6 +204,10 @@ export async function POST(req: NextRequest) {
               onConflict: 'user_id,merchant_canonical'
             })
         }
+        
+        // Try to identify unknown subscriptions
+        const { identifyUnknownSubscriptions } = await import('@/lib/identify-unknown')
+        await identifyUnknownSubscriptions(userId, supabase)
       }
     }
     
