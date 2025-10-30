@@ -58,6 +58,9 @@ export default function AppNavbar({ user }: AppNavbarProps) {
                 <Link href="/app/offerte" prefetch={true} className="text-gray-700 hover:text-blue-600">
                   Offerte
                 </Link>
+                <Link href="/app/prezzi" prefetch={true} className="text-gray-700 hover:text-blue-600">
+                  Prezzi
+                </Link>
               </div>
             </div>
 
@@ -109,6 +112,9 @@ export default function AppNavbar({ user }: AppNavbarProps) {
                 </Link>
                 <Link href="/app/offerte" prefetch={true} className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/offerte' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
                   <span>Offerte</span>
+                </Link>
+                <Link href="/app/prezzi" prefetch={true} className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/prezzi' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
+                  <span>Prezzi</span>
                 </Link>
                 
                 <div className="border-t pt-4 mt-4">
