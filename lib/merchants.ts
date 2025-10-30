@@ -50,6 +50,8 @@ export function normalizeMerchant(raw: string): string {
   if (upper.includes('GOOGLE PAY') || upper.includes('GOOGLEPAY') || upper.includes('G PAY')) return 'unknown-googlepay'
   if (upper.includes('POS CARTA')) return 'unknown-pos'
   if (upper.includes('POS') && (upper.includes('DEBIT') || upper.includes('VISA') || upper.includes('MASTERCARD'))) return 'unknown-pos'
+  // Generic POS without merchant info
+  if (upper === 'POS' || upper.startsWith('POS ')) return 'unknown-pos'
   
   // Check merchant map
   for (const [key, value] of Object.entries(MERCHANT_MAP)) {
