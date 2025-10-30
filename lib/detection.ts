@@ -12,6 +12,7 @@ interface Subscription {
   confidence: number
   first_seen: string
   last_seen: string
+  status?: 'active' | 'cancelled'
   is_installment?: boolean
   installments_total?: number | null
   installments_paid?: number | null
