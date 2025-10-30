@@ -332,39 +332,7 @@ export default async function DashboardPage() {
                     </div>
                   ))
                 )}
-              </CardContent>
-            </Card>
-          )}
-          
-          {/* Cancelled Subscriptions */}
-          {cancelledSubscriptions && cancelledSubscriptions.length > 0 && (
-            <Card className="border-red-100 bg-gradient-to-br from-red-50/30 to-gray-50">
-              <CardHeader>
-                <CardTitle className="text-gray-600 flex items-center gap-2 text-base sm:text-lg">
-                  <XCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-500" />
-                  ⏸️ Abbonamenti Scaduti
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {cancelledSubscriptions.slice(0, 5).map((sub) => (
-                  <div key={sub.id} className="p-3 bg-white border border-red-100 rounded-lg hover:shadow-sm transition-shadow">
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 opacity-70">
-                      <div className="flex-1">
-                        <div className="font-medium text-sm sm:text-base text-gray-700 flex items-center gap-2">
-                          <XCircle className="h-4 w-4 text-red-500 flex-shrink-0" />
-                          <span className="break-words">{sub.title}</span>
-                        </div>
-                        <div className="text-xs text-gray-500 mt-1 flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          Ultimo: {new Date(sub.last_seen).toLocaleDateString('it-IT')}
-                        </div>
-                      </div>
-                      <div className="text-sm text-gray-600 font-medium">{formatCurrency(sub.monthly_amount)}/mese</div>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+          </Card>
           )}
         </div>
         
