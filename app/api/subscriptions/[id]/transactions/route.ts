@@ -24,18 +24,33 @@ export async function GET(
     return NextResponse.json({ error: 'Not found' }, { status: 404 })
   }
 
+  console.log('Subscription merchant_canonical:', subscription.merchant_canonical)
+
   // Get transactions for this subscription
   // For unknown-* subscriptions, merchant_canonical has amount suffix, but transactions don't
   const baseMerchant = subscription.merchant_canonical.startsWith('unknown-')
     ? subscription.merchant_canonical.split('-').slice(0, 2).join('-') // "unknown-pos-1.99" -> "unknown-pos"
     : subscription.merchant_canonical
 
+  console.log('Searching transactions with merchant:', baseMerchant)
+
   const { data: transactions } = await supabase
     .from('transactions')
-    .select('id, occurred_at, amount, description')
+    .select('id, occurred_at, amount, description, merchant_canonical')
     .eq('user_id', user.id)
     .eq('merchant_canonical', baseMerchant)
     .order('occurred_at', { ascending: false })
+
+  console.log('Found transactions:', transactions?.length || 0)
+  
+  // Also check what merchants exist for this user
+  const { data: allMerchants } = await supabase
+    .from('transactions')
+    .select('merchant_canonical')
+    .eq('user_id', user.id)
+    .limit(50)
+  
+  console.log('All merchants in DB:', [...new Set(allMerchants?.map(t => t.merchant_canonical))])
 
   // Add source field based on statement_id presence
   const enrichedTransactions = transactions?.map(tx => ({
