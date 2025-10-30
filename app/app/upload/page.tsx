@@ -241,11 +241,13 @@ export default function UploadPage() {
               className="hidden"
               id="file-upload"
             />
-            <label htmlFor="file-upload">
-              <Button variant="outline" className="cursor-pointer">
-                Seleziona file
-              </Button>
-            </label>
+            <Button 
+              variant="outline" 
+              onClick={() => document.getElementById('file-upload')?.click()}
+              type="button"
+            >
+              Seleziona file
+            </Button>
           </div>
 
           {file && (
@@ -290,6 +292,28 @@ export default function UploadPage() {
                   )}
                 </div>
               </div>
+            </div>
+          )}
+
+          {(uploading || processing) && (
+            <div className="mt-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-gray-700">
+                  {uploading ? 'Caricamento file...' : 'Elaborazione in corso...'}
+                </span>
+                <span className="text-sm text-gray-500">
+                  {uploading ? '50%' : '75%'}
+                </span>
+              </div>
+              <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transition-all duration-500 animate-pulse"
+                  style={{ width: uploading ? '50%' : '75%' }}
+                />
+              </div>
+              <p className="text-xs text-gray-500 mt-2">
+                {uploading ? 'Upload del file in corso...' : 'Analisi transazioni e rilevamento abbonamenti...'}
+              </p>
             </div>
           )}
 
