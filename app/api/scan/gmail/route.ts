@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
       if (!amount) continue
       
       // Skip promotional/marketing emails
-      const marketingKeywords = ['ritorna', 'torna', 'scopri', 'spendi', 'inizia a guardare', 'benvenuto', 'buon', 'ricordi', 'passati', 'vuoi guardare']
+      const marketingKeywords = ['ritorna', 'torna', 'scopri', 'spendi', 'inizia a guardare', 'benvenuto', 'buon', 'ricordi', 'passati', 'vuoi guardare', 'solo €', 'solo 7', 'solo 9', 'solo 10', 'abbiamo piani', 'a partire da']
       const isMarketing = marketingKeywords.some(keyword => subject.toLowerCase().includes(keyword))
       if (isMarketing) continue
       
