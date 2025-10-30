@@ -173,8 +173,8 @@ export function detectSubscriptions(transactions: Transaction[]): Subscription[]
     // Use the largest group (most recurring pattern)
     const largestGroup = amountGroups.sort((a, b) => b.length - a.length)[0]
     
-    if (largestGroup.length < 3) {
-      console.log(`  ❌ Skipped: need at least 3 recurring transactions (found ${largestGroup.length})`)
+    if (largestGroup.length < 2) {
+      console.log(`  ❌ Skipped: need at least 2 recurring transactions (found ${largestGroup.length})`)
       continue
     }
     
