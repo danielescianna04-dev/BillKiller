@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase'
-import puppeteer from 'puppeteer'
+import PDFDocument from 'pdfkit'
 
 export async function GET(req: NextRequest) {
   const supabase = await createServerSupabaseClient()
@@ -53,7 +53,10 @@ export async function GET(req: NextRequest) {
       'Abbonamento,Periodicità,Importo,Importo Mensile,Prima Rilevazione,Ultima Rilevazione',
       ...subscriptions.map(s => 
         `"${s.title}",${s.periodicity},€${s.amount.toFixed(2)},€${s.monthly_amount.toFixed(2)},${s.first_seen},${s.last_seen}`
-      )
+      ),
+      '',
+      `"Totale Mensile",,,,€${totalMonthly.toFixed(2)}`,
+      `"Totale Annuale",,,,€${totalYearly.toFixed(2)}`
     ].join('\n')
 
     return new NextResponse(csv, {
@@ -65,73 +68,75 @@ export async function GET(req: NextRequest) {
   }
 
   if (format === 'pdf') {
-    const html = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <style>
-          body { font-family: Arial, sans-serif; padding: 40px; }
-          h1 { color: #f59e0b; }
-          .summary { background: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; }
-          table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-          th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-          th { background: #f59e0b; color: white; }
-          .total { font-weight: bold; background: #fef3c7; }
-        </style>
-      </head>
-      <body>
-        <h1>BillKiller - Report Abbonamenti</h1>
-        <p>Generato il ${new Date().toLocaleDateString('it-IT')}</p>
+    const doc = new PDFDocument({ margin: 50 })
+    const chunks: Buffer[] = []
+
+    doc.on('data', (chunk) => chunks.push(chunk))
+    
+    return new Promise<NextResponse>((resolve) => {
+      doc.on('end', () => {
+        const pdfBuffer = Buffer.concat(chunks)
+        resolve(new NextResponse(pdfBuffer, {
+          headers: {
+            'Content-Type': 'application/pdf',
+            'Content-Disposition': 'attachment; filename="abbonamenti.pdf"'
+          }
+        }))
+      })
+
+      // Header
+      doc.fontSize(24).fillColor('#f59e0b').text('BillKiller', { align: 'left' })
+      doc.fontSize(16).fillColor('#000').text('Report Abbonamenti', { align: 'left' })
+      doc.fontSize(10).fillColor('#666').text(`Generato il ${new Date().toLocaleDateString('it-IT')}`, { align: 'left' })
+      doc.moveDown(2)
+
+      // Summary box
+      doc.rect(50, doc.y, 500, 100).fillAndStroke('#fef3c7', '#f59e0b')
+      doc.fillColor('#000').fontSize(12)
+      doc.text(`Spesa Mensile: €${totalMonthly.toFixed(2)}`, 70, doc.y - 80, { width: 460 })
+      doc.text(`Spesa Annuale: €${totalYearly.toFixed(2)}`, 70, doc.y + 5, { width: 460 })
+      doc.text(`Abbonamenti Attivi: ${subscriptions.length}`, 70, doc.y + 5, { width: 460 })
+      doc.moveDown(4)
+
+      // Table header
+      const tableTop = doc.y
+      doc.fontSize(10).fillColor('#fff')
+      doc.rect(50, tableTop, 500, 25).fill('#f59e0b')
+      doc.text('Abbonamento', 60, tableTop + 8, { width: 150 })
+      doc.text('Periodicità', 210, tableTop + 8, { width: 80 })
+      doc.text('Importo', 290, tableTop + 8, { width: 80 })
+      doc.text('Mensile', 370, tableTop + 8, { width: 80 })
+      doc.text('Dal', 450, tableTop + 8, { width: 90 })
+
+      // Table rows
+      let y = tableTop + 35
+      doc.fillColor('#000')
+      subscriptions.forEach((sub, i) => {
+        if (y > 700) {
+          doc.addPage()
+          y = 50
+        }
         
-        <div class="summary">
-          <h2>Riepilogo</h2>
-          <p><strong>Spesa Mensile:</strong> €${totalMonthly.toFixed(2)}</p>
-          <p><strong>Spesa Annuale:</strong> €${totalYearly.toFixed(2)}</p>
-          <p><strong>Abbonamenti Attivi:</strong> ${subscriptions.length}</p>
-        </div>
+        const bgColor = i % 2 === 0 ? '#f9fafb' : '#fff'
+        doc.rect(50, y - 5, 500, 25).fill(bgColor)
+        
+        doc.fontSize(9)
+        doc.text(sub.title.substring(0, 25), 60, y, { width: 140 })
+        doc.text(sub.periodicity, 210, y, { width: 70 })
+        doc.text(`€${sub.amount.toFixed(2)}`, 290, y, { width: 70 })
+        doc.text(`€${sub.monthly_amount.toFixed(2)}`, 370, y, { width: 70 })
+        doc.text(new Date(sub.first_seen).toLocaleDateString('it-IT'), 450, y, { width: 90 })
+        
+        y += 30
+      })
 
-        <table>
-          <thead>
-            <tr>
-              <th>Abbonamento</th>
-              <th>Periodicità</th>
-              <th>Importo</th>
-              <th>Mensile</th>
-              <th>Prima Rilevazione</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${subscriptions.map(s => `
-              <tr>
-                <td>${s.title}</td>
-                <td>${s.periodicity}</td>
-                <td>€${s.amount.toFixed(2)}</td>
-                <td>€${s.monthly_amount.toFixed(2)}</td>
-                <td>${new Date(s.first_seen).toLocaleDateString('it-IT')}</td>
-              </tr>
-            `).join('')}
-            <tr class="total">
-              <td colspan="3">Totale Mensile</td>
-              <td>€${totalMonthly.toFixed(2)}</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-      </body>
-      </html>
-    `
+      // Total row
+      doc.rect(50, y - 5, 500, 25).fill('#fef3c7')
+      doc.fontSize(10).font('Helvetica-Bold')
+      doc.text('Totale Mensile', 60, y, { width: 300 })
+      doc.text(`€${totalMonthly.toFixed(2)}`, 370, y, { width: 80 })
 
-    const browser = await puppeteer.launch({ headless: true })
-    const page = await browser.newPage()
-    await page.setContent(html)
-    const pdf = await page.pdf({ format: 'A4', printBackground: true })
-    await browser.close()
-
-    return new NextResponse(Buffer.from(pdf), {
-      headers: {
-        'Content-Type': 'application/pdf',
-        'Content-Disposition': 'attachment; filename="abbonamenti.pdf"'
-      }
+      doc.end()
     })
   }
 
