@@ -33,6 +33,9 @@ export async function POST(req: NextRequest) {
   const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
     type: 'magiclink',
     email: data.user.email!,
+    options: {
+      redirectTo: process.env.NEXT_PUBLIC_URL?.trim() || 'https://www.billkiller.it'
+    }
   })
 
   if (linkError) {
