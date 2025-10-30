@@ -133,11 +133,16 @@ export async function POST(req: NextRequest) {
 
       // Insert subscriptions
       for (const sub of detected) {
+        // For unknown payments, include amount in merchant_canonical to allow multiple subscriptions
+        const merchantKey = sub.merchant_canonical.startsWith('unknown-')
+          ? `${sub.merchant_canonical}-${sub.amount.toFixed(2)}`
+          : sub.merchant_canonical
+        
         const { error } = await supabase
           .from('subscriptions')
           .insert({
             user_id: source.user_id,
-            merchant_canonical: sub.merchant_canonical,
+            merchant_canonical: merchantKey,
             title: getMerchantTitle(sub.merchant_canonical),
             periodicity: sub.periodicity,
             amount: sub.amount,
