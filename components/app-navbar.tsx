@@ -59,10 +59,6 @@ export default function AppNavbar({ user }: AppNavbarProps) {
                   <Tag className="w-4 h-4" />
                   <span>Offerte</span>
                 </Link>
-                <Link href="/app/prezzi" prefetch={true} className="text-gray-700 hover:text-blue-600 flex items-center space-x-1">
-                  <DollarSign className="w-4 h-4" />
-                  <span>Prezzi</span>
-                </Link>
               </div>
             </div>
 
@@ -116,12 +112,12 @@ export default function AppNavbar({ user }: AppNavbarProps) {
                   <Tag className="w-5 h-5" />
                   <span>Offerte</span>
                 </Link>
-                <Link href="/app/prezzi" prefetch={true} className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/prezzi' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
-                  <DollarSign className="w-5 h-5" />
-                  <span>Prezzi</span>
-                </Link>
                 
                 <div className="border-t pt-4 mt-4">
+                  <Link href="/app/prezzi" prefetch={true} className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/prezzi' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
+                    <DollarSign className="w-5 h-5" />
+                    <span>Prezzi</span>
+                  </Link>
                   <Link href="/app/account" prefetch={true} className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/account' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
                     <Settings className="w-5 h-5" />
                     <span>Account</span>
