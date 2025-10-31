@@ -25,6 +25,7 @@ interface Subscription {
   installments_total?: number | null
   installments_paid?: number | null
   installments_remaining?: number | null
+  meta?: { identification_method?: 'email' | 'description' }
 }
 
 interface SubscriptionsListProps {
