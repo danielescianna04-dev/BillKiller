@@ -36,10 +36,28 @@ export async function identifyUnknownSubscriptions(
 
   console.log(`Found ${unknownSubs.length} unknown subscriptions`)
 
+  // Remove duplicates: keep only the most recent subscription per merchant
+  const uniqueSubs = new Map<string, any>()
+  for (const sub of unknownSubs) {
+    const existing = uniqueSubs.get(sub.merchant_canonical)
+    if (!existing || new Date(sub.created_at) > new Date(existing.created_at)) {
+      if (existing) {
+        // Delete older duplicate
+        await supabase.from('subscriptions').delete().eq('id', existing.id)
+        console.log(`  🗑️ Deleted duplicate: ${existing.merchant_canonical}`)
+      }
+      uniqueSubs.set(sub.merchant_canonical, sub)
+    } else {
+      // Delete this duplicate
+      await supabase.from('subscriptions').delete().eq('id', sub.id)
+      console.log(`  🗑️ Deleted duplicate: ${sub.merchant_canonical}`)
+    }
+  }
+
   let identified = 0
   const methods: string[] = []
 
-  for (const sub of unknownSubs) {
+  for (const sub of Array.from(uniqueSubs.values())) {
     console.log(`\nAnalyzing: ${sub.merchant_canonical} €${sub.amount}`)
 
     // Method #1: Match by date + amount with email transactions
