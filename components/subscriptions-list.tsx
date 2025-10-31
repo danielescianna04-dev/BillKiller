@@ -86,7 +86,7 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
       
       <div className="grid grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
         {subscriptions.map((sub) => {
-          const isUnknown = sub.merchant_canonical.includes('unknown-')
+          const isUnknown = sub.merchant_canonical.includes('unknown-') || sub.meta?.identification_method === 'description'
           return (
           <Card 
             key={sub.id}
