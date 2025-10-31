@@ -18,6 +18,7 @@ interface Subscription {
   installments_paid?: number | null
   installments_remaining?: number | null
   is_active?: boolean
+  meta?: { identification_method?: 'email' | 'description' }
 }
 
 interface InstallmentPlan {
