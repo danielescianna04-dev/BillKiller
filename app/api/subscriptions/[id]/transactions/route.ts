@@ -7,16 +7,16 @@ export async function GET(
 ) {
   const { id: subscriptionId } = await params
   const supabase = await createServerSupabaseClient()
-  
+
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  // Get subscription to verify ownership
+  // Get subscription to verify ownership and get details
   const { data: subscription } = await supabase
     .from('subscriptions')
-    .select('merchant_canonical, user_id')
+    .select('merchant_canonical, user_id, amount, title, first_seen, last_seen')
     .eq('id', subscriptionId)
     .single()
 
@@ -24,38 +24,70 @@ export async function GET(
     return NextResponse.json({ error: 'Not found' }, { status: 404 })
   }
 
-  console.log('Subscription merchant_canonical:', subscription.merchant_canonical)
+  console.log('Subscription:', {
+    merchant: subscription.merchant_canonical,
+    amount: subscription.amount,
+    title: subscription.title
+  })
 
-  // Get transactions for this subscription
-  // For unknown-* subscriptions, merchant_canonical has amount suffix, but transactions don't
+  // Strategy 1: Search by merchant_canonical (exact or partial match)
   const baseMerchant = subscription.merchant_canonical.startsWith('unknown-')
-    ? subscription.merchant_canonical.split('-').slice(0, 2).join('-') // "unknown-pos-1.99" -> "unknown-pos"
+    ? subscription.merchant_canonical.split('-').slice(0, 2).join('-')
     : subscription.merchant_canonical
 
-  console.log('Searching transactions with merchant:', baseMerchant)
-
-  const { data: transactions } = await supabase
+  let { data: transactions } = await supabase
     .from('transactions')
     .select('id, occurred_at, amount, description, merchant_canonical')
     .eq('user_id', user.id)
-    .eq('merchant_canonical', baseMerchant)
+    .ilike('merchant_canonical', `%${baseMerchant}%`)
     .order('occurred_at', { ascending: false })
 
-  console.log('Found transactions:', transactions?.length || 0)
-  
-  // Also check what merchants exist for this user
-  const { data: allMerchants } = await supabase
-    .from('transactions')
-    .select('merchant_canonical')
-    .eq('user_id', user.id)
-    .limit(50)
-  
-  console.log('All merchants in DB:', [...new Set(allMerchants?.map(t => t.merchant_canonical))])
+  // Strategy 2: If no results, search by similar amount (±10%)
+  if (!transactions || transactions.length === 0) {
+    const minAmount = subscription.amount * 0.9
+    const maxAmount = subscription.amount * 1.1
 
-  // Add source field based on statement_id presence
+    const { data: amountTxs } = await supabase
+      .from('transactions')
+      .select('id, occurred_at, amount, description, merchant_canonical')
+      .eq('user_id', user.id)
+      .gte('amount', -maxAmount)
+      .lte('amount', -minAmount)
+      .order('occurred_at', { ascending: false })
+
+    if (amountTxs && amountTxs.length > 0) {
+      transactions = amountTxs
+      console.log('Found by amount range:', transactions.length)
+    }
+  }
+
+  // Strategy 3: Search by title/description match
+  if (!transactions || transactions.length === 0) {
+    const titleWords = subscription.title.toLowerCase().split(/\s+/).filter(w => w.length > 2)
+
+    for (const word of titleWords) {
+      const { data: descTxs } = await supabase
+        .from('transactions')
+        .select('id, occurred_at, amount, description, merchant_canonical')
+        .eq('user_id', user.id)
+        .ilike('description', `%${word}%`)
+        .order('occurred_at', { ascending: false })
+        .limit(20)
+
+      if (descTxs && descTxs.length > 0) {
+        transactions = descTxs
+        console.log(`Found by description match "${word}":`, transactions.length)
+        break
+      }
+    }
+  }
+
+  console.log('Final transactions found:', transactions?.length || 0)
+
+  // Add source field
   const enrichedTransactions = transactions?.map(tx => ({
     ...tx,
-    source: 'statement' // Default to statement for now
+    source: 'statement'
   })) || []
 
   return NextResponse.json({ transactions: enrichedTransactions })
