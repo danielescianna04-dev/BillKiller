@@ -169,45 +169,41 @@ export async function POST(req: NextRequest) {
 
     console.log(`Gmail scan complete: ${found} transactions found`)
     
-    // Run detection on all user transactions
+    // Run AI detection on all user transactions
     if (found > 0) {
-      const { detectSubscriptions } = await import('@/lib/detection')
+      const { detectSubscriptionsWithAI } = await import('@/lib/ai-detection')
       const { data: allTransactions } = await supabase
         .from('transactions')
         .select('*')
         .eq('user_id', userId)
         .order('occurred_at', { ascending: true })
-      
+
       if (allTransactions && allTransactions.length > 0) {
-        const detected = detectSubscriptions(allTransactions)
-        console.log(`Detection: found ${detected.length} subscriptions`)
-        
+        const detected = await detectSubscriptionsWithAI(allTransactions)
+        console.log(`AI Detection: found ${detected.length} subscriptions`)
+
         // Insert/update subscriptions
         for (const sub of detected) {
           const merchantKey = sub.merchant_canonical.startsWith('unknown-')
             ? `${sub.merchant_canonical}-${sub.amount.toFixed(2)}`
             : sub.merchant_canonical
-          
+
           await supabase
             .from('subscriptions')
             .upsert({
               user_id: userId,
               merchant_canonical: merchantKey,
-              title: getMerchantTitle(sub.merchant_canonical),
+              title: sub.merchant_name || getMerchantTitle(sub.merchant_canonical),
               periodicity: sub.periodicity,
               amount: sub.amount,
               confidence: sub.confidence,
               first_seen: sub.first_seen,
               last_seen: sub.last_seen,
-              status: sub.status || 'active'
+              status: sub.status
             }, {
               onConflict: 'user_id,merchant_canonical'
             })
         }
-        
-        // Try to identify unknown subscriptions
-        const { identifyUnknownSubscriptions } = await import('@/lib/identify-unknown')
-        await identifyUnknownSubscriptions(userId, supabase)
       }
     }
     

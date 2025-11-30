@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { parseCSV } from '@/lib/parsers/csv'
-import { parsePDF } from '@/lib/parsers/pdf'
+import { parseWithAI, parseCSVWithAI } from '@/lib/ai-parser'
 import { normalizeMerchant, getMerchantTitle } from '@/lib/merchants'
-import { detectSubscriptions, detectInstallmentPlans } from '@/lib/detection'
+import { detectSubscriptionsWithAI } from '@/lib/ai-detection'
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -21,14 +20,14 @@ export async function POST(req: NextRequest) {
 
     if (downloadError) throw downloadError
 
-    // Parse file
+    // Parse file with AI
     let parsedTransactions
     if (filePath.endsWith('.pdf')) {
       const buffer = await fileData.arrayBuffer()
-      parsedTransactions = await parsePDF(Buffer.from(buffer))
+      parsedTransactions = await parseWithAI(Buffer.from(buffer))
     } else {
       const content = await fileData.text()
-      parsedTransactions = parseCSV(content)
+      parsedTransactions = await parseCSVWithAI(content)
     }
 
     // Get source to get user_id
@@ -114,84 +113,55 @@ export async function POST(req: NextRequest) {
 
     let detectedCount = 0
     if (allTxs) {
-      console.log(`Analyzing ${allTxs.length} total transactions for user`)
-      console.log('Sample transactions:', allTxs.slice(0, 3).map(t => ({ 
-        date: t.occurred_at, 
-        description: t.description, 
-        amount: t.amount 
+      console.log(`Analyzing ${allTxs.length} total transactions for user with AI`)
+      console.log('Sample transactions:', allTxs.slice(0, 3).map(t => ({
+        date: t.occurred_at,
+        description: t.description,
+        amount: t.amount
       })))
-      
-      // Detect subscriptions
-      const detected = detectSubscriptions(allTxs)
+
+      // Detect subscriptions with AI
+      const detected = await detectSubscriptionsWithAI(allTxs)
       detectedCount = detected.length
-      
-      console.log(`Detected ${detectedCount} subscriptions:`, detected.map(s => ({
+
+      console.log(`AI detected ${detectedCount} subscriptions:`, detected.map(s => ({
         merchant: s.merchant_canonical,
+        name: s.merchant_name,
         amount: s.amount,
-        periodicity: s.periodicity
+        periodicity: s.periodicity,
+        reasoning: s.reasoning
       })))
 
       // Insert subscriptions
       for (const sub of detected) {
-        // For unknown payments, include amount in merchant_canonical to allow multiple subscriptions
         const merchantKey = sub.merchant_canonical.startsWith('unknown-')
           ? `${sub.merchant_canonical}-${sub.amount.toFixed(2)}`
           : sub.merchant_canonical
-        
+
         const { error } = await supabase
           .from('subscriptions')
           .insert({
             user_id: source.user_id,
             merchant_canonical: merchantKey,
-            title: getMerchantTitle(sub.merchant_canonical),
+            title: sub.merchant_name || getMerchantTitle(sub.merchant_canonical),
             periodicity: sub.periodicity,
             amount: sub.amount,
             confidence: sub.confidence,
             first_seen: sub.first_seen,
             last_seen: sub.last_seen,
-            status: sub.is_active ? 'active' : 'cancelled'
+            status: sub.status,
+            meta: sub.is_installment ? {
+              is_installment_plan: true,
+              installments_total: sub.installments_total,
+              installments_paid: sub.installments_paid,
+              installments_remaining: sub.installments_remaining
+            } : undefined
           })
-        
+
         if (error) {
           console.error('Error inserting subscription:', error)
         } else {
-          console.log('✅ Inserted subscription:', sub.merchant_canonical)
-        }
-      }
-      
-      // Detect installment plans
-      const installmentPlans = detectInstallmentPlans(allTxs)
-      console.log(`Inserting ${installmentPlans.length} installment plans...`)
-      
-      // Insert installment plans as subscriptions with special flag
-      for (const plan of installmentPlans) {
-        const uniqueKey = `${plan.merchant_canonical}-${plan.installment_amount.toFixed(2)}`
-        const { data, error } = await supabase
-          .from('subscriptions')
-          .insert({
-            user_id: source.user_id,
-            merchant_canonical: uniqueKey,
-            title: getMerchantTitle(plan.merchant_canonical) + ' (Piano rateale)',
-            periodicity: 'monthly',
-            amount: plan.installment_amount,
-            confidence: 1.0,
-            first_seen: plan.first_payment,
-            last_seen: plan.last_payment,
-            status: 'active',
-            meta: {
-              is_installment_plan: true,
-              is_completed: plan.is_completed,
-              total_amount: plan.total_amount,
-              installments_total: plan.installments_total,
-              installments_paid: plan.installments_paid,
-              installments_remaining: plan.installments_remaining
-            }
-          })
-        
-        if (error) {
-          console.error('Error inserting installment plan:', error)
-        } else {
-          console.log('Inserted installment plan:', plan.merchant_canonical)
+          console.log('✅ Inserted subscription:', sub.merchant_canonical, '-', sub.reasoning)
         }
       }
     }
