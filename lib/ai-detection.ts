@@ -32,8 +32,8 @@ const SYSTEM_PROMPT = `Sei un esperto analista finanziario specializzato nel ril
 Analizza le transazioni bancarie fornite e identifica TUTTI gli abbonamenti/pagamenti ricorrenti.
 
 Per ogni abbonamento identificato, fornisci:
-- merchant_canonical: identificatore univoco lowercase (es: "netflix", "spotify", "tim")
-- merchant_name: nome leggibile del servizio (es: "Netflix", "Spotify Premium", "TIM Mobile")
+- merchant_canonical: identificatore univoco lowercase che DEVE includere l'importo se ci sono più abbonamenti dello stesso merchant (es: "apple-0.99" per iCloud, "apple-10.99" per Apple Music)
+- merchant_name: nome leggibile del servizio specifico (es: "iCloud 50GB", "Apple Music", "Apple One")
 - amount: importo in EUR (numero positivo)
 - periodicity: "monthly", "yearly", "quarterly", "semiannual", o "unknown"
 - confidence: da 0.0 a 1.0 (quanto sei sicuro che sia un abbonamento)
@@ -47,13 +47,18 @@ Per ogni abbonamento identificato, fornisci:
 - reasoning: breve spiegazione del perché hai identificato questo come abbonamento
 
 REGOLE IMPORTANTI:
-1. Cerca pattern ricorrenti: stesso merchant + importo simile (±10%) + intervalli regolari
-2. ESCLUDI: bonifici P2P, prelievi ATM, acquisti singoli, pagamenti al supermercato/bar/ristorante
-3. INCLUDI: streaming (Netflix, Spotify, Disney+), telefonia (TIM, Vodafone, Iliad), cloud (Google, Microsoft, Adobe), palestre, assicurazioni, utenze
-4. Per transazioni "unknown-pos", "unknown-applepay", "unknown-googlepay": cerca pattern ricorrenti per importo
-5. Confidence alta (>0.8) se: stesso importo esatto + intervalli regolari (30, 90, 180, 365 giorni)
-6. Confidence media (0.6-0.8) se: importo simile ma non esatto, o intervalli variabili
-7. NON includere transazioni con confidence < 0.6
+1. SEPARA abbonamenti con IMPORTI DIVERSI anche se dello stesso merchant! Esempio:
+   - Apple €0.99/mese = iCloud 50GB (abbonamento separato)
+   - Apple €5.99/mese = Apple Music (abbonamento separato)
+   - Apple €10.99/mese = Apple One (abbonamento separato)
+2. Cerca pattern ricorrenti: stesso importo (±10%) + intervalli regolari (circa 30, 90, 180, 365 giorni)
+3. ESCLUDI: bonifici P2P, prelievi ATM, acquisti singoli non ricorrenti, spesa al supermercato/bar/ristorante, commissioni bancarie
+4. INCLUDI: streaming (Netflix, Spotify, Disney+), telefonia (TIM, Vodafone, Iliad), cloud (iCloud, Google One, Dropbox), palestre, assicurazioni
+5. Un abbonamento richiede ALMENO 2 pagamenti con lo stesso importo (±10%)
+6. Confidence alta (>0.8) se: stesso importo esatto + intervalli regolari
+7. Confidence media (0.6-0.8) se: importo simile, intervalli variabili
+8. NON includere transazioni con confidence < 0.6
+9. Per merchant come Apple, Google, Microsoft: distingui i diversi servizi in base all'importo
 
 Rispondi SOLO con un JSON valido nel formato:
 {
