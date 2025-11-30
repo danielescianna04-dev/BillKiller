@@ -1,13 +1,25 @@
 import Groq from 'groq-sdk'
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY
-})
+let groqClient: Groq | null = null
+
+function getGroqClient(): Groq {
+  if (!groqClient) {
+    if (!process.env.GROQ_API_KEY) {
+      throw new Error('GROQ_API_KEY environment variable is required')
+    }
+    groqClient = new Groq({
+      apiKey: process.env.GROQ_API_KEY
+    })
+  }
+  return groqClient
+}
 
 export async function analyzeWithAI<T>(
   prompt: string,
   systemPrompt: string
 ): Promise<T> {
+  const groq = getGroqClient()
+
   const response = await groq.chat.completions.create({
     model: 'llama-3.1-70b-versatile',
     messages: [
@@ -24,5 +36,3 @@ export async function analyzeWithAI<T>(
 
   return JSON.parse(content) as T
 }
-
-export { groq }
