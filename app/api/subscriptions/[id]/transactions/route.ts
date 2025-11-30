@@ -63,7 +63,7 @@ export async function GET(
 
   // Strategy 3: Search by title/description match
   if (!transactions || transactions.length === 0) {
-    const titleWords = subscription.title.toLowerCase().split(/\s+/).filter(w => w.length > 2)
+    const titleWords = subscription.title.toLowerCase().split(/\s+/).filter((w: string) => w.length > 2)
 
     for (const word of titleWords) {
       const { data: descTxs } = await supabase
