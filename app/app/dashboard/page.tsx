@@ -257,6 +257,42 @@ export default async function DashboardPage() {
             </>
           )}
           
+          {/* Cancelled/Expired Subscriptions */}
+          {cancelledSubscriptions && cancelledSubscriptions.length > 0 && (
+            <Card className="border-gray-200 bg-gradient-to-br from-gray-50/50 to-slate-50/30">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                  <XCircle className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
+                  Abbonamenti Scaduti
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {cancelledSubscriptions.map((sub) => (
+                  <div key={sub.id} className="p-3 sm:p-4 border border-gray-200 rounded-lg bg-white/50 opacity-75 hover:opacity-100 transition-opacity">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
+                      <div className="flex-1">
+                        <div className="font-semibold text-sm sm:text-base text-gray-700 flex items-center gap-2">
+                          <span className="break-words">{sub.title}</span>
+                        </div>
+                        <div className="text-xs sm:text-sm text-gray-500 mt-1">
+                          {formatCurrency(sub.amount)}/{sub.periodicity === 'monthly' ? 'mese' : sub.periodicity === 'yearly' ? 'anno' : sub.periodicity}
+                        </div>
+                        <div className="text-xs text-gray-400 mt-1">
+                          Ultimo pagamento: {new Date(sub.last_seen).toLocaleDateString('it-IT')}
+                        </div>
+                      </div>
+                      <div className="text-left sm:text-right">
+                        <span className="text-xs sm:text-sm font-medium text-gray-500 bg-gray-100 px-3 py-1 rounded-full inline-block">
+                          Scaduto
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
+
           {/* Installment Plans */}
           {activeInstallmentPlans && activeInstallmentPlans.length > 0 && (
             <Card className="border-orange-200 bg-gradient-to-br from-orange-50/50 to-amber-50/30">
