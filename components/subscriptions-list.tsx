@@ -87,9 +87,17 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
       
       <div className="grid grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
         {subscriptions.map((sub) => {
+          // Merchant generici che non permettono di capire il servizio specifico
+          const genericMerchants = ['apple', 'google', 'microsoft', 'amazon']
+          const isGenericMerchant = genericMerchants.some(m =>
+            sub.merchant_canonical.toLowerCase() === m ||
+            sub.merchant_canonical.toLowerCase().startsWith(m + '-')
+          )
+
           const isUnknown = sub.merchant_canonical.includes('unknown-') ||
                            sub.meta?.identification_method === 'description' ||
-                           sub.periodicity === 'unknown'
+                           sub.periodicity === 'unknown' ||
+                           isGenericMerchant
           return (
           <Card 
             key={sub.id}
@@ -154,14 +162,16 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
                 {isUnknown ? (
                   <div className="space-y-2">
                     <p className="text-[9px] sm:text-[10px] text-amber-700 text-center px-2">
-                      Contatta la tua banca per informazioni aggiuntive
+                      {isGenericMerchant
+                        ? `Potrebbe essere ${sub.title}, iCloud, Music, o altro`
+                        : 'Contatta la tua banca per informazioni aggiuntive'}
                     </p>
-                    <a 
+                    <a
                       href="/app/email"
                       className="text-[10px] sm:text-xs md:text-sm font-semibold text-amber-600 hover:text-amber-700 inline-flex items-center gap-1 justify-center w-full"
                     >
                       <Mail className="w-3 h-3 sm:w-4 sm:h-4" />
-                      Collega email
+                      Collega email per identificare
                     </a>
                   </div>
                 ) : (
