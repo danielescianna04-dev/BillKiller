@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { CheckCircle, Upload, Mail, TrendingDown, Shield, Sparkles, Zap, ArrowRight } from 'lucide-react'
+import { CheckCircle, Upload, TrendingDown, Shield, Sparkles, Zap, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import BillKillerLogo from '@/components/logo'
 import { useRouter } from 'next/navigation'
@@ -109,8 +109,8 @@ export default function HomePage() {
 
       {/* How it works */}
       <section className="howitworks relative container mx-auto px-4 sm:px-6 py-4 sm:py-8">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 sm:mb-16 text-gray-900">Come funziona, in 3 semplici passi</h2>
-        <div className="grid md:grid-cols-3 gap-6 sm:gap-8 text-center">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 sm:mb-16 text-gray-900">Come funziona, in 2 semplici passi</h2>
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 text-center max-w-4xl mx-auto">
           <div className="bg-white/50 p-6 sm:p-8 rounded-2xl border border-gray-200/50 transform hover:scale-105 hover:border-amber-500/50 transition-all shadow-lg">
             <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 mx-auto shadow-lg shadow-amber-500/20">
               <Upload className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
@@ -121,21 +121,11 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="bg-white/50 p-6 sm:p-8 rounded-2xl border border-gray-200/50 transform hover:scale-105 hover:border-orange-500/50 transition-all shadow-lg">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 mx-auto shadow-lg shadow-orange-500/20">
-              <Mail className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gray-900">2. Collega (Opzionale)</h3>
-            <p className="text-sm sm:text-base text-gray-600">
-              Connetti la tua email per trovare ricevute e notifiche di rinnovo. Massima sicurezza, solo lettura.
-            </p>
-          </div>
-
           <div className="bg-white/50 p-6 sm:p-8 rounded-2xl border border-gray-200/50 transform hover:scale-105 hover:border-yellow-500/50 transition-all shadow-lg">
             <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-yellow-500 to-amber-600 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 mx-auto shadow-lg shadow-yellow-500/20">
               <TrendingDown className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
             </div>
-            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gray-900">3. Risparmia</h3>
+            <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gray-900">2. Risparmia</h3>
             <p className="text-sm sm:text-base text-gray-600">
               Visualizza tutti i tuoi abbonamenti, scopri quanto spendi e trova alternative più convenienti.
             </p>
@@ -161,8 +151,8 @@ export default function HomePage() {
                 Come faccio a sapere quanti abbonamenti ho?
               </h3>
               <p className="text-gray-600">
-                BillKiller analizza automaticamente i tuoi estratti conto e le email per trovare tutti gli abbonamenti attivi. 
-                Carica un estratto conto o collega la tua email Gmail/Outlook e scopri in pochi secondi quanti abbonamenti hai e quanto spendi ogni mese.
+                BillKiller analizza automaticamente i tuoi estratti conto per trovare tutti gli abbonamenti attivi.
+                Carica un estratto conto e scopri in pochi secondi quanti abbonamenti hai e quanto spendi ogni mese.
               </p>
             </div>
 
@@ -181,8 +171,8 @@ export default function HomePage() {
                 Quanto costa BillKiller?
               </h3>
               <p className="text-gray-600">
-                BillKiller è gratis per sempre fino a 5 abbonamenti. Il piano Premium costa solo €0,99/mese e include abbonamenti illimitati, 
-                collegamento email automatico, grafici dettagliati ed export PDF/CSV. Nessun costo nascosto.
+                BillKiller è gratis per sempre fino a 5 abbonamenti. Il piano Premium costa solo €0,99/mese e include abbonamenti illimitati,
+                grafici dettagliati ed export PDF/CSV. Nessun costo nascosto.
               </p>
             </div>
 

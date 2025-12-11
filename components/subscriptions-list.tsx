@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatCurrency } from '@/lib/utils'
-import { CreditCard, Mail, CheckCircle, TrendingUp, ArrowRight, AlertCircle } from 'lucide-react'
+import { CreditCard, CheckCircle, TrendingUp, ArrowRight, AlertCircle } from 'lucide-react'
 import ExportButton from './export-button'
 import SubscriptionDetailsDialog from './subscription-details-dialog'
 import { useState } from 'react'
@@ -145,15 +145,6 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
                       Carta
                     </span>
                     <span className="font-semibold text-gray-800">...{sub.payment_hint}</span>
-                  </div>
-                )}
-                {sub.email_hint && (
-                  <div className="flex items-center justify-between gap-1">
-                    <span className="text-gray-600 flex items-center gap-1 sm:gap-2">
-                      <Mail className="w-3 h-3 flex-shrink-0"/>
-                      Email
-                    </span>
-                    <span className="font-semibold text-gray-800 truncate max-w-[80px] sm:max-w-[120px]">{sub.email_hint}</span>
                   </div>
                 )}
               </div>

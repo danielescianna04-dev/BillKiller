@@ -1,7 +1,7 @@
 import { createServerSupabaseClient } from '@/lib/supabase'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatCurrency } from '@/lib/utils'
-import { TrendingUp, CreditCard, Calendar, AlertCircle, Lock, CheckCircle, XCircle, Clock, Package, Sparkles, DollarSign, Mail } from 'lucide-react'
+import { TrendingUp, CreditCard, Calendar, AlertCircle, Lock, CheckCircle, XCircle, Clock, Package, Sparkles, DollarSign } from 'lucide-react'
 import SubscriptionsList from '@/components/subscriptions-list'
 import UpgradePrompt from '@/components/upgrade-prompt'
 import SubscriptionCharts from '@/components/subscription-charts'
@@ -212,13 +212,10 @@ export default async function DashboardPage() {
                   <>
                     <CreditCard className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-4" />
                     <h3 className="text-base sm:text-lg font-semibold mb-2">Nessun abbonamento trovato</h3>
-                    <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 px-4">Carica un estratto conto o collega la tua email per iniziare</p>
+                    <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 px-4">Carica un estratto conto per iniziare</p>
                     <div className="flex flex-col sm:flex-row gap-3 justify-center px-4">
                       <Link href="/app/upload">
                         <Button className="w-full sm:w-auto">Carica estratto conto</Button>
-                      </Link>
-                      <Link href="/app/email">
-                        <Button variant="outline" className="w-full sm:w-auto">Collega email</Button>
                       </Link>
                     </div>
                   </>
@@ -350,10 +347,6 @@ export default async function DashboardPage() {
               <a href="/app/upload" className="group block p-3 sm:p-4 rounded-xl border-2 border-gray-100 hover:border-amber-300 hover:bg-amber-50/50 transition-all">
                 <div className="text-sm sm:text-base font-semibold text-gray-900 group-hover:text-amber-600 transition-colors">Carica estratto conto</div>
                 <div className="text-xs sm:text-sm text-gray-600 mt-1">Trova nuovi abbonamenti</div>
-              </a>
-              <a href="/app/email" className="group block p-3 sm:p-4 rounded-xl border-2 border-gray-100 hover:border-orange-300 hover:bg-orange-50/50 transition-all">
-                <div className="text-sm sm:text-base font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">Collega email</div>
-                <div className="text-xs sm:text-sm text-gray-600 mt-1">Trova ricevute e rinnovi</div>
               </a>
               <a href="/app/offerte" className="group block p-3 sm:p-4 rounded-xl border-2 border-gray-100 hover:border-yellow-300 hover:bg-yellow-50/50 transition-all">
                 <div className="text-sm sm:text-base font-semibold text-gray-900 group-hover:text-yellow-600 transition-colors">Scopri offerte</div>

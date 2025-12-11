@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabase-client'
 import { User } from '@supabase/supabase-js'
-import { LogOut, Settings, Upload, Mail, Menu, X, Tag, DollarSign } from 'lucide-react'
+import { LogOut, Settings, Upload, Menu, X, Tag, DollarSign } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
 import { useState, useTransition } from 'react'
@@ -50,10 +50,6 @@ export default function AppNavbar({ user }: AppNavbarProps) {
                 <Link href="/app/upload" prefetch={true} className="text-gray-700 hover:text-blue-600 flex items-center space-x-1">
                   <Upload className="w-4 h-4" />
                   <span>Upload</span>
-                </Link>
-                <Link href="/app/email" prefetch={true} className="text-gray-700 hover:text-blue-600 flex items-center space-x-1">
-                  <Mail className="w-4 h-4" />
-                  <span>Email</span>
                 </Link>
                 <Link href="/app/offerte" prefetch={true} className="text-gray-700 hover:text-blue-600 flex items-center space-x-1">
                   <Tag className="w-4 h-4" />
@@ -103,10 +99,6 @@ export default function AppNavbar({ user }: AppNavbarProps) {
                 <Link href="/app/upload" prefetch={true} className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/upload' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
                   <Upload className="w-5 h-5" />
                   <span>Upload</span>
-                </Link>
-                <Link href="/app/email" prefetch={true} className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/email' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
-                  <Mail className="w-5 h-5" />
-                  <span>Email</span>
                 </Link>
                 <Link href="/app/offerte" prefetch={true} className={`flex items-center space-x-3 py-2 hover:text-blue-600 ${pathname === '/app/offerte' ? 'text-blue-600 font-semibold bg-blue-50 px-3 rounded-lg' : 'text-gray-700'}`} onClick={() => setIsOpen(false)}>
                   <Tag className="w-5 h-5" />
