@@ -15,7 +15,6 @@ export default function UploadPage() {
   const [failedFilePath, setFailedFilePath] = useState<string | null>(null)
   const [sendingReport, setSendingReport] = useState(false)
   const [dragActive, setDragActive] = useState(false)
-  const [testingEmails, setTestingEmails] = useState(false)
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault()
@@ -176,32 +175,6 @@ export default function UploadPage() {
     }
   }
 
-  const handleTestEmails = async () => {
-    setTestingEmails(true)
-    setMessage('')
-    
-    try {
-      const { data: { session } } = await supabase.auth.getSession()
-      
-      const response = await fetch('/api/scan/trigger', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${session?.access_token}`
-        }
-      })
-      
-      const data = await response.json()
-      
-      if (!response.ok) throw new Error(data.error)
-      
-      setMessage(`✅ ${data.message}`)
-    } catch (error: any) {
-      setMessage(`❌ ${error.message}`)
-    } finally {
-      setTestingEmails(false)
-    }
-  }
-
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div>
@@ -355,25 +328,6 @@ export default function UploadPage() {
               I tuoi dati vengono elaborati in server UE e cancellati automaticamente dopo 30 giorni.
             </div>
           </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-dashed">
-        <CardHeader>
-          <CardTitle className="text-sm">📧 Scansiona Email</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-gray-600 mb-4">
-            Ricontrolla le email collegate per trovare nuove ricevute di pagamento e abbonamenti.
-          </p>
-          <Button 
-            onClick={handleTestEmails} 
-            disabled={testingEmails}
-            variant="outline"
-            size="sm"
-          >
-            {testingEmails ? 'Scansione...' : 'Scansiona email ora'}
-          </Button>
         </CardContent>
       </Card>
     </div>
