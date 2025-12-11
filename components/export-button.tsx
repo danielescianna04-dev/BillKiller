@@ -17,8 +17,18 @@ export default function ExportButton() {
         const a = document.createElement('a')
         a.href = url
         a.download = `abbonamenti.${format}`
+        document.body.appendChild(a)
         a.click()
+        document.body.removeChild(a)
+        window.URL.revokeObjectURL(url)
+      } else {
+        const error = await response.json()
+        console.error('Export error:', error)
+        alert(error.error || 'Errore durante l\'export')
       }
+    } catch (err) {
+      console.error('Export error:', err)
+      alert('Errore durante l\'export')
     } finally {
       setLoading(false)
     }

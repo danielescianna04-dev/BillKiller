@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerSupabaseClient } from '@/lib/supabase'
-import PDFDocument from 'pdfkit'
+import { jsPDF } from 'jspdf'
 
 export async function GET(req: NextRequest) {
   const supabase = await createServerSupabaseClient()
   const { data: { user } } = await supabase.auth.getUser()
-  
+
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
@@ -51,7 +51,7 @@ export async function GET(req: NextRequest) {
   if (format === 'csv') {
     const csv = [
       'Abbonamento,Periodicità,Importo,Importo Mensile,Prima Rilevazione,Ultima Rilevazione',
-      ...subscriptions.map(s => 
+      ...subscriptions.map(s =>
         `"${s.title}",${s.periodicity},€${s.amount.toFixed(2)},€${s.monthly_amount.toFixed(2)},${s.first_seen},${s.last_seen}`
       ),
       '',
@@ -68,76 +68,107 @@ export async function GET(req: NextRequest) {
   }
 
   if (format === 'pdf') {
-    const doc = new PDFDocument({ margin: 50 })
-    const chunks: Buffer[] = []
-
-    doc.on('data', (chunk) => chunks.push(chunk))
-    
-    return new Promise<NextResponse>((resolve) => {
-      doc.on('end', () => {
-        const pdfBuffer = Buffer.concat(chunks)
-        resolve(new NextResponse(pdfBuffer, {
-          headers: {
-            'Content-Type': 'application/pdf',
-            'Content-Disposition': 'attachment; filename="abbonamenti.pdf"'
-          }
-        }))
-      })
+    try {
+      const doc = new jsPDF()
+      const pageWidth = doc.internal.pageSize.getWidth()
 
       // Header
-      doc.fontSize(24).fillColor('#f59e0b').text('BillKiller', { align: 'left' })
-      doc.fontSize(16).fillColor('#000').text('Report Abbonamenti', { align: 'left' })
-      doc.fontSize(10).fillColor('#666').text(`Generato il ${new Date().toLocaleDateString('it-IT')}`, { align: 'left' })
-      doc.moveDown(2)
+      doc.setFontSize(24)
+      doc.setTextColor(245, 158, 11) // amber-500
+      doc.text('BillKiller', 20, 25)
+
+      doc.setFontSize(16)
+      doc.setTextColor(0, 0, 0)
+      doc.text('Report Abbonamenti', 20, 35)
+
+      doc.setFontSize(10)
+      doc.setTextColor(100, 100, 100)
+      doc.text(`Generato il ${new Date().toLocaleDateString('it-IT')}`, 20, 43)
 
       // Summary box
-      doc.rect(50, doc.y, 500, 100).fillAndStroke('#fef3c7', '#f59e0b')
-      doc.fillColor('#000').fontSize(12)
-      doc.text(`Spesa Mensile: €${totalMonthly.toFixed(2)}`, 70, doc.y - 80, { width: 460 })
-      doc.text(`Spesa Annuale: €${totalYearly.toFixed(2)}`, 70, doc.y + 5, { width: 460 })
-      doc.text(`Abbonamenti Attivi: ${subscriptions.length}`, 70, doc.y + 5, { width: 460 })
-      doc.moveDown(4)
+      doc.setFillColor(254, 243, 199) // amber-100
+      doc.setDrawColor(245, 158, 11) // amber-500
+      doc.roundedRect(20, 50, pageWidth - 40, 35, 3, 3, 'FD')
+
+      doc.setFontSize(12)
+      doc.setTextColor(0, 0, 0)
+      doc.text(`Spesa Mensile: €${totalMonthly.toFixed(2)}`, 30, 62)
+      doc.text(`Spesa Annuale: €${totalYearly.toFixed(2)}`, 30, 72)
+      doc.text(`Abbonamenti Attivi: ${subscriptions.length}`, 30, 82)
 
       // Table header
-      const tableTop = doc.y
-      doc.fontSize(10).fillColor('#fff')
-      doc.rect(50, tableTop, 500, 25).fill('#f59e0b')
-      doc.text('Abbonamento', 60, tableTop + 8, { width: 150 })
-      doc.text('Periodicità', 210, tableTop + 8, { width: 80 })
-      doc.text('Importo', 290, tableTop + 8, { width: 80 })
-      doc.text('Mensile', 370, tableTop + 8, { width: 80 })
-      doc.text('Dal', 450, tableTop + 8, { width: 90 })
+      const tableTop = 100
+      doc.setFillColor(245, 158, 11)
+      doc.rect(20, tableTop, pageWidth - 40, 10, 'F')
+
+      doc.setFontSize(9)
+      doc.setTextColor(255, 255, 255)
+      doc.text('Abbonamento', 25, tableTop + 7)
+      doc.text('Periodicità', 85, tableTop + 7)
+      doc.text('Importo', 120, tableTop + 7)
+      doc.text('Mensile', 150, tableTop + 7)
+      doc.text('Dal', 175, tableTop + 7)
 
       // Table rows
-      let y = tableTop + 35
-      doc.fillColor('#000')
-      subscriptions.forEach((sub, i) => {
-        if (y > 700) {
-          doc.addPage()
-          y = 50
+      let y = tableTop + 18
+      doc.setTextColor(0, 0, 0)
+
+      const getPeriodicityLabel = (p: string) => {
+        const labels: Record<string, string> = {
+          monthly: 'Mensile',
+          yearly: 'Annuale',
+          quarterly: 'Trimestrale',
+          semiannual: 'Semestrale',
+          unknown: 'Sconosciuto'
         }
-        
-        const bgColor = i % 2 === 0 ? '#f9fafb' : '#fff'
-        doc.rect(50, y - 5, 500, 25).fill(bgColor)
-        
-        doc.fontSize(9)
-        doc.text(sub.title.substring(0, 25), 60, y, { width: 140 })
-        doc.text(sub.periodicity, 210, y, { width: 70 })
-        doc.text(`€${sub.amount.toFixed(2)}`, 290, y, { width: 70 })
-        doc.text(`€${sub.monthly_amount.toFixed(2)}`, 370, y, { width: 70 })
-        doc.text(new Date(sub.first_seen).toLocaleDateString('it-IT'), 450, y, { width: 90 })
-        
-        y += 30
+        return labels[p] || p
+      }
+
+      subscriptions.forEach((sub, i) => {
+        // Check if we need a new page
+        if (y > 270) {
+          doc.addPage()
+          y = 20
+        }
+
+        // Alternating row colors
+        if (i % 2 === 0) {
+          doc.setFillColor(249, 250, 251)
+          doc.rect(20, y - 5, pageWidth - 40, 10, 'F')
+        }
+
+        doc.setFontSize(8)
+        const title = sub.title.length > 20 ? sub.title.substring(0, 20) + '...' : sub.title
+        doc.text(title, 25, y)
+        doc.text(getPeriodicityLabel(sub.periodicity), 85, y)
+        doc.text(`€${sub.amount.toFixed(2)}`, 120, y)
+        doc.text(`€${sub.monthly_amount.toFixed(2)}`, 150, y)
+        doc.text(new Date(sub.first_seen).toLocaleDateString('it-IT'), 175, y)
+
+        y += 10
       })
 
       // Total row
-      doc.rect(50, y - 5, 500, 25).fill('#fef3c7')
-      doc.fontSize(10).font('Helvetica-Bold')
-      doc.text('Totale Mensile', 60, y, { width: 300 })
-      doc.text(`€${totalMonthly.toFixed(2)}`, 370, y, { width: 80 })
+      doc.setFillColor(254, 243, 199)
+      doc.rect(20, y - 3, pageWidth - 40, 10, 'F')
+      doc.setFontSize(10)
+      doc.setFont('helvetica', 'bold')
+      doc.text('Totale Mensile:', 25, y + 4)
+      doc.text(`€${totalMonthly.toFixed(2)}`, 150, y + 4)
 
-      doc.end()
-    })
+      // Generate PDF buffer
+      const pdfBuffer = Buffer.from(doc.output('arraybuffer'))
+
+      return new NextResponse(pdfBuffer, {
+        headers: {
+          'Content-Type': 'application/pdf',
+          'Content-Disposition': 'attachment; filename="abbonamenti.pdf"'
+        }
+      })
+    } catch (error) {
+      console.error('PDF generation error:', error)
+      return NextResponse.json({ error: 'Errore nella generazione del PDF' }, { status: 500 })
+    }
   }
 
   return NextResponse.json({ error: 'Format not supported' }, { status: 400 })
