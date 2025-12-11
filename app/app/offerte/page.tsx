@@ -364,22 +364,22 @@ export default function OffertePage() {
           return (
             <div
               key={offer.id}
-              className="group relative bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl hover:border-gray-300 transition-all duration-300 flex flex-col"
+              className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl hover:border-gray-300 transition-all duration-300 flex flex-col"
             >
-              {/* Category Badge */}
-              <div className={`absolute top-4 left-4 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${config.bgLight} ${config.textColor}`}>
-                <Icon className="w-3 h-3" />
-                {offer.category}
-              </div>
-
-              {/* Savings Badge */}
-              {savings > 0 && (
-                <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                  -{savings}%
+              <div className="p-5 sm:p-6 flex flex-col flex-1">
+                {/* Top row: Category + Savings badges */}
+                <div className="flex items-center justify-between mb-3">
+                  <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${config.bgLight} ${config.textColor}`}>
+                    <Icon className="w-3 h-3" />
+                    {offer.category}
+                  </div>
+                  {savings > 0 && (
+                    <div className="bg-green-500 text-white px-2.5 py-1 rounded-full text-xs font-bold">
+                      -{savings}%
+                    </div>
+                  )}
                 </div>
-              )}
 
-              <div className="p-5 sm:p-6 pt-14 flex flex-col flex-1">
                 {/* Alternative Name */}
                 <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors">
                   {offer.alternative_name}
