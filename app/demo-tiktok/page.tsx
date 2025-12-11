@@ -478,43 +478,43 @@ function SwipeCardsVersion() {
 }
 
 // ===== VERSIONI INSTAGRAM CAROSELLO (v8, v9, v10) =====
-// Formato quadrato 1:1, colori BillKiller (amber/orange), stile coerente
+// Formato mobile fisso, colori BillKiller (amber/orange), NO SCROLL
 
 // Versione 8 - Instagram Slide 1: "Il Problema"
 function InstagramSlide1() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 flex flex-col items-center justify-center p-8">
+    <div className="h-screen max-h-screen bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 flex flex-col items-center justify-center p-6 overflow-hidden">
       {/* Logo */}
-      <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-2xl">
-        <Flame className="w-12 h-12 text-orange-500" />
+      <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-2xl">
+        <Flame className="w-10 h-10 text-orange-500" />
       </div>
 
       {/* Main text */}
       <div className="text-center">
-        <p className="text-white/80 text-lg mb-4">Lo sapevi che in media</p>
-        <p className="text-white text-5xl font-black mb-4">€1.284</p>
-        <p className="text-white/80 text-lg mb-8">all'anno se ne vanno in abbonamenti?</p>
+        <p className="text-white/80 text-base mb-3">Lo sapevi che in media</p>
+        <p className="text-white text-5xl font-black mb-3">€1.284</p>
+        <p className="text-white/80 text-base mb-6">all'anno se ne vanno in abbonamenti?</p>
 
         {/* Visual element */}
-        <div className="flex justify-center gap-2 mb-8">
-          {['🎬', '🎵', '📦', '☁️', '💪', '📺'].map((emoji, i) => (
-            <div key={i} className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center text-2xl backdrop-blur-sm">
+        <div className="flex justify-center gap-2 mb-6">
+          {['🎬', '🎵', '📦', '☁️', '💪'].map((emoji, i) => (
+            <div key={i} className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center text-xl backdrop-blur-sm">
               {emoji}
             </div>
           ))}
         </div>
 
-        <p className="text-white text-2xl font-bold">
+        <p className="text-white text-xl font-bold">
           E tu, sai quanto spendi?
         </p>
       </div>
 
       {/* Swipe indicator */}
-      <div className="absolute bottom-8 flex items-center gap-2">
-        <div className="w-8 h-1 bg-white rounded-full" />
+      <div className="absolute bottom-6 flex items-center gap-2">
+        <div className="w-6 h-1 bg-white rounded-full" />
         <div className="w-2 h-1 bg-white/40 rounded-full" />
         <div className="w-2 h-1 bg-white/40 rounded-full" />
-        <ArrowRight className="w-5 h-5 text-white ml-2" />
+        <ArrowRight className="w-4 h-4 text-white ml-2" />
       </div>
     </div>
   )
@@ -525,47 +525,47 @@ function InstagramSlide2() {
   const steps = [
     { icon: Upload, text: 'Carica estratto conto', num: '1' },
     { icon: Scan, text: 'Analisi automatica AI', num: '2' },
-    { icon: Target, text: 'Trova tutti gli abbonamenti', num: '3' },
+    { icon: Target, text: 'Trova abbonamenti', num: '3' },
     { icon: PiggyBank, text: 'Scopri quanto risparmi', num: '4' },
   ]
 
   return (
-    <div className="min-h-screen bg-white flex flex-col p-8">
+    <div className="h-screen max-h-screen bg-white flex flex-col p-5 overflow-hidden">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-8">
-        <div className="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
-          <Flame className="w-8 h-8 text-white" />
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+          <Flame className="w-7 h-7 text-white" />
         </div>
         <div>
-          <p className="text-2xl font-bold text-gray-900">BillKiller</p>
-          <p className="text-sm text-gray-500">Come funziona</p>
+          <p className="text-xl font-bold text-gray-900">BillKiller</p>
+          <p className="text-xs text-gray-500">Come funziona</p>
         </div>
       </div>
 
       {/* Steps */}
-      <div className="flex-1 flex flex-col justify-center space-y-6">
+      <div className="flex-1 flex flex-col justify-center space-y-4">
         {steps.map((step, i) => (
-          <div key={i} className="flex items-center gap-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl flex items-center justify-center relative">
-              <step.icon className="w-8 h-8 text-orange-500" />
-              <div className="absolute -top-2 -left-2 w-7 h-7 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">
+          <div key={i} className="flex items-center gap-3">
+            <div className="w-14 h-14 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl flex items-center justify-center relative flex-shrink-0">
+              <step.icon className="w-7 h-7 text-orange-500" />
+              <div className="absolute -top-1.5 -left-1.5 w-6 h-6 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg">
                 {step.num}
               </div>
             </div>
-            <p className="text-xl font-semibold text-gray-800">{step.text}</p>
+            <p className="text-lg font-semibold text-gray-800">{step.text}</p>
           </div>
         ))}
       </div>
 
       {/* Bottom */}
-      <div className="text-center">
-        <p className="text-gray-500 text-sm">100% Privacy • Nessun accesso alla banca</p>
+      <div className="text-center py-2">
+        <p className="text-gray-500 text-xs">100% Privacy • Nessun accesso alla banca</p>
       </div>
 
       {/* Swipe indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2">
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2">
         <div className="w-2 h-1 bg-orange-200 rounded-full" />
-        <div className="w-8 h-1 bg-orange-500 rounded-full" />
+        <div className="w-6 h-1 bg-orange-500 rounded-full" />
         <div className="w-2 h-1 bg-orange-200 rounded-full" />
       </div>
     </div>
@@ -577,68 +577,68 @@ function InstagramSlide3() {
   const totalMonthly = FAKE_SUBSCRIPTIONS.reduce((sum, s) => sum + s.amount, 0)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col items-center justify-center p-8 relative overflow-hidden">
+    <div className="h-screen max-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col items-center justify-center p-5 overflow-hidden relative">
       {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-amber-500/20 to-transparent rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-orange-500/20 to-transparent rounded-full blur-3xl" />
+      <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-amber-500/20 to-transparent rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-orange-500/20 to-transparent rounded-full blur-3xl" />
 
       {/* Content */}
-      <div className="relative text-center">
+      <div className="relative text-center w-full">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 px-4 py-2 rounded-full mb-6">
+        <div className="inline-flex items-center gap-2 bg-amber-500/20 border border-amber-500/30 px-3 py-1.5 rounded-full mb-4">
           <Gift className="w-4 h-4 text-amber-400" />
           <span className="text-amber-400 text-sm font-bold">GRATIS</span>
         </div>
 
         {/* Logo */}
-        <div className="w-24 h-24 bg-gradient-to-br from-amber-400 to-orange-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-orange-500/30">
-          <Flame className="w-14 h-14 text-white" />
+        <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-2xl shadow-orange-500/30">
+          <Flame className="w-10 h-10 text-white" />
         </div>
 
         {/* Main CTA */}
-        <h1 className="text-4xl font-black text-white mb-4">
+        <h1 className="text-2xl font-black text-white mb-2">
           Smetti di sprecare soldi
         </h1>
-        <p className="text-slate-400 text-lg mb-8">
-          Scopri tutti i tuoi abbonamenti in 30 secondi
+        <p className="text-slate-400 text-sm mb-4">
+          Scopri i tuoi abbonamenti in 30 secondi
         </p>
 
         {/* Fake demo result */}
-        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-5 mb-8 backdrop-blur-sm">
+        <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-4 mb-4 backdrop-blur-sm">
           <div className="flex items-center justify-between">
             <div className="text-left">
-              <p className="text-slate-400 text-sm">Esempio: Marco ha trovato</p>
-              <p className="text-3xl font-bold text-white">€{totalMonthly.toFixed(0)}/mese</p>
+              <p className="text-slate-400 text-xs">Marco ha trovato</p>
+              <p className="text-2xl font-bold text-white">€{totalMonthly.toFixed(0)}/mese</p>
             </div>
             <div className="text-right">
-              <p className="text-emerald-400 text-sm">Risparmio possibile</p>
-              <p className="text-2xl font-bold text-emerald-400">€247/anno</p>
+              <p className="text-emerald-400 text-xs">Risparmio</p>
+              <p className="text-xl font-bold text-emerald-400">€247/anno</p>
             </div>
           </div>
         </div>
 
         {/* CTA Button */}
-        <div className="space-y-3">
-          <button className="w-full bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 font-bold py-5 rounded-2xl text-xl shadow-lg shadow-amber-500/30">
+        <div className="space-y-2">
+          <button className="w-full bg-gradient-to-r from-amber-400 to-orange-500 text-slate-900 font-bold py-4 rounded-xl text-lg shadow-lg shadow-amber-500/30">
             Provalo Gratis
           </button>
-          <p className="text-slate-500 text-sm flex items-center justify-center gap-2">
-            <Clock className="w-4 h-4" />
-            Solo 30 secondi • Nessuna registrazione
+          <p className="text-slate-500 text-xs flex items-center justify-center gap-1">
+            <Clock className="w-3 h-3" />
+            30 secondi • Nessuna registrazione
           </p>
         </div>
       </div>
 
       {/* Website */}
-      <p className="absolute bottom-8 text-slate-600 text-sm font-medium">
+      <p className="absolute bottom-12 text-slate-600 text-xs font-medium">
         billkiller.it
       </p>
 
       {/* Swipe indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 mb-8">
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2">
         <div className="w-2 h-1 bg-slate-600 rounded-full" />
         <div className="w-2 h-1 bg-slate-600 rounded-full" />
-        <div className="w-8 h-1 bg-amber-500 rounded-full" />
+        <div className="w-6 h-1 bg-amber-500 rounded-full" />
       </div>
     </div>
   )
