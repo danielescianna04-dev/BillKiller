@@ -583,7 +583,7 @@ function InstagramSlide3() {
           </button>
           <p className="text-slate-500 text-xs flex items-center justify-center gap-1">
             <Clock className="w-3 h-3" />
-            30 secondi • Nessuna registrazione
+            30 secondi
           </p>
         </div>
       </div>
