@@ -3,10 +3,12 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatCurrency } from '@/lib/utils'
-import { CreditCard, CheckCircle, TrendingUp, ArrowRight, AlertCircle } from 'lucide-react'
+import { CreditCard, CheckCircle, TrendingUp, ArrowRight, AlertCircle, Pencil } from 'lucide-react'
 import ExportButton from './export-button'
 import SubscriptionDetailsDialog from './subscription-details-dialog'
+import IdentifySubscriptionDialog from './identify-subscription-dialog'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface Subscription {
   id: string
@@ -35,7 +37,9 @@ interface SubscriptionsListProps {
 }
 
 export default function SubscriptionsList({ subscriptions, isPremium, title = "I Tuoi Abbonamenti" }: SubscriptionsListProps) {
+  const router = useRouter()
   const [selectedSubscription, setSelectedSubscription] = useState<{ id: string; title: string } | null>(null)
+  const [identifySubscription, setIdentifySubscription] = useState<{ id: string; title: string } | null>(null)
   
   const getPeriodicityLabel = (periodicity: string) => {
     const labels = {
@@ -151,26 +155,33 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
 
               <div className="mt-auto pt-2 sm:pt-3 md:pt-4 border-t border-gray-100">
                 {isUnknown ? (
-                  <div className="text-center">
-                    <p className="text-[9px] sm:text-[10px] text-amber-700 px-2">
+                  <div className="text-center space-y-2">
+                    <button
+                      onClick={() => setIdentifySubscription({ id: sub.id, title: sub.title })}
+                      className="text-[10px] sm:text-xs md:text-sm font-semibold text-amber-600 hover:text-amber-700 inline-flex items-center gap-1"
+                    >
+                      <Pencil className="w-3 h-3" />
+                      Identifica
+                    </button>
+                    <p className="text-[8px] sm:text-[9px] text-amber-600/70 px-2">
                       {(() => {
                         const merchant = sub.merchant_canonical.toLowerCase()
                         if (merchant.startsWith('apple') || merchant === 'apple') {
-                          return 'Potrebbe essere iCloud, Music o altro. Verifica in Impostazioni > [tuo nome] > Abbonamenti sul tuo iPhone/iPad'
+                          return 'Verifica in Impostazioni > [tuo nome] > Abbonamenti'
                         }
                         if (merchant.startsWith('google') || merchant === 'google') {
-                          return 'Potrebbe essere YouTube, One o altro. Verifica su play.google.com/store/account/subscriptions'
+                          return 'Verifica su play.google.com/store/account/subscriptions'
                         }
                         if (merchant.startsWith('samsung') || merchant === 'samsung') {
-                          return 'Verifica in Galaxy Store > Menu > Abbonamenti sul tuo dispositivo Samsung'
+                          return 'Verifica in Galaxy Store > Menu > Abbonamenti'
                         }
                         if (merchant.startsWith('microsoft') || merchant === 'microsoft') {
-                          return 'Potrebbe essere Xbox, 365 o altro. Verifica su account.microsoft.com/services'
+                          return 'Verifica su account.microsoft.com/services'
                         }
                         if (merchant.startsWith('amazon') || merchant === 'amazon') {
-                          return 'Potrebbe essere Prime, Music o altro. Verifica su amazon.it/gp/primecentral'
+                          return 'Verifica su amazon.it/gp/primecentral'
                         }
-                        return 'Servizio non identificato'
+                        return ''
                       })()}
                     </p>
                   </div>
@@ -197,6 +208,16 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
           title={selectedSubscription.title}
           open={!!selectedSubscription}
           onOpenChange={(open) => !open && setSelectedSubscription(null)}
+        />
+      )}
+
+      {identifySubscription && (
+        <IdentifySubscriptionDialog
+          subscriptionId={identifySubscription.id}
+          currentTitle={identifySubscription.title}
+          open={!!identifySubscription}
+          onOpenChange={(open) => !open && setIdentifySubscription(null)}
+          onSuccess={() => router.refresh()}
         />
       )}
     </div>
