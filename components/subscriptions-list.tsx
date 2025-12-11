@@ -160,19 +160,28 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
 
               <div className="mt-auto pt-2 sm:pt-3 md:pt-4 border-t border-gray-100">
                 {isUnknown ? (
-                  <div className="space-y-2">
-                    <p className="text-[9px] sm:text-[10px] text-amber-700 text-center px-2">
-                      {isGenericMerchant
-                        ? `Potrebbe essere ${sub.title}, iCloud, Music, o altro`
-                        : 'Contatta la tua banca per informazioni aggiuntive'}
+                  <div className="text-center">
+                    <p className="text-[9px] sm:text-[10px] text-amber-700 px-2">
+                      {(() => {
+                        const merchant = sub.merchant_canonical.toLowerCase()
+                        if (merchant.startsWith('apple') || merchant === 'apple') {
+                          return 'Potrebbe essere iCloud, Music o altro. Verifica in Impostazioni > [tuo nome] > Abbonamenti sul tuo iPhone/iPad'
+                        }
+                        if (merchant.startsWith('google') || merchant === 'google') {
+                          return 'Potrebbe essere YouTube, One o altro. Verifica su play.google.com/store/account/subscriptions'
+                        }
+                        if (merchant.startsWith('samsung') || merchant === 'samsung') {
+                          return 'Verifica in Galaxy Store > Menu > Abbonamenti sul tuo dispositivo Samsung'
+                        }
+                        if (merchant.startsWith('microsoft') || merchant === 'microsoft') {
+                          return 'Potrebbe essere Xbox, 365 o altro. Verifica su account.microsoft.com/services'
+                        }
+                        if (merchant.startsWith('amazon') || merchant === 'amazon') {
+                          return 'Potrebbe essere Prime, Music o altro. Verifica su amazon.it/gp/primecentral'
+                        }
+                        return 'Servizio non identificato'
+                      })()}
                     </p>
-                    <a
-                      href="/app/email"
-                      className="text-[10px] sm:text-xs md:text-sm font-semibold text-amber-600 hover:text-amber-700 inline-flex items-center gap-1 justify-center w-full"
-                    >
-                      <Mail className="w-3 h-3 sm:w-4 sm:h-4" />
-                      Collega email per identificare
-                    </a>
                   </div>
                 ) : (
                   <div className="text-center">
