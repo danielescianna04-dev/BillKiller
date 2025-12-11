@@ -275,7 +275,7 @@ export default function OffertePage() {
           const hasLivePrice = livePrice?.price !== null && livePrice?.price !== undefined
 
           return (
-            <Card key={offer.id} className="hover:shadow-lg transition-all hover:scale-[1.02]">
+            <Card key={offer.id} className="hover:shadow-lg transition-all hover:scale-[1.02] flex flex-col">
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
@@ -289,66 +289,75 @@ export default function OffertePage() {
                   )}
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-sm text-gray-600">{offer.description}</p>
+              <CardContent className="flex flex-col h-full">
+                {/* Descrizione - altezza fissa */}
+                <p className="text-sm text-gray-600 min-h-[40px]">{offer.description}</p>
 
-                {/* Prezzo originale (live) */}
-                {loading ? (
-                  <div className="flex items-center justify-center py-2">
-                    <Loader2 className="w-5 h-5 animate-spin text-gray-400" />
-                    <span className="ml-2 text-sm text-gray-500">Caricamento prezzo...</span>
+                {/* Sezione prezzi - altezza fissa */}
+                <div className="flex-1 flex flex-col justify-center py-4 space-y-3">
+                  {/* Prezzo originale (live) - sempre stesso spazio */}
+                  <div className="h-[52px] flex items-center justify-center">
+                    {loading ? (
+                      <div className="flex items-center">
+                        <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
+                        <span className="ml-2 text-sm text-gray-400">Caricamento...</span>
+                      </div>
+                    ) : hasLivePrice ? (
+                      <div className="text-center">
+                        <div className="text-xs text-gray-500">
+                          Prezzo {offer.merchant_canonical.replace(/-/g, ' ')} {livePrice?.plan_name && `(${livePrice.plan_name})`}
+                        </div>
+                        <div className="text-lg text-gray-400 line-through">
+                          €{livePrice!.price!.toFixed(2)}/mese
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-xs text-gray-300">
+                        Prezzo originale non disponibile
+                      </div>
+                    )}
                   </div>
-                ) : hasLivePrice ? (
-                  <div className="text-center">
-                    <div className="text-xs text-gray-500 mb-1">
-                      Prezzo {offer.merchant_canonical.replace(/-/g, ' ')} {livePrice?.plan_name && `(${livePrice.plan_name})`}
-                    </div>
-                    <div className="text-lg text-gray-500 line-through">
-                      €{livePrice!.price!.toFixed(2)}/mese
-                    </div>
-                  </div>
-                ) : livePrice?.error ? (
-                  <div className="text-center text-xs text-gray-400">
-                    Prezzo non disponibile
-                  </div>
-                ) : null}
 
-                {/* Prezzo alternativa */}
-                <div className="flex items-center justify-center gap-4">
-                  <TrendingDown className="w-5 h-5 text-green-600" />
-                  <div className="text-center">
-                    <div className="text-xs text-gray-500">Con {offer.alternative_name}</div>
-                    <div className="text-2xl font-bold text-green-600">
-                      {offer.alternative_price === 0 ? (
-                        'GRATIS'
-                      ) : (
-                        `€${offer.alternative_price.toFixed(2)}/mese`
-                      )}
+                  {/* Prezzo alternativa */}
+                  <div className="flex items-center justify-center gap-3">
+                    <TrendingDown className="w-5 h-5 text-green-600 flex-shrink-0" />
+                    <div className="text-center">
+                      <div className="text-xs text-gray-500">Con {offer.alternative_name}</div>
+                      <div className="text-2xl font-bold text-green-600">
+                        {offer.alternative_price === 0 ? 'GRATIS' : `€${offer.alternative_price.toFixed(2)}/mese`}
+                      </div>
                     </div>
+                  </div>
+
+                  {/* Box risparmio - altezza fissa */}
+                  <div className="h-[60px] flex items-center justify-center">
+                    {savings > 0 ? (
+                      <div className="text-sm text-green-700 bg-green-50 p-3 rounded-lg text-center w-full">
+                        Risparmi <strong>{savings}%</strong>
+                        {hasLivePrice && livePrice!.price! > offer.alternative_price && (
+                          <span className="block text-xs mt-1">
+                            = €{((livePrice!.price! - offer.alternative_price) * 12).toFixed(0)}/anno
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="text-xs text-gray-300">Alternativa consigliata</div>
+                    )}
                   </div>
                 </div>
 
-                {savings > 0 && (
-                  <div className="text-sm text-green-700 bg-green-50 p-3 rounded-lg text-center">
-                    Risparmi <strong>{savings}%</strong>
-                    {hasLivePrice && livePrice!.price! > offer.alternative_price && (
-                      <span className="block text-xs mt-1">
-                        = €{((livePrice!.price! - offer.alternative_price) * 12).toFixed(0)}/anno
-                      </span>
-                    )}
-                  </div>
-                )}
-
-                <a href={offer.affiliate_url} target="_blank" rel="noopener noreferrer">
-                  <Button className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600">
-                    Scopri offerta
-                    <ExternalLink className="w-4 h-4 ml-2" />
-                  </Button>
-                </a>
-
-                <p className="text-xs text-gray-500 text-center">
-                  Link affiliato • Supporti BillKiller
-                </p>
+                {/* Footer - sempre in basso */}
+                <div className="mt-auto space-y-3">
+                  <a href={offer.affiliate_url} target="_blank" rel="noopener noreferrer">
+                    <Button className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600">
+                      Scopri offerta
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </Button>
+                  </a>
+                  <p className="text-xs text-gray-500 text-center">
+                    Link affiliato • Supporti BillKiller
+                  </p>
+                </div>
               </CardContent>
             </Card>
           )
