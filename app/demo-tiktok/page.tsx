@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
-import { CheckCircle, TrendingDown, AlertTriangle, Sparkles, CreditCard, Calendar, ArrowRight, Flame, Zap, X } from 'lucide-react'
+import { CheckCircle, TrendingDown, AlertTriangle, Sparkles, CreditCard, Calendar, ArrowRight, Flame, Zap, X, Eye, EyeOff, Skull, Bell, Shield, Trash2, Star } from 'lucide-react'
 import BillKillerLogo from '@/components/logo'
 
 // Dati finti per il demo
@@ -193,6 +193,290 @@ function BeforeAfterVersion() {
   )
 }
 
+// Versione 4 - "Soldi che bruciano" stile drammatico
+function MoneyBurningVersion() {
+  const totalMonthly = FAKE_SUBSCRIPTIONS.reduce((sum, s) => sum + s.amount, 0)
+  const totalYearly = totalMonthly * 12
+  const perDay = totalMonthly / 30
+
+  return (
+    <div className="min-h-screen bg-black flex flex-col">
+      {/* Fire effect header */}
+      <div className="relative pt-12 pb-8 px-5">
+        <div className="absolute inset-0 bg-gradient-to-b from-orange-600/30 via-red-600/20 to-transparent" />
+        <div className="relative text-center">
+          <div className="inline-flex items-center gap-2 bg-red-500/20 border border-red-500/40 px-4 py-2 rounded-full mb-6">
+            <Skull className="w-4 h-4 text-red-500" />
+            <span className="text-red-400 text-sm font-bold">ALERT</span>
+          </div>
+          <p className="text-white/60 text-sm mb-2">Ogni giorno stai bruciando</p>
+          <div className="flex items-center justify-center gap-1">
+            <span className="text-6xl font-black text-transparent bg-gradient-to-b from-yellow-400 via-orange-500 to-red-600 bg-clip-text">
+              €{perDay.toFixed(2)}
+            </span>
+            <Flame className="w-10 h-10 text-orange-500 animate-pulse" />
+          </div>
+          <p className="text-white/40 text-xs mt-3">in abbonamenti che non usi</p>
+        </div>
+      </div>
+
+      {/* Abbonamenti "in fiamme" */}
+      <div className="px-5 flex-1">
+        <div className="space-y-3">
+          {FAKE_SUBSCRIPTIONS.slice(0, 4).map((sub, i) => (
+            <div
+              key={i}
+              className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-4 border border-orange-500/20 relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-orange-500/20 to-transparent rounded-bl-full" />
+              <div className="flex items-center justify-between relative">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center text-2xl">
+                    {sub.icon}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-white">{sub.name}</p>
+                    <p className="text-xs text-orange-400">€{(sub.amount * 12).toFixed(0)}/anno</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="text-xl font-bold text-white">€{sub.amount}</p>
+                  <Flame className="w-4 h-4 text-orange-500 ml-auto" />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Totale drammatico */}
+      <div className="px-5 pb-8 pt-4">
+        <div className="bg-gradient-to-r from-red-600 to-orange-600 rounded-2xl p-5 text-center mb-4">
+          <p className="text-white/80 text-sm">Totale annuale</p>
+          <p className="text-4xl font-black text-white my-2">€{totalYearly.toFixed(0)}</p>
+          <p className="text-white/60 text-xs">che potrebbero restare in tasca tua</p>
+        </div>
+
+        <button className="w-full bg-white text-black font-bold py-4 rounded-2xl flex items-center justify-center gap-2 text-lg">
+          Smetti di bruciare soldi
+          <ArrowRight className="w-5 h-5" />
+        </button>
+        <p className="text-center text-xs text-white/30 mt-3">billkiller.it</p>
+      </div>
+    </div>
+  )
+}
+
+// Versione 5 - "Notifica shock" stile iPhone notification
+function NotificationVersion() {
+  const totalMonthly = FAKE_SUBSCRIPTIONS.reduce((sum, s) => sum + s.amount, 0)
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 flex flex-col justify-center px-4">
+      {/* Fake time bar */}
+      <div className="text-center mb-8">
+        <p className="text-black/80 font-semibold text-sm">9:41</p>
+        <p className="text-black/40 text-xs">Mercoledì 11 Dicembre</p>
+      </div>
+
+      {/* Notification stack */}
+      <div className="space-y-3">
+        {/* Main notification */}
+        <div className="bg-white rounded-3xl p-4 shadow-xl">
+          <div className="flex items-start gap-3">
+            <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center">
+              <Flame className="w-7 h-7 text-white" />
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-gray-900">BillKiller</span>
+                <span className="text-xs text-gray-400">ora</span>
+              </div>
+              <p className="text-gray-600 text-sm mt-1">
+                Ho trovato <span className="font-bold text-red-500">8 abbonamenti</span> attivi collegati alla tua banca
+              </p>
+              <div className="mt-3 bg-red-50 rounded-xl p-3 border border-red-100">
+                <p className="text-red-600 text-xs font-medium">Stai spendendo</p>
+                <p className="text-2xl font-black text-red-600">€{totalMonthly.toFixed(2)}/mese</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Secondary notifications */}
+        <div className="bg-white/80 rounded-2xl p-3 shadow-lg">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-red-500 rounded-xl flex items-center justify-center">
+              <Bell className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm text-gray-700">
+                <span className="font-semibold">Netflix</span> rinnoverà tra 3 giorni
+              </p>
+              <p className="text-xs text-gray-400">€17.99</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white/60 rounded-2xl p-3 shadow-md">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center">
+              <AlertTriangle className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm text-gray-600">
+                <span className="font-semibold">2 abbonamenti</span> non usati da 3+ mesi
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div className="mt-8">
+        <button className="w-full bg-black text-white font-bold py-4 rounded-2xl flex items-center justify-center gap-2">
+          Scopri i tuoi abbonamenti
+        </button>
+        <p className="text-center text-xs text-gray-400 mt-3">billkiller.it • Gratis</p>
+      </div>
+    </div>
+  )
+}
+
+// Versione 6 - "Confronto visivo" con grafico a barre
+function BarChartVersion() {
+  const subscriptions = FAKE_SUBSCRIPTIONS.slice(0, 6)
+  const maxAmount = Math.max(...subscriptions.map(s => s.amount))
+  const totalMonthly = FAKE_SUBSCRIPTIONS.reduce((sum, s) => sum + s.amount, 0)
+
+  return (
+    <div className="min-h-screen bg-slate-900 flex flex-col px-5 py-8">
+      {/* Header */}
+      <div className="text-center mb-8">
+        <div className="inline-flex items-center gap-2 mb-4">
+          <Flame className="w-8 h-8 text-amber-500" />
+          <span className="text-2xl font-bold text-white">BillKiller</span>
+        </div>
+        <p className="text-slate-400 text-sm">Dove vanno i tuoi soldi ogni mese?</p>
+      </div>
+
+      {/* Bar chart */}
+      <div className="flex-1 space-y-4">
+        {subscriptions.map((sub, i) => {
+          const width = (sub.amount / maxAmount) * 100
+          return (
+            <div key={i} className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center text-lg flex-shrink-0">
+                {sub.icon}
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-white text-sm font-medium">{sub.name}</span>
+                  <span className="text-white font-bold">€{sub.amount}</span>
+                </div>
+                <div className="h-3 bg-slate-800 rounded-full overflow-hidden">
+                  <div
+                    className={`h-full ${sub.color} rounded-full`}
+                    style={{ width: `${width}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Total */}
+      <div className="mt-8 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 rounded-2xl p-5">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-amber-400 text-sm">Totale mensile</p>
+            <p className="text-3xl font-black text-white">€{totalMonthly.toFixed(2)}</p>
+          </div>
+          <div className="text-right">
+            <p className="text-slate-400 text-xs">All'anno</p>
+            <p className="text-xl font-bold text-amber-400">€{(totalMonthly * 12).toFixed(0)}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA */}
+      <button className="mt-6 w-full bg-gradient-to-r from-amber-500 to-orange-500 text-black font-bold py-4 rounded-2xl flex items-center justify-center gap-2">
+        Analizza i tuoi
+        <ArrowRight className="w-5 h-5" />
+      </button>
+      <p className="text-center text-xs text-slate-600 mt-3">billkiller.it</p>
+    </div>
+  )
+}
+
+// Versione 7 - "Cancella e risparmia" con swipe cards
+function SwipeCardsVersion() {
+  const cancelledSubs = [
+    { name: 'Palestra mai usata', amount: 29.90, icon: '💪', saved: true },
+    { name: 'App dimenticata', amount: 9.99, icon: '📱', saved: true },
+    { name: 'Streaming duplicato', amount: 8.99, icon: '📺', saved: true },
+  ]
+  const totalSaved = cancelledSubs.reduce((sum, s) => sum + s.amount, 0)
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-emerald-900 to-slate-900 flex flex-col">
+      {/* Header */}
+      <div className="px-5 pt-8 pb-6 text-center">
+        <div className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-500/30 px-4 py-2 rounded-full mb-4">
+          <Shield className="w-4 h-4 text-emerald-400" />
+          <span className="text-emerald-400 text-sm font-bold">Soldi salvati</span>
+        </div>
+        <h1 className="text-2xl font-bold text-white mb-2">
+          Marco ha cancellato 3 abbonamenti
+        </h1>
+        <p className="text-slate-400 text-sm">che non usava più</p>
+      </div>
+
+      {/* Cancelled cards */}
+      <div className="px-5 flex-1 space-y-4">
+        {cancelledSubs.map((sub, i) => (
+          <div
+            key={i}
+            className="bg-slate-800/50 rounded-2xl p-4 border border-emerald-500/20 relative overflow-hidden"
+          >
+            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-emerald-500/20 to-transparent flex items-center justify-center">
+              <Trash2 className="w-5 h-5 text-emerald-400" />
+            </div>
+            <div className="flex items-center gap-4 pr-12">
+              <div className="w-14 h-14 bg-slate-700 rounded-xl flex items-center justify-center text-2xl">
+                {sub.icon}
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-white line-through opacity-60">{sub.name}</p>
+                <p className="text-emerald-400 text-sm font-bold">+€{sub.amount}/mese risparmiati</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Savings summary */}
+      <div className="px-5 pb-8 pt-4">
+        <div className="bg-gradient-to-r from-emerald-500 to-green-500 rounded-2xl p-6 text-center mb-4">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Star className="w-5 h-5 text-white" />
+            <span className="text-white/80 text-sm font-medium">Risparmio totale</span>
+            <Star className="w-5 h-5 text-white" />
+          </div>
+          <p className="text-5xl font-black text-white">€{(totalSaved * 12).toFixed(0)}</p>
+          <p className="text-white/60 text-sm mt-1">all'anno</p>
+        </div>
+
+        <button className="w-full bg-white text-slate-900 font-bold py-4 rounded-2xl flex items-center justify-center gap-2 text-lg">
+          Trova i tuoi abbonamenti inutili
+        </button>
+        <p className="text-center text-xs text-slate-500 mt-3">billkiller.it • Gratis</p>
+      </div>
+    </div>
+  )
+}
+
 // Versione originale con scroll
 function ScrollVersion() {
   const totalMonthly = FAKE_SUBSCRIPTIONS.reduce((sum, s) => sum + s.amount, 0)
@@ -356,6 +640,18 @@ function DemoContent() {
   }
   if (version === '3') {
     return <BeforeAfterVersion />
+  }
+  if (version === '4') {
+    return <MoneyBurningVersion />
+  }
+  if (version === '5') {
+    return <NotificationVersion />
+  }
+  if (version === '6') {
+    return <BarChartVersion />
+  }
+  if (version === '7') {
+    return <SwipeCardsVersion />
   }
   return <ScrollVersion />
 }
