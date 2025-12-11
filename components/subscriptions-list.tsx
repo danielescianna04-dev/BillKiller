@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatCurrency } from '@/lib/utils'
-import { Calendar, CreditCard, Mail, CheckCircle, TrendingUp, Sparkles, ArrowRight, TrendingDown, AlertCircle } from 'lucide-react'
+import { CreditCard, Mail, CheckCircle, TrendingUp, ArrowRight, AlertCircle } from 'lucide-react'
 import ExportButton from './export-button'
 import SubscriptionDetailsDialog from './subscription-details-dialog'
 import { useState } from 'react'
@@ -87,7 +87,9 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
       
       <div className="grid grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
         {subscriptions.map((sub) => {
-          const isUnknown = sub.merchant_canonical.includes('unknown-') || sub.meta?.identification_method === 'description'
+          const isUnknown = sub.merchant_canonical.includes('unknown-') ||
+                           sub.meta?.identification_method === 'description' ||
+                           sub.periodicity === 'unknown'
           return (
           <Card 
             key={sub.id}
