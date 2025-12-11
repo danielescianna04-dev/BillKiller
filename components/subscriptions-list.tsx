@@ -167,19 +167,19 @@ export default function SubscriptionsList({ subscriptions, isPremium, title = "I
                       {(() => {
                         const merchant = sub.merchant_canonical.toLowerCase()
                         if (merchant.startsWith('apple') || merchant === 'apple') {
-                          return 'Verifica in Impostazioni > [tuo nome] > Abbonamenti'
+                          return 'Potrebbe essere iCloud, Music o altro. Verifica in Impostazioni > [tuo nome] > Abbonamenti sul tuo iPhone/iPad'
                         }
                         if (merchant.startsWith('google') || merchant === 'google') {
-                          return 'Verifica su play.google.com/store/account/subscriptions'
+                          return 'Potrebbe essere YouTube, One o altro. Verifica su play.google.com/store/account/subscriptions'
                         }
                         if (merchant.startsWith('samsung') || merchant === 'samsung') {
-                          return 'Verifica in Galaxy Store > Menu > Abbonamenti'
+                          return 'Verifica in Galaxy Store > Menu > Abbonamenti sul tuo dispositivo Samsung'
                         }
                         if (merchant.startsWith('microsoft') || merchant === 'microsoft') {
-                          return 'Verifica su account.microsoft.com/services'
+                          return 'Potrebbe essere Xbox, 365 o altro. Verifica su account.microsoft.com/services'
                         }
                         if (merchant.startsWith('amazon') || merchant === 'amazon') {
-                          return 'Verifica su amazon.it/gp/primecentral'
+                          return 'Potrebbe essere Prime, Music o altro. Verifica su amazon.it/gp/primecentral'
                         }
                         return ''
                       })()}
